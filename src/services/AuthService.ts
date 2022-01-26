@@ -1,6 +1,6 @@
 import { URL } from './../utils/URL'
 import axios from 'axios'
-import { Login, User } from 'types/login'
+import { Login, User } from '../types/Login'
 
 const AuthService = {
   signup: (user: User) => {
