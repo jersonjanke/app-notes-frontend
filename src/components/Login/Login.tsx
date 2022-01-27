@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import AuthService from 'services/AuthService'
 import { Wrapper } from './style'
+import { useDispatch } from 'react-redux'
+import { userUpdate } from '../../store/actions/user'
 
 const Login = () => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const handleLogin = async () => {
     try {
       const { data } = await AuthService.login({ email, password })
-      console.log(data)
+      dispatch(userUpdate(data))
     } catch (err) {
       console.error(err)
     }
