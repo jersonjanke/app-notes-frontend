@@ -3,9 +3,11 @@ import AuthService from 'services/AuthService'
 import { Wrapper } from './style'
 import { useDispatch } from 'react-redux'
 import { userUpdate } from '../../store/actions/user'
+import { useRouter } from 'next/router'
 
 const Login = () => {
   const dispatch = useDispatch()
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -13,6 +15,7 @@ const Login = () => {
     try {
       const { data } = await AuthService.login({ email, password })
       dispatch(userUpdate(data))
+      router.push('/dashboard')
     } catch (err) {
       console.error(err)
     }
@@ -33,7 +36,7 @@ const Login = () => {
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <a>Criar conta</a>
+      <a onClick={() => router.push('/signup')}>Criar conta</a>
       <button onClick={handleLogin}>Login</button>
     </Wrapper>
   )
