@@ -4,6 +4,7 @@ import { Wrapper } from './style'
 import { useDispatch } from 'react-redux'
 import { userUpdate } from '../../store/actions/user'
 import { useRouter } from 'next/router'
+import Button from 'components/Button'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -23,7 +24,7 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <h2>Login</h2>
+      <h3>Login</h3>
       <label>E-mail</label>
       <input
         name="email"
@@ -37,7 +38,7 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <a onClick={() => router.push('/signup')}>Criar conta</a>
-      <button onClick={handleLogin}>Login</button>
+      <Button label="login" onClick={handleLogin} />
     </Wrapper>
   )
 }
