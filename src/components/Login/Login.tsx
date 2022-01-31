@@ -11,13 +11,17 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleLogin = async () => {
     try {
+      setLoading(true)
       const { data } = await AuthService.login({ email, password })
       dispatch(userUpdate(data))
+      setLoading(false)
       router.push('/dashboard')
     } catch (err) {
+      setLoading(false)
       console.error(err)
     }
   }
@@ -38,7 +42,7 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <a onClick={() => router.push('/signup')}>Criar conta</a>
-      <Button label="login" onClick={handleLogin} />
+      <Button loading={loading} label="login" onClick={handleLogin} />
     </Wrapper>
   )
 }
