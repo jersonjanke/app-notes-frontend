@@ -1,50 +1,53 @@
-import { useState } from 'react'
-import AuthService from 'services/AuthService'
-import { Wrapper } from './style'
-import { useDispatch } from 'react-redux'
-import { userUpdate } from '../../store/actions/user'
-import { useRouter } from 'next/router'
-import Button from 'components/Button'
+import { useState } from 'react';
+import AuthService from 'services/AuthService';
+import { Wrapper } from './style';
+import { useDispatch } from 'react-redux';
+import { userUpdate } from '../../store/actions/user';
+import { useRouter } from 'next/router';
+import Button from 'components/Button';
+import Input from 'components/Input';
+import Link from 'next/link';
+import Title from 'components/Title';
 
 const Login = () => {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
-      setLoading(true)
-      const { data } = await AuthService.login({ email, password })
-      dispatch(userUpdate(data))
-      setLoading(false)
-      router.push('/dashboard')
+      setLoading(true);
+      const { data } = await AuthService.login({ email, password });
+      dispatch(userUpdate(data));
+      setLoading(false);
+      router.push('/dashboard');
     } catch (err) {
-      setLoading(false)
-      console.error(err)
+      setLoading(false);
+      console.error(err);
     }
-  }
+  };
 
   return (
     <Wrapper>
-      <h3>Login</h3>
-      <label>E-mail</label>
-      <input
+      <Title level={1}>Login</Title>
+      <Input
+        title="E-mail"
         name="email"
-        onChange={(e) => setEmail(e.target.value)}
         type="text"
+        onChange={(e) => setEmail(e.target.value)}
       />
-      <label>Senha</label>
-      <input
+      <Input
+        title="Senha"
         name="password"
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <a onClick={() => router.push('/signup')}>Criar conta</a>
+      <Link href="/signup">Criar conta</Link>
       <Button loading={loading} label="login" onClick={handleLogin} />
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
