@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { blue } from 'utils/colors';
 
 type HeadingProps = {
   level: 1 | 2 | 3;
@@ -18,7 +19,7 @@ export default function Title({ level, children }: HeadingProps) {
 const Heading1 = styled.h1`
   font-weight: 900;
   font-size: 36px;
-  color: #274060;
+  color: ${blue};
 `;
 
 const Heading2 = styled.h2`

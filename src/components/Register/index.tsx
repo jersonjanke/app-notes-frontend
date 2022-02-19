@@ -1,7 +1,8 @@
-import { useFormik } from 'formik'
-import AuthService from 'services/AuthService'
-import { User } from 'types/Login'
-import * as yup from 'yup'
+import Title from 'components/Title';
+import { useFormik } from 'formik';
+import AuthService from 'services/AuthService';
+import { User } from 'types/Login';
+import * as yup from 'yup';
 
 const Register = () => {
   const schema = yup.object().shape({
@@ -9,7 +10,7 @@ const Register = () => {
     email: yup.string().required('Campo obrigatório'),
     password: yup.string().required('Campo obrigatório'),
     confirm_password: yup.string().required('Campo obrigatório'),
-  })
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -20,9 +21,9 @@ const Register = () => {
     },
     validationSchema: schema,
     onSubmit: (values: User) => {
-      AuthService.signup(values).then(console.log).catch(console.error)
+      AuthService.signup(values).then(console.log).catch(console.error);
     },
-  })
+  });
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -52,7 +53,7 @@ const Register = () => {
       />
       <button type="submit">Salvar</button>
     </form>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
