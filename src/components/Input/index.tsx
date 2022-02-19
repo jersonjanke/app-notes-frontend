@@ -1,10 +1,10 @@
 import { InputHTMLAttributes } from 'react';
-import { InputWrapper } from './style';
+import { InputWrapper, Label } from './style';
 
 const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <>
-      {props.title && <label htmlFor={props?.id}>{props.title}</label>}
+      {props.title && <Label htmlFor={props?.id}>{props.title}</Label>}
       <InputWrapper {...props} />
     </>
   );
