@@ -6,13 +6,15 @@ import AuthService from 'services/AuthService';
 import { User } from 'types/Login';
 import * as yup from 'yup';
 import { Wrapper, Form } from './style';
+import { useRouter } from 'next/router';
 
-const Register = () => {
+const Register: React.FC = () => {
+  const router = useRouter();
   const schema = yup.object().shape({
-    name: yup.string().required('Campo obrigatório'),
-    email: yup.string().required('Campo obrigatório'),
-    password: yup.string().required('Campo obrigatório'),
-    confirm_password: yup.string().required('Campo obrigatório'),
+    name: yup.string().min(3).required('Campo obrigatório'),
+    email: yup.string().min(3).required('Campo obrigatório'),
+    password: yup.string().min(6).required('Campo obrigatório'),
+    confirm_password: yup.string().min(6).required('Campo obrigatório'),
   });
 
   const formik = useFormik({
@@ -23,8 +25,13 @@ const Register = () => {
       confirm_password: '',
     },
     validationSchema: schema,
-    onSubmit: (values: User) => {
-      AuthService.signup(values).then(console.log).catch(console.error);
+    onSubmit: async (values: User) => {
+      try {
+        await AuthService.signUp(values);
+        router.push('/signup-success');
+      } catch (e) {
+        console.error(e);
+      }
     },
   });
 
@@ -40,7 +47,7 @@ const Register = () => {
           placeholder="Informe seu nome"
         />
         <Input
-          type="text"
+          type="email"
           title="E-mail"
           id="email"
           onChange={formik.handleChange}
@@ -60,7 +67,11 @@ const Register = () => {
           onChange={formik.handleChange}
           placeholder="Confirme sua senha"
         />
-        <Button label="Salvar" type="submit" />
+        <Button
+          disabled={!formik.isValid || !formik.dirty}
+          label="Salvar"
+          type="submit"
+        />
       </Form>
     </Wrapper>
   );

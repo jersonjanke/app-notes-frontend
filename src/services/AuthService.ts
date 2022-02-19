@@ -1,14 +1,14 @@
-import { URL } from './../utils/URL'
-import axios from 'axios'
-import { Login, User } from '../types/Login'
+import { URL } from './../utils/URL';
+import axios from 'axios';
+import { Login, User } from '../types/Login';
 
 const AuthService = {
-  signup: (user: User) => {
-    return axios.post(`${URL.URL_BASE_OPEN}/signup`, user)
+  signUp: (user: User) => {
+    return axios.post(`${URL.URL_BASE_OPEN}/signup`, user);
   },
   login: (login: Login) => {
-    return axios.post(`${URL.URL_BASE_OPEN}/login`, login)
+    return axios.post(`${URL.URL_BASE_OPEN}/login`, login);
   },
-}
+};
 
-export default AuthService
+export default AuthService;

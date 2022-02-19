@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { blue, white } from 'utils/colors';
+import { blue, white, gray, black } from 'utils/colors';
 
 export const ButtonStyle = styled.button`
   width: 196px;
@@ -10,4 +10,10 @@ export const ButtonStyle = styled.button`
   border-radius: 8px;
   color: ${white};
   cursor: pointer;
+
+  :disabled {
+    background-color: ${gray};
+    color: ${black};
+    cursor: not-allowed;
+  }
 `;
