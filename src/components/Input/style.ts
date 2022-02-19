@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { black } from 'utils/colors';
+import { black, white } from 'utils/colors';
 
 export const InputWrapper = styled.input`
   padding: 4px 8px;
@@ -7,7 +7,7 @@ export const InputWrapper = styled.input`
   border-style: solid;
   border-width: 1px;
   border-color: rgb(191, 191, 191);
-  background-color: ${black};
+  background-color: ${white};
   color: ${black};
 `;
 

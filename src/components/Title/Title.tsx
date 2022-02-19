@@ -25,11 +25,11 @@ const Heading1 = styled.h1`
 const Heading2 = styled.h2`
   font-weight: 900;
   font-size: 24px;
-  color: #274060;
+  color: ${blue};
 `;
 
 const Heading3 = styled.h3`
   font-weight: 900;
   font-size: 18px;
-  color: #274060;
+  color: ${blue};
 `;

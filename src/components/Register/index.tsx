@@ -1,8 +1,11 @@
 import Title from 'components/Title';
+import Input from 'components/Input';
+import Button from 'components/Button';
 import { useFormik } from 'formik';
 import AuthService from 'services/AuthService';
 import { User } from 'types/Login';
 import * as yup from 'yup';
+import { Wrapper, Form } from './style';
 
 const Register = () => {
   const schema = yup.object().shape({
@@ -26,33 +29,40 @@ const Register = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <input
-        type="text"
-        id="name"
-        onChange={formik.handleChange}
-        placeholder="Nome"
-      />
-      <input
-        type="text"
-        id="email"
-        onChange={formik.handleChange}
-        placeholder="E-mail"
-      />
-      <input
-        type="password"
-        id="password"
-        onChange={formik.handleChange}
-        placeholder="Senha"
-      />
-      <input
-        type="password"
-        id="confirm_password"
-        onChange={formik.handleChange}
-        placeholder="Repita Senha"
-      />
-      <button type="submit">Salvar</button>
-    </form>
+    <Wrapper>
+      <Title level={2}>Criar conta!</Title>
+      <Form onSubmit={formik.handleSubmit}>
+        <Input
+          type="text"
+          title="Nome"
+          id="name"
+          onChange={formik.handleChange}
+          placeholder="Informe seu nome"
+        />
+        <Input
+          type="text"
+          title="E-mail"
+          id="email"
+          onChange={formik.handleChange}
+          placeholder="Inforne seu e-mail"
+        />
+        <Input
+          type="password"
+          title="Senha"
+          id="password"
+          onChange={formik.handleChange}
+          placeholder="Informe sua senha"
+        />
+        <Input
+          type="password"
+          title="Confirme senha"
+          id="confirm_password"
+          onChange={formik.handleChange}
+          placeholder="Confirme sua senha"
+        />
+        <Button label="Salvar" type="submit" />
+      </Form>
+    </Wrapper>
   );
 };
 
