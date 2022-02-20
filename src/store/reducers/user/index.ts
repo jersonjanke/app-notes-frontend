@@ -1,5 +1,5 @@
-// import { HYDRATE } from 'next-redux-wrapper'
-import { USER_UPDATE, USER_RESET } from '../../actions';
+import { User } from 'types/Login';
+import { USER_UPDATE, USER_RESET, USER_SIGNUP } from '../../actions';
 
 const initialState = {
   name: '',
@@ -7,8 +7,16 @@ const initialState = {
   token: '',
 };
 
-const reducer = (state = initialState, action: any) => {
+type DataUser = {
+  type: 'USER_SIGNUP' | 'USER_UPDATE' | 'USER_RESET';
+  payload: User;
+};
+
+const reducer = (state = initialState, action: DataUser) => {
   switch (action.type) {
+    case USER_SIGNUP: {
+      return { ...state, ...action.payload };
+    }
     case USER_UPDATE: {
       return { ...state, ...action.payload };
     }

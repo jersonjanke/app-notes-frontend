@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   height: 76px;
   background-color: ${blue};
   color: ${white};
+  margin-bottom: 24px;
 `;
 
 export const Menu = styled.div`

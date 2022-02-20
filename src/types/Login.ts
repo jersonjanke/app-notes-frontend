@@ -6,6 +6,9 @@ export interface Login {
 export interface User {
   name: string;
   email: string;
+}
+
+export interface PasswordData {
   password: string;
   confirm_password: string;
 }
