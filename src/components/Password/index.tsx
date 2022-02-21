@@ -2,8 +2,10 @@ import { Wrapper } from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { blue } from 'utils/colors';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { IconX } from './style';
+import { useDispatch } from 'react-redux';
+import { setValidPassword } from 'store/actions/user';
 import {
   hasLowerCase,
   hasNumber,
@@ -16,6 +18,7 @@ type Props = {
 };
 
 const Password = ({ password }: Props) => {
+  const dispatch = useDispatch();
   const numberOk = useMemo(() => hasNumber(password), [password]);
   const upperCaseOk = useMemo(() => hasUpperCase(password), [password]);
   const lowerCaseOk = useMemo(() => hasLowerCase(password), [password]);
@@ -23,6 +26,14 @@ const Password = ({ password }: Props) => {
     () => hasSpecialCharacter(password),
     [password]
   );
+
+  useEffect(() => {
+    if (numberOk && upperCaseOk && lowerCaseOk && specialCharacterOk) {
+      dispatch(setValidPassword(true));
+    } else {
+      dispatch(setValidPassword(false));
+    }
+  }, [numberOk, upperCaseOk, lowerCaseOk, specialCharacterOk]);
 
   return (
     <Wrapper>

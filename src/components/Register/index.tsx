@@ -53,6 +53,7 @@ const Register: React.FC = () => {
             <Button
               disabled={!formik.isValid || !formik.dirty}
               label="Próximo"
+              style={{ marginTop: 12 }}
               type="submit"
             />
           </Form>

@@ -1,6 +1,6 @@
 import Button from 'components/Button';
 import Card from 'components/Card';
-import Input from 'components/Input';
+import InputPassword from 'components/InputPassword';
 import Password from 'components/Password';
 import Title from 'components/Title';
 import { useFormik } from 'formik';
@@ -55,15 +55,13 @@ const PasswordPage: React.FC = () => {
       >
         <Title level={2}>Criar senha!</Title>
         <Password password={formik.values.password} />
-        <Input
-          type="password"
+        <InputPassword
           title="Senha"
           id="password"
           onChange={formik.handleChange}
           placeholder="Informe sua senha"
         />
-        <Input
-          type="password"
+        <InputPassword
           title="Confirme senha"
           id="confirm_password"
           onChange={formik.handleChange}
@@ -71,7 +69,7 @@ const PasswordPage: React.FC = () => {
         />
         <Button
           loading={loading}
-          disabled={!formik.isValid || !formik.dirty}
+          disabled={!formik.isValid || !user?.validPassword}
           label="Finalizar"
           type="submit"
         />

@@ -6,6 +6,7 @@ export interface Login {
 export interface User {
   name: string;
   email: string;
+  validPassword?: boolean;
 }
 
 export interface PasswordData {
