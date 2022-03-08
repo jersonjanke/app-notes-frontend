@@ -19,6 +19,9 @@ export const Form = styled.form`
 `;
 
 export const Wrapper = styled.div`
-  min-width: 472px;
   max-width: 472px;
+
+  @media screen and (max-width: 600px) {
+    width: 90vw;
+  }
 `;

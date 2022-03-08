@@ -10,6 +10,11 @@ export const Wrapper = styled.div`
   padding: 20px;
   border-radius: 8px;
   margin-top: 32px;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    box-shadow: none;
+  }
 `;
 
 export const WrapperText = styled.div`
@@ -17,4 +22,8 @@ export const WrapperText = styled.div`
   margin: 0 auto;
   margin-top: 14px;
   font-size: 14px;
+
+  @media screen and (max-width: 600px) {
+    width: 90vw;
+  }
 `;

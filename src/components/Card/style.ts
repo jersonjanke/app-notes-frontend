@@ -5,4 +5,10 @@ export const Wrapper = styled.div`
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
   padding: 20px;
   border-radius: 8px;
+
+  @media screen and (max-width: 600px) {
+    width: 90vw;
+    min-width: 100%;
+    box-shadow: none;
+  }
 `;
