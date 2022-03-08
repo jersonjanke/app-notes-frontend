@@ -11,3 +11,10 @@ export const Wrapper = styled.div`
   border-radius: 8px;
   margin-top: 32px;
 `;
+
+export const WrapperText = styled.div`
+  width: 432px;
+  margin: 0 auto;
+  margin-top: 14px;
+  font-size: 14px;
+`;

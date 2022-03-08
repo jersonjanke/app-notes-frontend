@@ -20,4 +20,5 @@ export const Form = styled.form`
 
 export const Wrapper = styled.div`
   min-width: 472px;
+  max-width: 472px;
 `;

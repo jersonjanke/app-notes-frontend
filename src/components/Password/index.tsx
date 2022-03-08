@@ -1,83 +1,80 @@
-import { Wrapper } from './style';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { blue } from 'utils/colors';
-import { useEffect, useMemo } from 'react';
-import { IconX } from './style';
-import { useDispatch } from 'react-redux';
-import { setValidPassword } from 'store/actions/user';
-import {
-  hasLowerCase,
-  hasNumber,
-  hasSpecialCharacter,
-  hasUpperCase,
-} from 'utils/validate';
+import Button from 'components/Button';
+import Card from 'components/Card';
+import InputPassword from 'components/InputPassword';
+import PasswordValidate from '@/components/PasswordValidate';
+import Title from 'components/Title';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import AuthService from 'services/AuthService';
+import { PasswordData, User } from 'types/Login';
+import * as yup from 'yup';
 
-type Props = {
-  password: string;
+type State = {
+  user: User;
 };
 
-const Password = ({ password }: Props) => {
-  const dispatch = useDispatch();
-  const numberOk = useMemo(() => hasNumber(password), [password]);
-  const upperCaseOk = useMemo(() => hasUpperCase(password), [password]);
-  const lowerCaseOk = useMemo(() => hasLowerCase(password), [password]);
-  const specialCharacterOk = useMemo(
-    () => hasSpecialCharacter(password),
-    [password]
-  );
+const Password: React.FC = () => {
+  const router = useRouter();
+  const user = useSelector((state: State) => state?.user);
+  const [loading, setLoading] = useState(false);
+  const schema = yup.object().shape({
+    password: yup.string().min(6).required('Campo obrigatório'),
+    confirm_password: yup.string().min(6).required('Campo obrigatório'),
+  });
 
-  useEffect(() => {
-    if (numberOk && upperCaseOk && lowerCaseOk && specialCharacterOk) {
-      dispatch(setValidPassword(true));
-    } else {
-      dispatch(setValidPassword(false));
-    }
-  }, [numberOk, upperCaseOk, lowerCaseOk, specialCharacterOk]);
+  const formik = useFormik({
+    initialValues: {
+      password: '',
+      confirm_password: '',
+    },
+    validationSchema: schema,
+    onSubmit: async (values: PasswordData) => {
+      try {
+        setLoading(true);
+        await AuthService.signUp({
+          ...values,
+          email: user.email,
+          name: user.name,
+        });
+        setLoading(false);
+        router.push('/signup-success');
+      } catch (e) {
+        console.error(e);
+        setLoading(false);
+      }
+    },
+  });
 
   return (
-    <Wrapper>
-      <div>
-        {password.length > 5 ? (
-          <FontAwesomeIcon icon={faCheck} color={blue} size="1x" />
-        ) : (
-          <IconX>X</IconX>
-        )}
-        <span style={{ marginLeft: 6 }}>6 caracteres ou mais</span>
-      </div>
-      <div>
-        {numberOk ? (
-          <FontAwesomeIcon icon={faCheck} color={blue} size="1x" />
-        ) : (
-          <IconX>X</IconX>
-        )}
-        <span style={{ marginLeft: 6 }}>Um número</span>
-      </div>
-      <div>
-        {upperCaseOk ? (
-          <FontAwesomeIcon icon={faCheck} color={blue} size="1x" />
-        ) : (
-          <IconX>X</IconX>
-        )}
-        <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
-      </div>
-      <div>
-        {lowerCaseOk ? (
-          <FontAwesomeIcon icon={faCheck} color={blue} size="1x" />
-        ) : (
-          <IconX>X</IconX>
-        )}
-        <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
-      </div>
-      <div>
-        {specialCharacterOk ? (
-          <FontAwesomeIcon icon={faCheck} color={blue} size="1x" />
-        ) : (
-          <IconX>X</IconX>
-        )}
-        <span style={{ marginLeft: 6 }}>Um carácter especial (@$!?+%)</span>
-      </div>
-    </Wrapper>
+    <Card>
+      <form
+        onSubmit={formik.handleSubmit}
+        style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
+      >
+        <Title level={2}>Criar senha!</Title>
+        <PasswordValidate password={formik.values.password} />
+        <InputPassword
+          title="Senha"
+          id="password"
+          onChange={formik.handleChange}
+          placeholder="Informe sua senha"
+        />
+        <InputPassword
+          title="Confirme senha"
+          id="confirm_password"
+          onChange={formik.handleChange}
+          placeholder="Confirme sua senha"
+        />
+        <Button
+          loading={loading}
+          disabled={!formik.isValid || !user?.validPassword}
+          label="Finalizar"
+          type="submit"
+        />
+      </form>
+    </Card>
   );
 };
 

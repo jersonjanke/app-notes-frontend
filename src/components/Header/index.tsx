@@ -6,8 +6,8 @@ const Header: React.FC = () => {
     <Wrapper>
       <Container style={{ width: '100%' }}>
         <Menu>
-          <ItemMenu>App Notes</ItemMenu>
-          <ItemMenu>Entrar</ItemMenu>
+          <ItemMenu href={'/'}>App Notes</ItemMenu>
+          <ItemMenu href={'/'}>Entrar</ItemMenu>
         </Menu>
       </Container>
     </Wrapper>

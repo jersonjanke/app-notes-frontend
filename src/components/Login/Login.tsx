@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import AuthService from 'services/AuthService';
-import { Wrapper } from './style';
+import { Wrapper, WrapperText } from './style';
 import { useDispatch } from 'react-redux';
 import { userUpdate } from '../../store/actions/user';
 import { useRouter } from 'next/router';
@@ -30,23 +30,35 @@ const Login = () => {
   };
 
   return (
-    <Wrapper>
-      <Title level={1}>Login</Title>
-      <Input
-        title="E-mail"
-        name="email"
-        type="text"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input
-        title="Senha"
-        name="password"
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Link href="/signup">Criar conta</Link>
-      <Button loading={loading} label="login" onClick={handleLogin} />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Title level={1}>Login</Title>
+        <Input
+          title="E-mail"
+          name="email"
+          type="text"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          title="Senha"
+          name="password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          style={{ marginTop: 8 }}
+          loading={loading}
+          label="login"
+          onClick={handleLogin}
+        />
+        <Link href="/signup">Criar conta</Link>
+      </Wrapper>
+      <WrapperText>
+        Este projeto pretende desenvolver uma aplicação no tema de educação,
+        trazendo uma gamificação para deixar o aprendizado mais divertido. A
+        proposta é a realização de um jogo no campo da educação musical.
+      </WrapperText>
+    </>
   );
 };
 
