@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import Link from 'next/link';
 import Title from 'components/Title';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -23,9 +24,14 @@ const Login = () => {
       dispatch(userUpdate(data));
       setLoading(false);
       router.push('/dashboard');
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false);
-      console.error(err);
+      err.response.data.errors.forEach((error: string) =>
+        toast(error, {
+          type: 'error',
+          theme: 'colored',
+        })
+      );
     }
   };
 

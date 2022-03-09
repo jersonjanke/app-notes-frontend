@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import AuthService from 'services/AuthService';
 import { PasswordData, User } from 'types/Login';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 
 type State = {
   user: User;
@@ -40,9 +41,14 @@ const Password: React.FC = () => {
         });
         setLoading(false);
         router.push('/signup-success');
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
         setLoading(false);
+        err?.response?.data?.errors?.forEach((error: string) =>
+          toast(error, {
+            type: 'error',
+            theme: 'colored',
+          })
+        );
       }
     },
   });
