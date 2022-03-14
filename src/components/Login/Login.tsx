@@ -9,6 +9,7 @@ import Input from 'components/Input';
 import Link from 'next/link';
 import Title from 'components/Title';
 import { toast } from 'react-toastify';
+import InputPassword from '../InputPassword';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Login = () => {
           type="text"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Input
+        <InputPassword
           title="Senha"
           name="password"
           type="password"

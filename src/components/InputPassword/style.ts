@@ -5,12 +5,17 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+`;
+
+export const WrapperIcon = styled.div`
+  display: flex;
+  justify-content: flex-end;
 
   > svg {
     cursor: pointer;
     position: absolute;
-    right: 50px;
-    margin-top: 34px;
+    margin-top: 8px;
+    margin-right: 8px;
   }
 `;
 
