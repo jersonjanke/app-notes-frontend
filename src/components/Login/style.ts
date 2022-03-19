@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shadow } from 'utils/colors';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -6,7 +7,7 @@ export const Wrapper = styled.div`
   width: 432px;
   margin: 0 auto;
   gap: 4px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  box-shadow: ${shadow};
   padding: 20px;
   border-radius: 8px;
   margin-top: 32px;

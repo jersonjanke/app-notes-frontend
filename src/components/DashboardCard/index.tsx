@@ -5,8 +5,8 @@ type Props = {
   onClick?: () => void;
 };
 
-const Card: React.FC<Props> = ({ children, onClick }) => {
+const DashboardCard: React.FC<Props> = ({ children, onClick }) => {
   return <Wrapper onClick={onClick}>{children}</Wrapper>;
 };
 
-export default Card;
+export default DashboardCard;
