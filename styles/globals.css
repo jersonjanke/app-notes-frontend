@@ -21,7 +21,7 @@ body {
 }
 
 #__next {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -37,4 +37,9 @@ a {
 * {
   box-sizing: border-box;
   font-family: 'Catamaran', sans-serif;
+}
+
+.container {
+  width: 100%;
+  flex: 1 0 auto;
 }
