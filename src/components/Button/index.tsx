@@ -6,20 +6,20 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type ButtonProps = {
   onClick?: () => void;
-  label?: string;
+  children: any;
   loading?: boolean;
   props?: any;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = ({
   onClick,
-  label,
+  children,
   loading,
   ...props
 }) => {
   return (
     <ButtonStyle {...props} onClick={onClick}>
-      {label}
+      {children}
       {loading && (
         <FontAwesomeIcon
           style={{ marginLeft: 8 }}

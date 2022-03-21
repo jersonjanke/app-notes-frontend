@@ -5,12 +5,21 @@ import Stepper from '@/components/Stepper';
 import { useState } from 'react';
 import Title from '@/components/Title';
 import { getTitleForParams } from 'utils/pages';
+import Button from '@/components/Button';
+import { notes } from 'utils/notes';
 
 const PlayPage: React.FC = () => {
   const router = useRouter();
   const type = router?.query?.type as typePlay;
   const [current, setCurrent] = useState<number>(1);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const play = () => {
+    let audio = new Audio();
+    audio.src = notes.e0.src;
+    // audio.load();
+    audio.play();
+  };
 
   return (
     <Row>
@@ -19,6 +28,7 @@ const PlayPage: React.FC = () => {
       </Col>
       <Col md={12}>
         <Stepper items={items} current={current} />
+        <Button onClick={() => play()}>Play</Button>
       </Col>
     </Row>
   );
