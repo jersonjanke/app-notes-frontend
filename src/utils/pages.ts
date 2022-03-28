@@ -1,5 +1,6 @@
 export const pages = {
   play: 'play',
+  level: 'level',
   dashboard: 'dashboard',
   interval: 'interval',
   password: 'password',

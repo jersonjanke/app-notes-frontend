@@ -22,6 +22,7 @@ export const Item = styled.div<ItemProps>`
   justify-content: center;
   align-items: center;
   box-shadow: ${shadow};
+  cursor: pointer;
 
   ${(props) =>
     props.current &&

@@ -1,7 +1,7 @@
 import { Wrapper } from './style';
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
   onClick?: () => void;
 };
 

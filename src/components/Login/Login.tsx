@@ -55,9 +55,10 @@ const Login = () => {
         <Button
           style={{ marginTop: 8 }}
           loading={loading}
-          label="login"
           onClick={handleLogin}
-        />
+        >
+          Login
+        </Button>
         <Link href="/signup">Criar conta</Link>
       </Wrapper>
       <WrapperText>

@@ -76,9 +76,10 @@ const Password: React.FC = () => {
         <Button
           loading={loading}
           disabled={!formik.isValid || !user?.validPassword}
-          label="Finalizar"
           type="submit"
-        />
+        >
+          Finalizar
+        </Button>
       </form>
     </Card>
   );

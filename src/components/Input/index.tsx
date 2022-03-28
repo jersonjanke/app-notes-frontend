@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useState } from 'react';
+import { InputHTMLAttributes } from 'react';
 import { InputWrapper, Label, Wrapper } from './style';
 
 const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
