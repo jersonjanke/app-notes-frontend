@@ -1,10 +1,9 @@
 import Button from '@/components/Button';
 import Flex from '@/components/Flex';
 import Stepper from '@/components/Stepper';
-import Title from '@/components/Title';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getLevel } from 'services/GameService';
+import { generateLevel } from 'services/GameService';
 import { getRandomNumber } from 'services/GameService';
 import { Note } from 'types/Game';
 import { toast } from 'react-toastify';
@@ -19,30 +18,38 @@ const LevelPage: React.FC = () => {
   const steps = [1, 2, 3, 4, 5];
   const { level } = router.query;
   const [active, setActive] = useState(0);
-  const game = getLevel(Number(level));
   const [correct, setCorrect] = useState<Note | null>();
+  const [data, setData] = useState<Note[]>();
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    if (game) {
-      const note = setRandomNote(active);
-      setCorrect(note);
-      play(`/${note.src}`);
-    }
-  }, [game]);
+    setData(generateLevel(Number(level)));
+  }, [level]);
 
-  const setRandomNote = (activeLevel: number) => {
-    return game.level[activeLevel].notes[
-      getRandomNumber(game.level[activeLevel].size)
-    ];
+  useEffect(() => {
+    if (data) {
+      const random = setRandomNote(data);
+      const note = data[random];
+      setCorrect(note);
+    }
+  }, [data]);
+
+  const setRandomNote = (notes: Note[]) => {
+    return getRandomNumber(notes ? notes?.length : 0);
   };
 
   const handlePlay = () => {
-    const randomNote = setRandomNote(active);
-    setCorrect(randomNote);
-    play(`/${randomNote.src}`);
+    if (data) {
+      const random = setRandomNote(data);
+      const note = data[random];
+      setCorrect(note);
+      play(`/${note.src}`);
+      setDisabled(false);
+    }
   };
 
   const handleIsCorrect = (note: Note) => {
+    setDisabled(true);
     const isCorrect = note === correct;
     if (isCorrect) {
       if (steps.length - 1 === active) {
@@ -58,12 +65,13 @@ const LevelPage: React.FC = () => {
         theme: 'colored',
       });
       setActive(active + 1);
-      const note = setRandomNote(active + 1);
-      setCorrect(note);
 
-      setTimeout(() => {
-        play(`/${note.src}`);
-      }, 500);
+      if (data) {
+        const randomData = generateLevel(Number(level));
+        setData(randomData);
+        const random = setRandomNote(randomData);
+        setCorrect(data[random]);
+      }
     } else {
       toast('Incorreto!', {
         type: 'error',
@@ -78,31 +86,29 @@ const LevelPage: React.FC = () => {
 
   return (
     <Flex flexDirection="column" gap="16px">
-      {game && (
-        <>
-          <Title level={1}>{game.title}</Title>
-          <Stepper items={steps} level={active + 1} />
-          <Flex justifyContent="center" gap="8px">
-            <Button onClick={handlePlay}>
-              {'Tocar '}
-              <FontAwesomeIcon icon={faPlay as IconProp} size="1x" />
-            </Button>
-            <Button onClick={handleRepeat}>
-              {'Repetir '}
-              <FontAwesomeIcon icon={faRetweet as IconProp} />
-            </Button>
-          </Flex>
-          <Flex justifyContent="center" gap="8px">
-            {game.level[active].notes.map((note) => (
+      <>
+        <Stepper items={steps} level={active + 1} />
+        <Flex justifyContent="center" gap="8px">
+          <Button onClick={handlePlay}>
+            {'Tocar '}
+            <FontAwesomeIcon icon={faPlay as IconProp} size="1x" />
+          </Button>
+          <Button onClick={handleRepeat}>
+            {'Repetir '}
+            <FontAwesomeIcon icon={faRetweet as IconProp} />
+          </Button>
+        </Flex>
+        <Flex justifyContent="center" gap="8px">
+          {data &&
+            data.map((note) => (
               <Button
-                disabled={!correct}
+                disabled={disabled}
                 onClick={() => handleIsCorrect(note)}
-                key={note.name}
-              >{`${note.name} (${note.cipher})`}</Button>
+                key={note.id}
+              >{`${note.name} (${note.id})`}</Button>
             ))}
-          </Flex>
-        </>
-      )}
+        </Flex>
+      </>
     </Flex>
   );
 };

@@ -6,7 +6,7 @@ import { pages } from 'utils/pages';
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
-  const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <Row>
       <Col md={12} style={{ marginBottom: 12 }}>
