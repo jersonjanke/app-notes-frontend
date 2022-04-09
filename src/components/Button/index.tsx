@@ -6,7 +6,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type ButtonProps = {
   onClick?: () => void;
-  children: any;
+  children: React.ReactNode;
   loading?: boolean;
   props?: any;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
