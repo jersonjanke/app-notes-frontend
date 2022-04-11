@@ -8,7 +8,7 @@ type ItemProps = {
 export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 18px;
 `;
 
 export const Item = styled.div<ItemProps>`
@@ -16,8 +16,8 @@ export const Item = styled.div<ItemProps>`
   background-color: ${gray};
   color: ${black};
   border-radius: 50%;
-  height: 36px;
-  width: 36px;
+  height: 48px;
+  width: 48px;
   display: flex;
   justify-content: center;
   align-items: center;

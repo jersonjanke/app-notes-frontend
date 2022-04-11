@@ -1,16 +1,61 @@
 import { URL } from './../utils/URL';
-import axios from 'axios';
-import { Score } from '../types/Score';
+import axios, { AxiosError } from 'axios';
+import { Score, ScoreDto } from '../types/Score';
 
 const scoreService = {
   getByEmailScore: (email: string) => {
-    return axios.get(`${URL.URL_BASE}/score?email=${email}`);
+    return new Promise<ScoreDto[]>((resolve, reject) => {
+      axios;
+      axios
+        .get(`${URL.URL_BASE}/score?email=${email}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          reject(error);
+        });
+    });
+  },
+  getByIDScore: (id: string) => {
+    return new Promise<ScoreDto>((resolve, reject) => {
+      axios;
+      axios
+        .get(`${URL.URL_BASE}/score/${id}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          reject(error);
+        });
+    });
   },
   createScore: (score: Score) => {
-    return axios.post(`${URL.URL_BASE}/score`, score);
+    return new Promise<ScoreDto>((resolve, reject) => {
+      axios
+        .post(`${URL.URL_BASE}/score`, score)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          reject(error);
+        });
+    });
   },
-  updateScore: (score: Score) => {
-    return axios.post(`${URL.URL_BASE}/score/${score?.id}`, score);
+  updateScore: (score: ScoreDto) => {
+    return new Promise<ScoreDto>((resolve, reject) => {
+      axios
+        .put(`${URL.URL_BASE}/score/${score?._id}`, {
+          email: score.email,
+          score: score.score,
+          life: score.life,
+        })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          reject(error);
+        });
+    });
   },
 };
 

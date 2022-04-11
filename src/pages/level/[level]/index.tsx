@@ -16,6 +16,7 @@ import ButtonCircle from '@/components/ButtonCircle';
 import scoreService from 'services/ScoreService';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
+import { ScoreDto } from 'types/Score';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -29,17 +30,61 @@ const LevelPage: React.FC = () => {
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
+  const [dataScore, setDataScore] = useState<ScoreDto>();
 
-  const createScore = useCallback(() => {
+  const createScore = useCallback(async () => {
     try {
       const payload = {
         email: user.email,
         life: LIFE,
         score: score,
       };
-      scoreService.createScore(payload);
+      const response = await scoreService.createScore(payload);
+      setDataScore(response);
     } catch (error) {
       toast(`Problema ao criar o jogo: ${error}`, {
+        type: 'error',
+        theme: 'colored',
+      });
+    }
+  }, []);
+
+  const updateScore = useCallback(
+    async (life: number, score: number, done: boolean, data: ScoreDto) => {
+      try {
+        if (data) {
+          const payload = {
+            ...data,
+            done,
+            life,
+            score,
+            email: data.email,
+          };
+          await scoreService.updateScore(payload);
+          data._id && (await getScore(data._id));
+        }
+      } catch (error) {
+        toast(`Problema ao atualizar o score: ${error}`, {
+          type: 'error',
+          theme: 'colored',
+        });
+      }
+    },
+    []
+  );
+
+  const getScore = useCallback(async (id: string) => {
+    try {
+      const response = await scoreService.getByIDScore(id);
+      if (response) {
+        setDataScore(response);
+        setLife(response.life);
+        setScore(response.score);
+
+        if (response.life === 0) isLose();
+      }
+    } catch (error) {
+      toast(`Problema ao buscar o score: ${error}`, {
         type: 'error',
         theme: 'colored',
       });
@@ -76,22 +121,54 @@ const LevelPage: React.FC = () => {
     }
   };
 
-  const handleIsCorrect = (note: Note) => {
+  const isWinner = () => {
+    toast('Parabéns, você ganhou!!', {
+      type: 'success',
+      theme: 'colored',
+    });
+
+    if (dataScore) {
+      updateScore(dataScore?.life, dataScore?.score, true, dataScore);
+    }
+
+    return router.push(`/${pages.dashboard}`);
+  };
+
+  const isLose = () => {
+    toast('Você perdeu!', {
+      type: 'error',
+      theme: 'colored',
+    });
+
+    if (dataScore) {
+      updateScore(dataScore?.life, dataScore?.score, true, dataScore);
+    }
+
+    return router.push(`/${pages.dashboard}`);
+  };
+
+  const handleIsCorrect = async (note: Note) => {
     setDisabled(true);
     const isCorrect = note === correct;
     if (isCorrect) {
       if (steps.length - 1 === active) {
-        toast('Parabéns, você ganhou!!', {
-          type: 'success',
-          theme: 'colored',
-        });
-        return router.push(`/${pages.dashboard}`);
+        isWinner();
+      }
+
+      if (dataScore) {
+        await updateScore(
+          dataScore?.life,
+          dataScore?.score + 10,
+          false,
+          dataScore
+        );
       }
 
       toast('Correto!', {
         type: 'success',
         theme: 'colored',
       });
+
       setActive(active + 1);
 
       if (data) {
@@ -101,6 +178,14 @@ const LevelPage: React.FC = () => {
         setCorrect(data[random]);
       }
     } else {
+      if (dataScore) {
+        await updateScore(
+          dataScore.life - 1,
+          dataScore.score,
+          false,
+          dataScore
+        );
+      }
       toast('Incorreto!', {
         type: 'error',
         theme: 'colored',
@@ -116,9 +201,13 @@ const LevelPage: React.FC = () => {
     <Flex flexDirection="column" gap="16px">
       <>
         <Flex justifyContent="space-between">
-          <Flex flexDirection="column">Level: {level}</Flex>
+          <Flex style={{ fontSize: 28 }} flexDirection="column">
+            Level: {level}
+          </Flex>
           <Flex justifyContent="center">Vidas: {life}</Flex>
-          <Flex justifyContent="flex-end">Score: {score}</Flex>
+          <Flex style={{ fontSize: 28 }} justifyContent="flex-end">
+            Score: {score}
+          </Flex>
         </Flex>
 
         <Stepper items={steps} level={active + 1} />
@@ -129,7 +218,9 @@ const LevelPage: React.FC = () => {
           style={{ marginTop: 24, marginBottom: 24 }}
         >
           <ButtonCircle onClick={handlePlay}>
-            <FontAwesomeIcon icon={faPlay as IconProp} size="3x" />
+            <Flex justifyContent="center" style={{ marginLeft: 2 }}>
+              <FontAwesomeIcon icon={faPlay as IconProp} size="3x" />
+            </Flex>
           </ButtonCircle>
           <ButtonCircle onClick={handleRepeat}>
             <FontAwesomeIcon icon={faRedoAlt as IconProp} size="3x" />
@@ -139,6 +230,7 @@ const LevelPage: React.FC = () => {
           {data &&
             data.map((note) => (
               <Button
+                style={{ width: 148, height: 56, fontSize: 18 }}
                 disabled={disabled}
                 onClick={() => handleIsCorrect(note)}
                 key={note.id}
