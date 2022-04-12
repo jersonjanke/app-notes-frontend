@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { ScoreDto } from 'types/Score';
 import Heart from '@/components/Heart';
+import { Col, Container, Row } from 'react-grid-system';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -228,7 +229,7 @@ const LevelPage: React.FC = () => {
             <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
           </ButtonCircle>
         </Flex>
-        <Flex justifyContent="center" gap="8px">
+        <Flex justifyContent="center" gap="8px" flexWrap="wrap">
           {data &&
             data.map((note) => (
               <Button
