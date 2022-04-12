@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { blue, white, gray, black } from 'utils/colors';
 
 export const ButtonStyle = styled.button`
-  width: 96px;
-  height: 96px;
+  width: 78px;
+  height: 78px;
   text-decoration: none;
   background-color: ${blue};
   border: none;

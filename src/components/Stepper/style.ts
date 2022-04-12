@@ -16,8 +16,8 @@ export const Item = styled.div<ItemProps>`
   background-color: ${gray};
   color: ${black};
   border-radius: 50%;
-  height: 48px;
-  width: 48px;
+  height: 36px;
+  width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;

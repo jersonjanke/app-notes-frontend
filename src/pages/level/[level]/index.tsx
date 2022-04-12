@@ -17,6 +17,7 @@ import scoreService from 'services/ScoreService';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { ScoreDto } from 'types/Score';
+import Heart from '@/components/Heart';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -201,15 +202,16 @@ const LevelPage: React.FC = () => {
     <Flex flexDirection="column" gap="16px">
       <>
         <Flex justifyContent="space-between">
-          <Flex style={{ fontSize: 28 }} flexDirection="column">
+          <Flex style={{ fontSize: 22 }} flexDirection="column">
             Level: {level}
           </Flex>
-          <Flex justifyContent="center">Vidas: {life}</Flex>
-          <Flex style={{ fontSize: 28 }} justifyContent="flex-end">
+
+          <Flex style={{ fontSize: 22 }} justifyContent="flex-end">
             Score: {score}
           </Flex>
         </Flex>
 
+        <Heart size={5} opacity={life} />
         <Stepper items={steps} level={active + 1} />
 
         <Flex
@@ -219,18 +221,18 @@ const LevelPage: React.FC = () => {
         >
           <ButtonCircle onClick={handlePlay}>
             <Flex justifyContent="center" style={{ marginLeft: 2 }}>
-              <FontAwesomeIcon icon={faPlay as IconProp} size="3x" />
+              <FontAwesomeIcon icon={faPlay as IconProp} size="2x" />
             </Flex>
           </ButtonCircle>
           <ButtonCircle onClick={handleRepeat}>
-            <FontAwesomeIcon icon={faRedoAlt as IconProp} size="3x" />
+            <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
           </ButtonCircle>
         </Flex>
         <Flex justifyContent="center" gap="8px">
           {data &&
             data.map((note) => (
               <Button
-                style={{ width: 148, height: 56, fontSize: 18 }}
+                style={{ width: 136, height: 48, fontSize: 18 }}
                 disabled={disabled}
                 onClick={() => handleIsCorrect(note)}
                 key={note.id}
