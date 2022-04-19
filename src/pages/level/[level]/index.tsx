@@ -18,7 +18,6 @@ import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { ScoreDto } from 'types/Score';
 import Heart from '@/components/Heart';
-import { Col, Container, Row } from 'react-grid-system';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -83,7 +82,7 @@ const LevelPage: React.FC = () => {
         setLife(response.life);
         setScore(response.score);
 
-        if (response.life === 0) isLose();
+        if (response.life === 0) return isLose();
       }
     } catch (error) {
       toast(`Problema ao buscar o score: ${error}`, {

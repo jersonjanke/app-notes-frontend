@@ -26,9 +26,9 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
 
   return (
     <Flex justifyContent="center">
-      {hearts.map(({ opacityItem, index }) => (
+      {hearts.map(({ opacityItem }, index) => (
         <FontAwesomeIcon
-          key={index}
+          key={`heart-${index}`}
           style={{
             marginLeft: 8,
             opacity: opacityItem ? 0.15 : 1,
