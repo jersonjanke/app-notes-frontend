@@ -1,13 +1,14 @@
 import { Container } from 'react-grid-system';
-import { Wrapper, Menu, ItemMenu } from './style';
+import Link from 'next/link';
+import { Wrapper, Menu } from './style';
 
 const Header: React.FC = () => {
   return (
     <Wrapper>
       <Container style={{ width: '100%' }}>
         <Menu>
-          <ItemMenu href={'/dashboard'}>Guitar Notes</ItemMenu>
-          <ItemMenu href={'/'}>Entrar</ItemMenu>
+          <Link href={'/dashboard'}>Guitar Notes</Link>
+          <Link href={'/'}>Entrar</Link>
         </Menu>
       </Container>
     </Wrapper>

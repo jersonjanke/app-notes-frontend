@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { ScoreDto } from 'types/Score';
 import Heart from '@/components/Heart';
+import { blue } from 'utils/colors';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -97,7 +98,7 @@ const LevelPage: React.FC = () => {
   }, [createScore]);
 
   useEffect(() => {
-    setData(generateLevel(Number(level)));
+    level && setData(generateLevel(Number(level)));
   }, [level]);
 
   useEffect(() => {
@@ -136,7 +137,7 @@ const LevelPage: React.FC = () => {
   };
 
   const isLose = () => {
-    toast('Você perdeu!', {
+    toast('Você perdeu! :(', {
       type: 'error',
       theme: 'colored',
     });
@@ -174,9 +175,11 @@ const LevelPage: React.FC = () => {
 
       if (data) {
         const randomData = generateLevel(Number(level));
-        setData(randomData);
-        const random = setRandomNote(randomData);
-        setCorrect(data[random]);
+        if (randomData) {
+          setData(randomData);
+          const random = setRandomNote(randomData);
+          setCorrect(data[random]);
+        }
       }
     } else {
       if (dataScore) {
@@ -202,11 +205,11 @@ const LevelPage: React.FC = () => {
     <Flex flexDirection="column" gap="16px">
       <>
         <Flex justifyContent="space-between">
-          <Flex style={{ fontSize: 22 }} flexDirection="column">
+          <Flex style={{ fontSize: 22, color: blue }} flexDirection="column">
             Level: {level}
           </Flex>
 
-          <Flex style={{ fontSize: 22 }} justifyContent="flex-end">
+          <Flex style={{ fontSize: 22, color: blue }} justifyContent="flex-end">
             Score: {score}
           </Flex>
         </Flex>

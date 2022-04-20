@@ -1,4 +1,4 @@
-import { allNote, notes } from 'utils/notes';
+import { allNote } from 'utils/notes';
 
 export const getRandomNumber = (max: number) => {
   return Math.floor(Math.random() * max);
