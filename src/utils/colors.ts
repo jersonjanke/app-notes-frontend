@@ -1,6 +1,6 @@
 export const orange = '#EBAB46';
 export const green = '#AEF257';
-export const blue = '#5ADBDB';
+export const primary = '#fb4b19';
 export const purple = '#9057F2';
 export const red = '#EB341A';
 export const white = '#ffffff';

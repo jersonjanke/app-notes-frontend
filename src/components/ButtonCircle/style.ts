@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { blue, white, gray, black } from 'utils/colors';
+import { primary, white, gray, black } from 'utils/colors';
 
 export const ButtonStyle = styled.button`
-  width: 78px;
-  height: 78px;
+  width: 64px;
+  height: 64px;
   text-decoration: none;
-  background-color: ${blue};
+  background-color: ${primary};
   border: none;
   border-radius: 50%;
   color: ${white};

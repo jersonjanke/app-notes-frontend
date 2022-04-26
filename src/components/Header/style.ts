@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shadow, blue } from 'utils/colors';
+import { shadow, primary } from 'utils/colors';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   height: 76px;
   box-shadow: ${shadow};
   margin-bottom: 24px;
-  color: ${blue};
+  color: ${primary};
 `;
 
 export const Menu = styled.div`

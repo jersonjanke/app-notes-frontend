@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { gray, black, white, blue, shadow } from 'utils/colors';
+import { gray, black, white, primary, shadow } from 'utils/colors';
 
 type ItemProps = {
   current: boolean;
@@ -8,7 +8,7 @@ type ItemProps = {
 export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 12px;
 `;
 
 export const Item = styled.div<ItemProps>`
@@ -27,7 +27,7 @@ export const Item = styled.div<ItemProps>`
   ${(props) =>
     props.current &&
     css`
-      background-color: ${blue};
+      background-color: ${primary};
       color: ${white};
       font-weight: bold;
       transition: 500ms;

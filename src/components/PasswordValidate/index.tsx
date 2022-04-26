@@ -1,7 +1,7 @@
 import { Wrapper } from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { blue } from 'utils/colors';
+import { primary } from 'utils/colors';
 import { useEffect, useMemo } from 'react';
 import { IconX } from './style';
 import { useDispatch } from 'react-redux';
@@ -40,7 +40,11 @@ const PasswordValidate = ({ password }: Props) => {
     <Wrapper>
       <div>
         {password.length > 5 ? (
-          <FontAwesomeIcon icon={faCheck as IconProp} color={blue} size="1x" />
+          <FontAwesomeIcon
+            icon={faCheck as IconProp}
+            color={primary}
+            size="1x"
+          />
         ) : (
           <IconX>X</IconX>
         )}
@@ -48,7 +52,11 @@ const PasswordValidate = ({ password }: Props) => {
       </div>
       <div>
         {numberOk ? (
-          <FontAwesomeIcon icon={faCheck as IconProp} color={blue} size="1x" />
+          <FontAwesomeIcon
+            icon={faCheck as IconProp}
+            color={primary}
+            size="1x"
+          />
         ) : (
           <IconX>X</IconX>
         )}
@@ -56,7 +64,11 @@ const PasswordValidate = ({ password }: Props) => {
       </div>
       <div>
         {upperCaseOk ? (
-          <FontAwesomeIcon icon={faCheck as IconProp} color={blue} size="1x" />
+          <FontAwesomeIcon
+            icon={faCheck as IconProp}
+            color={primary}
+            size="1x"
+          />
         ) : (
           <IconX>X</IconX>
         )}
@@ -64,7 +76,11 @@ const PasswordValidate = ({ password }: Props) => {
       </div>
       <div>
         {lowerCaseOk ? (
-          <FontAwesomeIcon icon={faCheck as IconProp} color={blue} size="1x" />
+          <FontAwesomeIcon
+            icon={faCheck as IconProp}
+            color={primary}
+            size="1x"
+          />
         ) : (
           <IconX>X</IconX>
         )}
@@ -72,7 +88,11 @@ const PasswordValidate = ({ password }: Props) => {
       </div>
       <div>
         {specialCharacterOk ? (
-          <FontAwesomeIcon icon={faCheck as IconProp} color={blue} size="1x" />
+          <FontAwesomeIcon
+            icon={faCheck as IconProp}
+            color={primary}
+            size="1x"
+          />
         ) : (
           <IconX>X</IconX>
         )}

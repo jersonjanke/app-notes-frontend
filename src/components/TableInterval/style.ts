@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { black, blue, gray, purple } from 'utils/colors';
+import { black, primary, gray, purple } from 'utils/colors';
 
 export const Table = styled.table`
   margin-top: 24px;
@@ -16,7 +16,7 @@ export const Table = styled.table`
   }
 
   td:nth-child(2n + 1) {
-    background-color: ${blue};
+    background-color: ${primary};
   }
 
   td:nth-child(2n + 2) {
@@ -24,7 +24,7 @@ export const Table = styled.table`
   }
 
   th:nth-child(2n + 1) {
-    background-color: ${blue};
+    background-color: ${primary};
   }
 
   th:nth-child(2n + 2) {

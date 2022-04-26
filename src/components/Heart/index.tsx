@@ -1,7 +1,7 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { blue } from 'utils/colors';
+import { primary } from 'utils/colors';
 import { useEffect, useState } from 'react';
 import Flex from '@/components/Flex';
 
@@ -35,7 +35,7 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
             transition: '500ms',
           }}
           size="2x"
-          color={blue}
+          color={primary}
           icon={faHeart as IconProp}
         />
       ))}

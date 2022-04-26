@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { ScoreDto } from 'types/Score';
 import Heart from '@/components/Heart';
-import { blue } from 'utils/colors';
+import { primary } from 'utils/colors';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -205,11 +205,14 @@ const LevelPage: React.FC = () => {
     <Flex flexDirection="column" gap="16px">
       <>
         <Flex justifyContent="space-between">
-          <Flex style={{ fontSize: 22, color: blue }} flexDirection="column">
+          <Flex style={{ fontSize: 22, color: primary }} flexDirection="column">
             Level: {level}
           </Flex>
 
-          <Flex style={{ fontSize: 22, color: blue }} justifyContent="flex-end">
+          <Flex
+            style={{ fontSize: 22, color: primary }}
+            justifyContent="flex-end"
+          >
             Score: {score}
           </Flex>
         </Flex>
@@ -235,7 +238,7 @@ const LevelPage: React.FC = () => {
           {data &&
             data.map((note) => (
               <Button
-                style={{ width: 136, height: 48, fontSize: 18 }}
+                style={{ width: 86, height: 36, fontSize: 14 }}
                 disabled={disabled}
                 onClick={() => handleIsCorrect(note)}
                 key={note.id}
