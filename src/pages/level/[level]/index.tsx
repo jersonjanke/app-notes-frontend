@@ -9,14 +9,18 @@ import { Note } from 'types/Game';
 import { toast } from 'react-toastify';
 import { pages } from 'utils/pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlay,
+  faRedoAlt,
+  faArrowAltCircleLeft,
+} from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { play } from 'services/AudioService';
 import ButtonCircle from '@/components/ButtonCircle';
 import scoreService from 'services/ScoreService';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import { ScoreDto } from 'types/Score';
+import { GameListNotes, ScoreDto } from 'types/Score';
 import Heart from '@/components/Heart';
 import { primary } from 'utils/colors';
 
@@ -33,6 +37,8 @@ const LevelPage: React.FC = () => {
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
   const [dataScore, setDataScore] = useState<ScoreDto>();
+  const [gameId, setGameId] = useState('');
+  const [notes] = useState<GameListNotes[]>([]);
 
   const createScore = useCallback(async () => {
     try {
@@ -60,8 +66,10 @@ const LevelPage: React.FC = () => {
             done,
             life,
             score,
+            notes: notes,
             email: data.email,
           };
+          data._id && setGameId(data._id);
           await scoreService.updateScore(payload);
           data._id && (await getScore(data._id));
         }
@@ -83,7 +91,13 @@ const LevelPage: React.FC = () => {
         setLife(response.life);
         setScore(response.score);
 
-        if (response.life === 0) return isLose();
+        if (response.life === 0) {
+          if (dataScore) {
+            updateScore(dataScore?.life, dataScore?.score, true, dataScore);
+          }
+
+          return router.push(`/${pages.failed}/${id}`);
+        }
       }
     } catch (error) {
       toast(`Problema ao buscar o score: ${error}`, {
@@ -123,38 +137,23 @@ const LevelPage: React.FC = () => {
     }
   };
 
-  const isWinner = () => {
-    toast('Parabéns, você ganhou!!', {
-      type: 'success',
-      theme: 'colored',
-    });
-
-    if (dataScore) {
-      updateScore(dataScore?.life, dataScore?.score, true, dataScore);
-    }
-
-    return router.push(`/${pages.dashboard}`);
-  };
-
-  const isLose = () => {
-    toast('Você perdeu! :(', {
-      type: 'error',
-      theme: 'colored',
-    });
-
-    if (dataScore) {
-      updateScore(dataScore?.life, dataScore?.score, true, dataScore);
-    }
-
-    return router.push(`/${pages.dashboard}`);
-  };
-
   const handleIsCorrect = async (note: Note) => {
     setDisabled(true);
+
+    notes.push({
+      level: active + 1,
+      correct: correct ? correct?.name : 'null',
+      selected: note.name,
+    });
+
     const isCorrect = note === correct;
     if (isCorrect) {
       if (steps.length - 1 === active) {
-        isWinner();
+        if (dataScore) {
+          updateScore(dataScore?.life, dataScore?.score, true, dataScore);
+        }
+
+        return router.push(`/${pages.success}/${gameId}`);
       }
 
       if (dataScore) {
@@ -205,7 +204,20 @@ const LevelPage: React.FC = () => {
     <Flex flexDirection="column" gap="16px">
       <>
         <Flex justifyContent="space-between">
-          <Flex style={{ fontSize: 22, color: primary }} flexDirection="column">
+          <Flex>
+            <FontAwesomeIcon
+              size="2x"
+              color={primary}
+              style={{ cursor: 'pointer' }}
+              icon={faArrowAltCircleLeft as IconProp}
+              onClick={() => router.push(`/${pages.dashboard}`)}
+            />
+          </Flex>
+
+          <Flex
+            style={{ fontSize: 22, color: primary, textAlign: 'center' }}
+            flexDirection="column"
+          >
             Level: {level}
           </Flex>
 
@@ -240,7 +252,7 @@ const LevelPage: React.FC = () => {
               <Button
                 style={{ width: 86, height: 36, fontSize: 14 }}
                 disabled={disabled}
-                onClick={() => handleIsCorrect(note)}
+                onClick={async () => await handleIsCorrect(note)}
                 key={note.id}
               >{`${note.name} (${note.id})`}</Button>
             ))}

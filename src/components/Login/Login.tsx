@@ -27,7 +27,7 @@ const Login = () => {
       router.push('/dashboard');
     } catch (err: any) {
       setLoading(false);
-      err.response.data.errors.forEach((error: string) =>
+      err?.response?.data?.errors?.forEach((error: string) =>
         toast(error, {
           type: 'error',
           theme: 'colored',

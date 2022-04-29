@@ -5,11 +5,18 @@ export interface Score {
   life?: number;
 }
 
+export type GameListNotes = {
+  level: number;
+  correct: string;
+  selected: string;
+};
+
 export interface ScoreDto {
   done: boolean;
   email: string;
   life: number;
   score: number;
+  notes: GameListNotes[];
   __v?: number;
   _id?: string;
 }

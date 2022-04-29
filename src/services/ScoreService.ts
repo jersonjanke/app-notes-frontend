@@ -48,6 +48,7 @@ const scoreService = {
           email: score.email,
           score: score.score,
           life: score.life,
+          notes: score.notes,
         })
         .then((response) => {
           resolve(response.data);

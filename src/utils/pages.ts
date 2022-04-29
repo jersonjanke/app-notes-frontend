@@ -1,6 +1,8 @@
 export const pages = {
   play: 'play',
   level: 'level',
+  success: 'success',
+  failed: 'failed',
   dashboard: 'dashboard',
   interval: 'interval',
   password: 'password',
