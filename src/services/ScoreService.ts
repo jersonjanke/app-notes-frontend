@@ -18,9 +18,22 @@ const scoreService = {
   },
   getByIDScore: (id: string) => {
     return new Promise<ScoreDto>((resolve, reject) => {
-      axios;
       axios
         .get(`${URL.URL_BASE}/score/${id}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          reject(error);
+        });
+    });
+  },
+  getByIDScoreSSR: (id: string, token: string) => {
+    return new Promise<ScoreDto>((resolve, reject) => {
+      axios
+        .get(`${URL.URL_BASE}/score/${id}`, {
+          headers: { Authorization: token },
+        })
         .then((response) => {
           resolve(response.data);
         })

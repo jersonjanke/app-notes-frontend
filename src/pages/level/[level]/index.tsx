@@ -17,7 +17,7 @@ import {
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { play } from 'services/AudioService';
 import ButtonCircle from '@/components/ButtonCircle';
-import scoreService from 'services/ScoreService';
+import ScoreService from 'services/ScoreService';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { GameListNotes, ScoreDto } from 'types/Score';
@@ -47,7 +47,8 @@ const LevelPage: React.FC = () => {
         life: LIFE,
         score: score,
       };
-      const response = await scoreService.createScore(payload);
+      const response = await ScoreService.createScore(payload);
+      response._id && setGameId(response._id);
       setDataScore(response);
     } catch (error) {
       toast(`Problema ao criar o jogo: ${error}`, {
@@ -70,8 +71,8 @@ const LevelPage: React.FC = () => {
             email: data.email,
           };
           data._id && setGameId(data._id);
-          await scoreService.updateScore(payload);
-          data._id && (await getScore(data._id));
+          setScore(score);
+          await ScoreService.updateScore(payload);
         }
       } catch (error) {
         toast(`Problema ao atualizar o score: ${error}`, {
@@ -82,30 +83,6 @@ const LevelPage: React.FC = () => {
     },
     []
   );
-
-  const getScore = useCallback(async (id: string) => {
-    try {
-      const response = await scoreService.getByIDScore(id);
-      if (response) {
-        setDataScore(response);
-        setLife(response.life);
-        setScore(response.score);
-
-        if (response.life === 0) {
-          if (dataScore) {
-            updateScore(dataScore?.life, dataScore?.score, true, dataScore);
-          }
-
-          return router.push(`/${pages.failed}/${id}`);
-        }
-      }
-    } catch (error) {
-      toast(`Problema ao buscar o score: ${error}`, {
-        type: 'error',
-        theme: 'colored',
-      });
-    }
-  }, []);
 
   useEffect(() => {
     createScore();
@@ -126,6 +103,19 @@ const LevelPage: React.FC = () => {
   const setRandomNote = (notes: Note[]) => {
     return getRandomNumber(notes ? notes?.length : 0);
   };
+
+  useEffect(() => {
+    const updateGame = async (id: string) => {
+      if (life === 0) {
+        if (dataScore) {
+          updateScore(dataScore?.life, dataScore?.score, true, dataScore);
+        }
+
+        return router.push(`/${pages.failed}/${id}`);
+      }
+    };
+    updateGame(gameId);
+  }, [life]);
 
   const handlePlay = () => {
     if (data) {
@@ -150,19 +140,14 @@ const LevelPage: React.FC = () => {
     if (isCorrect) {
       if (steps.length - 1 === active) {
         if (dataScore) {
-          updateScore(dataScore?.life, dataScore?.score, true, dataScore);
+          updateScore(dataScore?.life, dataScore?.score + 10, true, dataScore);
         }
 
         return router.push(`/${pages.success}/${gameId}`);
       }
 
       if (dataScore) {
-        await updateScore(
-          dataScore?.life,
-          dataScore?.score + 10,
-          false,
-          dataScore
-        );
+        setDataScore({ ...dataScore, score: score + 10 });
       }
 
       toast('Correto!', {
@@ -182,12 +167,8 @@ const LevelPage: React.FC = () => {
       }
     } else {
       if (dataScore) {
-        await updateScore(
-          dataScore.life - 1,
-          dataScore.score,
-          false,
-          dataScore
-        );
+        setLife(life - 1);
+        setDataScore({ ...dataScore, life: life - 1 });
       }
       toast('Incorreto!', {
         type: 'error',
