@@ -3,6 +3,7 @@ export type Note = {
   name: string;
   cipher: string;
   src: string;
+  frequency: number;
 };
 
 export type GameLevel = {

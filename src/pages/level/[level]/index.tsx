@@ -23,15 +23,26 @@ import { StoreData } from 'types/Login';
 import { GameListNotes, ScoreDto } from 'types/Score';
 import Heart from '@/components/Heart';
 import { primary } from 'utils/colors';
+import MicrophoneStream from 'microphone-stream';
+import Pitchfinder from 'pitchfinder';
+
+type MicrophoneProps = {
+  on: (data: string, fn: (chunk: Buffer) => void) => void;
+  pipe: () => void;
+  toRaw: (chunk: Buffer) => void;
+  setStream: (stream: MediaStream) => void;
+  stop: () => void;
+};
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
+  const MARGIN_HZ = 4;
+  const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
   const { level } = router.query;
   const user = useSelector((state: StoreData) => state.user);
   const [life, setLife] = useState(LIFE);
-  const [score, setScore] = useState(0);
   const [active, setActive] = useState(0);
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
@@ -39,13 +50,50 @@ const LevelPage: React.FC = () => {
   const [dataScore, setDataScore] = useState<ScoreDto>();
   const [gameId, setGameId] = useState('');
   const [notes] = useState<GameListNotes[]>([]);
+  const [frequency, setFrequency] = useState<number | null>(0);
+  const [validateAudio, setValidateAudio] = useState(false);
+
+  const tunerHandler = () => {
+    setTimeout(() => {
+      setValidateAudio(false);
+      let microphone = new MicrophoneStream() as unknown as MicrophoneProps;
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream: MediaStream) => {
+          microphone.setStream(stream);
+        });
+
+      microphone.on('data', (chunk: any) => {
+        const detectPitch = Pitchfinder.AMDF({
+          minFrequency: 60,
+          maxFrequency: 700,
+          ratio: 10,
+        });
+        const stream = detectPitch(MicrophoneStream.toRaw(chunk));
+
+        if (stream) {
+          const hz = Number(stream) * 0.089 + Number(stream);
+          setFrequency(hz);
+        }
+      });
+
+      setTimeout(() => {
+        microphone.stop();
+        setValidateAudio(true);
+      }, 3000);
+    }, 1500);
+  };
+
+  useEffect(() => {
+    validateAudio && handleCorrectByHz();
+  }, [validateAudio]);
 
   const createScore = useCallback(async () => {
     try {
       const payload = {
         email: user.email,
         life: LIFE,
-        score: score,
+        score: 0,
       };
       const response = await ScoreService.createScore(payload);
       response._id && setGameId(response._id);
@@ -71,7 +119,6 @@ const LevelPage: React.FC = () => {
             email: data.email,
           };
           data._id && setGameId(data._id);
-          setScore(score);
           await ScoreService.updateScore(payload);
         }
       } catch (error) {
@@ -118,12 +165,77 @@ const LevelPage: React.FC = () => {
   }, [life]);
 
   const handlePlay = () => {
+    tunerHandler();
     if (data) {
       const random = setRandomNote(data);
       const note = data[random];
       setCorrect(note);
       play(`/${note.src}`);
       setDisabled(false);
+    }
+  };
+
+  const handleCorrectByHz = () => {
+    notes.push({
+      level: active + 1,
+      correct: correct ? correct?.name : 'null',
+      selected:
+        data && frequency
+          ? data.find(
+              (note) =>
+                frequency >= note.frequency - MARGIN_HZ &&
+                frequency <= note.frequency + MARGIN_HZ
+            )?.name || ''
+          : '',
+    });
+
+    if (correct && frequency) {
+      if (
+        frequency >= correct?.frequency - MARGIN_HZ &&
+        frequency <= correct.frequency + MARGIN_HZ
+      ) {
+        if (steps.length - 1 === active) {
+          if (dataScore) {
+            updateScore(
+              dataScore?.life,
+              dataScore?.score + SCORE,
+              true,
+              dataScore
+            );
+          }
+
+          return router.push(`/${pages.success}/${gameId}`);
+        }
+
+        if (dataScore) {
+          setDataScore({ ...dataScore, score: dataScore.score + SCORE });
+        }
+
+        toast('Correto!', {
+          type: 'success',
+          theme: 'colored',
+        });
+
+        setActive(active + 1);
+
+        if (data) {
+          const randomData = generateLevel(Number(level));
+          if (randomData) {
+            setData(randomData);
+            const random = setRandomNote(randomData);
+            setCorrect(data[random]);
+          }
+        }
+      } else {
+        if (dataScore) {
+          setLife(life - 1);
+          setDataScore({ ...dataScore, life: life - 1 });
+        }
+        toast('Incorreto!', {
+          type: 'error',
+          theme: 'colored',
+        });
+      }
     }
   };
 
@@ -140,14 +252,19 @@ const LevelPage: React.FC = () => {
     if (isCorrect) {
       if (steps.length - 1 === active) {
         if (dataScore) {
-          updateScore(dataScore?.life, dataScore?.score + 10, true, dataScore);
+          updateScore(
+            dataScore?.life,
+            dataScore?.score + SCORE,
+            true,
+            dataScore
+          );
         }
 
         return router.push(`/${pages.success}/${gameId}`);
       }
 
       if (dataScore) {
-        setDataScore({ ...dataScore, score: score + 10 });
+        setDataScore({ ...dataScore, score: dataScore.score + SCORE });
       }
 
       toast('Correto!', {
@@ -206,7 +323,7 @@ const LevelPage: React.FC = () => {
             style={{ fontSize: 22, color: primary }}
             justifyContent="flex-end"
           >
-            Score: {score}
+            Score: {dataScore?.score}
           </Flex>
         </Flex>
 
