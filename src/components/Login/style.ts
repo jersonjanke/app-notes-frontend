@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   box-shadow: ${shadow};
   padding: 20px;
   border-radius: 8px;
-  margin-top: 32px;
+  margin-top: 12px;
 
   @media screen and (max-width: 600px) {
     width: 100%;
