@@ -28,6 +28,7 @@ import Heart from '@/components/Heart';
 import MicrophoneStream from 'microphone-stream';
 import Pitchfinder from 'pitchfinder';
 import Config from '@/components/Config/Config';
+import { allNote } from 'utils/notes';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -157,8 +158,8 @@ const LevelPage: React.FC = () => {
       level: active + 1,
       correct: correct ? correct?.name : 'null',
       selected:
-        data && frequency
-          ? data.find(
+        allNote && frequency
+          ? allNote.find(
               (note) =>
                 frequency >= note.frequency - MARGIN_HZ &&
                 frequency <= note.frequency + MARGIN_HZ
