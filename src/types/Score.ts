@@ -18,5 +18,5 @@ export interface ScoreDto {
   score: number;
   notes: GameListNotes[];
   __v?: number;
-  _id?: string;
+  _id: string;
 }

@@ -3,31 +3,31 @@ import {
   faRedoAlt,
   faArrowAltCircleLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import Button from '@/components/Button';
-import Flex from '@/components/Flex';
-import Stepper from '@/components/Stepper';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { generateLevel } from 'services/GameService';
 import { getRandomNumber } from 'services/GameService';
 import { Note } from 'types/Game';
-import { toast } from 'react-toastify';
 import { pages } from 'utils/pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { play } from 'services/AudioService';
-import ButtonCircle from '@/components/ButtonCircle';
-import ScoreService from 'services/ScoreService';
-import { GameListNotes, ScoreDto } from 'types/Score';
-import Heart from '@/components/Heart';
+import { ScoreDto } from 'types/Score';
 import { primary } from 'utils/colors';
-import MicrophoneStream from 'microphone-stream';
 import { MicrophoneProps } from 'utils/microphone';
-import Pitchfinder from 'pitchfinder';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import Config from '@/components/Config/Config';
 import { ConfigData } from 'types/Config';
+import { toastMSG } from 'utils/toast';
+import Flex from '@/components/Flex';
+import Button from '@/components/Button';
+import Stepper from '@/components/Stepper';
+import ButtonCircle from '@/components/ButtonCircle';
+import ScoreService from 'services/ScoreService';
+import Heart from '@/components/Heart';
+import MicrophoneStream from 'microphone-stream';
+import Pitchfinder from 'pitchfinder';
+import Config from '@/components/Config/Config';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -35,20 +35,19 @@ const LevelPage: React.FC = () => {
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
-  const [id] = useState(router?.query?.id);
+  const [id] = useState(router?.query?.id ? router.query.id : '');
   const { level } = router.query;
-  const [life, setLife] = useState(LIFE);
   const [active, setActive] = useState(0);
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
-  const [notes] = useState<GameListNotes[]>([]);
   const [frequency, setFrequency] = useState<number | null>(0);
-  const [validateAudio, setValidateAudio] = useState(false);
+  const [recordAudio, setRecordAudio] = useState(false);
   const MicroStream = new MicrophoneStream() as unknown as MicrophoneProps;
   const user = useSelector((state: StoreData) => state.user);
   const config = useSelector((state: ConfigData) => state.config);
   const [dataScore, setDataScore] = useState<ScoreDto>({
+    _id: '',
     done: false,
     email: user.email,
     life: LIFE,
@@ -56,57 +55,36 @@ const LevelPage: React.FC = () => {
     notes: [],
   });
 
-  const updateScore = useCallback(
-    async (life: number, score: number, done: boolean, data: ScoreDto) => {
-      try {
-        if (data) {
-          const payload = {
-            ...data,
-            _id: id ? (id as string) : '',
-            done,
-            life,
-            score,
-            notes: notes,
-            email: data.email,
-          };
-          debugger;
-          await ScoreService.updateScore(payload);
-        }
-      } catch (error) {
-        toast(`Problema ao atualizar o score: ${error}`, {
-          type: 'error',
-          theme: 'colored',
-        });
-      }
-    },
-    []
-  );
+  const updateScore = useCallback(async (data: ScoreDto) => {
+    try {
+      await ScoreService.updateScore({
+        ...data,
+        _id: id as string,
+        done: data.done,
+        life: data.life,
+        score: data.score,
+        notes: dataScore.notes,
+        email: data.email,
+      });
+    } catch (error) {
+      toastMSG(`Problema ao atualizar o score: ${error}`, 'error');
+    }
+  }, []);
 
   useEffect(() => {
-    validateAudio && handleCorrectByHz();
-  }, [validateAudio]);
+    recordAudio && handleCorrectByHz();
+  }, [recordAudio]);
 
   useEffect(() => {
     if (steps.length === active) {
-      if (dataScore) {
-        updateScore(
-          dataScore?.life,
-          dataScore?.score + SCORE,
-          true,
-          dataScore
-        ).then(() => {
-          return router.push(`/${pages.success}/${id}`);
-        });
-      }
+      updateScore(dataScore).then(() => {
+        return router.push(`/${pages.success}/${id}`);
+      });
     }
-    if (level) {
-      const randomData = generateLevel(Number(level));
-      if (randomData) {
-        setData(randomData);
-        const random = setRandomNote(randomData);
-        setCorrect(randomData[random]);
-      }
-    }
+    const randomData = generateLevel(Number(level));
+    setData(randomData);
+    const random = setRandomNote(randomData);
+    setCorrect(randomData[random]);
   }, [level, active]);
 
   useEffect(() => {
@@ -119,18 +97,14 @@ const LevelPage: React.FC = () => {
 
   useEffect(() => {
     const updateGame = async (id: string) => {
-      if (life === 0) {
-        if (dataScore) {
-          updateScore(dataScore?.life, dataScore?.score, true, dataScore).then(
-            () => {
-              return router.push(`/${pages.failed}/${id}`);
-            }
-          );
-        }
+      if (dataScore.life === 0) {
+        updateScore(dataScore).then(() => {
+          return router.push(`/${pages.failed}/${id}`);
+        });
       }
     };
     id && updateGame(id as string);
-  }, [life, active]);
+  }, [dataScore.life, active]);
 
   const setRandomNote = (notes: Note[]) => {
     return getRandomNumber(notes ? notes?.length : 0);
@@ -138,7 +112,7 @@ const LevelPage: React.FC = () => {
 
   const analyzeFrequency = () => {
     setTimeout(() => {
-      setValidateAudio(false);
+      setRecordAudio(false);
       navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then((stream: MediaStream) => {
@@ -161,7 +135,7 @@ const LevelPage: React.FC = () => {
 
       setTimeout(() => {
         MicroStream.stop();
-        setValidateAudio(true);
+        setRecordAudio(true);
       }, 3000);
     }, 1500);
   };
@@ -178,6 +152,7 @@ const LevelPage: React.FC = () => {
   };
 
   const handleCorrectByHz = () => {
+    const notes = dataScore.notes;
     notes.push({
       level: active + 1,
       correct: correct ? correct?.name : 'null',
@@ -196,25 +171,12 @@ const LevelPage: React.FC = () => {
         frequency >= correct?.frequency - MARGIN_HZ &&
         frequency <= correct.frequency + MARGIN_HZ
       ) {
-        if (dataScore) {
-          setDataScore({ ...dataScore, score: dataScore.score + SCORE });
-        }
-
-        toast('Correto!', {
-          type: 'success',
-          theme: 'colored',
-        });
-
+        setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
+        toastMSG('Correto!', 'success');
         setActive(active + 1);
       } else {
-        if (dataScore) {
-          setDataScore({ ...dataScore, life: life - 1 });
-          setLife(life - 1);
-        }
-        toast('Incorreto!', {
-          type: 'error',
-          theme: 'colored',
-        });
+        setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
+        toastMSG('Incorreto!', 'error');
       }
     }
   };
@@ -222,6 +184,7 @@ const LevelPage: React.FC = () => {
   const handleIsCorrect = async (note: Note) => {
     setDisabled(true);
 
+    const notes = dataScore.notes;
     notes.push({
       level: active + 1,
       correct: correct ? correct?.name : 'null',
@@ -230,23 +193,12 @@ const LevelPage: React.FC = () => {
 
     const isCorrect = note === correct;
     if (isCorrect) {
-      if (dataScore) {
-        setDataScore({ ...dataScore, score: dataScore.score + SCORE });
-      }
-      toast('Correto!', {
-        type: 'success',
-        theme: 'colored',
-      });
+      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
+      toastMSG('Correto!', 'success');
       setActive(active + 1);
     } else {
-      if (dataScore) {
-        setDataScore({ ...dataScore, life: life - 1 });
-        setLife(life - 1);
-      }
-      toast('Incorreto!', {
-        type: 'error',
-        theme: 'colored',
-      });
+      setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
+      toastMSG('Incorreto!', 'error');
     }
   };
 
@@ -283,7 +235,7 @@ const LevelPage: React.FC = () => {
           </Flex>
         </Flex>
 
-        <Heart size={5} opacity={life} />
+        <Heart size={5} opacity={dataScore.life} />
         <Stepper items={steps} level={active + 1} />
 
         <Flex

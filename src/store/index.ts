@@ -7,4 +7,4 @@ const makeStore = () => {
   return createStore(reducers, composeWithDevTools());
 };
 
-export const storeWrapper = createWrapper(makeStore, { debug: true });
+export const storeWrapper = createWrapper(makeStore, { debug: false });

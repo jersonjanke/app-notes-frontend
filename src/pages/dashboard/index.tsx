@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import ScoreService from 'services/ScoreService';
-import { toast } from 'react-toastify';
+import { toastMSG } from 'utils/toast';
 
 const Dashboard: React.FC = () => {
   const LIFE = 5;
@@ -25,10 +25,7 @@ const Dashboard: React.FC = () => {
       const response = await ScoreService.createScore(payload);
       response._id && router.push(`${pages.level}/${level}/${response._id}`);
     } catch (error) {
-      toast(`Problema ao criar o jogo: ${error}`, {
-        type: 'error',
-        theme: 'colored',
-      });
+      toastMSG(`Problema ao criar o jogo: ${error}`, 'error');
     }
   }, []);
 
