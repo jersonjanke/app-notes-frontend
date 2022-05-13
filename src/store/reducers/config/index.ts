@@ -2,7 +2,7 @@ import { ConfigData } from 'types/Config';
 import { CONFIG } from './../../actions/index';
 
 const initialState = {
-  microphone: false,
+  microphone: true,
 };
 
 type DataConfig = {

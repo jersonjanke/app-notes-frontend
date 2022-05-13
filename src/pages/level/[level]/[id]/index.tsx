@@ -38,12 +38,11 @@ const LevelPage: React.FC = () => {
   const [id] = useState(router?.query?.id ? router.query.id : '');
   const { level } = router.query;
   const [active, setActive] = useState(0);
+  const [record, setRecord] = useState(false);
+  const [frequency, setFrequency] = useState(0);
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
-  const [frequency, setFrequency] = useState<number | null>(0);
-  const [recordAudio, setRecordAudio] = useState(false);
-  const MicroStream = new MicrophoneStream() as unknown as MicrophoneProps;
   const user = useSelector((state: StoreData) => state.user);
   const config = useSelector((state: ConfigData) => state.config);
   const [dataScore, setDataScore] = useState<ScoreDto>({
@@ -70,10 +69,6 @@ const LevelPage: React.FC = () => {
       toastMSG(`Problema ao atualizar o score: ${error}`, 'error');
     }
   }, []);
-
-  useEffect(() => {
-    recordAudio && handleCorrectByHz();
-  }, [recordAudio]);
 
   useEffect(() => {
     if (steps.length === active) {
@@ -110,38 +105,41 @@ const LevelPage: React.FC = () => {
     return getRandomNumber(notes ? notes?.length : 0);
   };
 
-  const analyzeFrequency = () => {
+  const getFrequency = () => {
     setTimeout(() => {
-      setRecordAudio(false);
+      setRecord(true);
+      const MicroStream = new MicrophoneStream() as unknown as MicrophoneProps;
+      const frequencyData: number[] = [];
       navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then((stream: MediaStream) => {
           MicroStream.setStream(stream);
         });
 
-      MicroStream.on('data', (chunk: any) => {
+      MicroStream.on('data', (chunk: Buffer) => {
         const detectPitch = Pitchfinder.AMDF({
           minFrequency: 60,
           maxFrequency: 700,
-          ratio: 10,
+          ratio: 5,
         });
         const stream = detectPitch(MicrophoneStream.toRaw(chunk));
 
         if (stream) {
-          const hz = Number(stream) * 0.089 + Number(stream);
-          setFrequency(hz);
+          frequencyData.push(Number(stream) * 0.089 + Number(stream));
+          let averageHZ =
+            frequencyData.reduce((a, b) => a + b, 0) / frequencyData.length;
+          setFrequency(averageHZ);
         }
       });
 
       setTimeout(() => {
         MicroStream.stop();
-        setRecordAudio(true);
-      }, 3000);
-    }, 1500);
+        setRecord(false);
+      }, 2500);
+    }, 1000);
   };
 
   const handlePlay = () => {
-    config.microphone && analyzeFrequency();
     if (data) {
       const random = setRandomNote(data);
       const note = data[random];
@@ -149,9 +147,11 @@ const LevelPage: React.FC = () => {
       play(`/${note.src}`);
       setDisabled(false);
     }
+    config.microphone && getFrequency();
   };
 
-  const handleCorrectByHz = () => {
+  const analyzeFrequency = () => {
+    if (!correct) return;
     const notes = dataScore.notes;
     notes.push({
       level: active + 1,
@@ -166,20 +166,24 @@ const LevelPage: React.FC = () => {
           : '',
     });
 
-    if (correct && frequency) {
-      if (
-        frequency >= correct?.frequency - MARGIN_HZ &&
-        frequency <= correct.frequency + MARGIN_HZ
-      ) {
-        setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
-        toastMSG('Correto!', 'success');
-        setActive(active + 1);
-      } else {
-        setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
-        toastMSG('Incorreto!', 'error');
-      }
+    if (
+      frequency >= correct.frequency - MARGIN_HZ &&
+      frequency <= correct.frequency + MARGIN_HZ
+    ) {
+      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
+      toastMSG('Correto!', 'success');
+      setActive(active + 1);
+    } else {
+      setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
+      toastMSG('Incorreto!', 'error');
     }
   };
+
+  useEffect(() => {
+    if (!record && config.microphone) {
+      analyzeFrequency();
+    }
+  }, [record]);
 
   const handleIsCorrect = async (note: Note) => {
     setDisabled(true);
