@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { ConfigData } from 'types/Config';
 import { toastMSG } from 'utils/toast';
+import { allNote } from 'utils/notes';
 import Flex from '@/components/Flex';
 import Button from '@/components/Button';
 import Stepper from '@/components/Stepper';
@@ -28,7 +29,6 @@ import Heart from '@/components/Heart';
 import MicrophoneStream from 'microphone-stream';
 import Pitchfinder from 'pitchfinder';
 import Config from '@/components/Config/Config';
-import { allNote } from 'utils/notes';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -36,7 +36,7 @@ const LevelPage: React.FC = () => {
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
-  const [id] = useState(router?.query?.id ? router.query.id : '');
+  const { id } = router.query;
   const { level } = router.query;
   const [active, setActive] = useState(0);
   const [record, setRecord] = useState(false);
@@ -156,15 +156,13 @@ const LevelPage: React.FC = () => {
     const notes = dataScore.notes;
     notes.push({
       level: active + 1,
-      correct: correct ? correct?.name : 'null',
+      correct: correct.name,
       selected:
-        allNote && frequency
-          ? allNote.find(
-              (note) =>
-                frequency >= note.frequency - MARGIN_HZ &&
-                frequency <= note.frequency + MARGIN_HZ
-            )?.name || ''
-          : '',
+        allNote.find(
+          (note) =>
+            frequency >= note.frequency - MARGIN_HZ &&
+            frequency <= note.frequency + MARGIN_HZ
+        )?.name || '',
     });
 
     if (
