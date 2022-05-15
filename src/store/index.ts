@@ -3,7 +3,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 
-const makeStore = () => {
+const makeStore: any = () => {
   return createStore(reducers, composeWithDevTools());
 };
 
