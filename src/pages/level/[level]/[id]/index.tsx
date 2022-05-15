@@ -28,7 +28,6 @@ import ScoreService from 'services/ScoreService';
 import Heart from '@/components/Heart';
 import MicrophoneStream from 'microphone-stream';
 import Pitchfinder from 'pitchfinder';
-import Config from '@/components/Config/Config';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -267,7 +266,6 @@ const LevelPage: React.FC = () => {
             ))}
         </Flex>
       </>
-      <Config />
     </Flex>
   );
 };

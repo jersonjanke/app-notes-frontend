@@ -1,3 +1,5 @@
+import { ConfigDto } from './Config';
+
 export interface Login {
   email: string;
   password: string;
@@ -17,4 +19,5 @@ export interface PasswordData {
 
 export interface StoreData {
   user: User;
+  config: ConfigDto;
 }
