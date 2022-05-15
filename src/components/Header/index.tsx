@@ -8,33 +8,37 @@ import Settings from '../Settings';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
+import ProgressBar from '../ProgressBar';
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(false);
   const state = useSelector((state: StoreData) => state);
   return (
-    <Wrapper>
-      <Container style={{ width: '100%' }}>
-        <Menu>
-          <Link href={'/dashboard'}>Guitar Notes</Link>
-          <div>
-            {state?.user?.token && (
-              <FontAwesomeIcon
-                onClick={() => setShow(true)}
-                icon={faCog as IconProp}
-                size="1x"
-                style={{ marginRight: 4, cursor: 'pointer' }}
-              />
-            )}
+    <>
+      <Wrapper>
+        <Container style={{ width: '100%' }}>
+          <Menu>
+            <Link href={'/dashboard'}>Guitar Notes</Link>
+            <div>
+              {state?.user?.token && (
+                <FontAwesomeIcon
+                  onClick={() => setShow(true)}
+                  icon={faCog as IconProp}
+                  size="1x"
+                  style={{ marginRight: 4, cursor: 'pointer' }}
+                />
+              )}
 
-            {!state.user?.token && <Link href={'/'}>Entrar</Link>}
-          </div>
-        </Menu>
-      </Container>
-      {state.user.token && (
-        <Settings open={show} onClose={() => setShow(false)} />
-      )}
-    </Wrapper>
+              {!state.user?.token && <Link href={'/'}>Entrar</Link>}
+            </div>
+          </Menu>
+        </Container>
+        {state.user.token && (
+          <Settings open={show} onClose={() => setShow(false)} />
+        )}
+      </Wrapper>
+      <ProgressBar progress={state.progress.value} />
+    </>
   );
 };
 

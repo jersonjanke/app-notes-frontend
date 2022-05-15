@@ -6,3 +6,6 @@ export const VALID_PASSWORD = 'VALID_PASSWORD';
 
 // *** CONFIG ***
 export const CONFIG = 'CONFIG';
+
+// *** PROGRESS ***
+export const PROGRESS = 'PROGRESS';

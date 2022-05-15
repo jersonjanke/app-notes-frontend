@@ -15,9 +15,8 @@ import { play } from 'services/AudioService';
 import { ScoreDto } from 'types/Score';
 import { primary } from 'utils/colors';
 import { MicrophoneProps } from 'utils/microphone';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import { ConfigData } from 'types/Config';
 import { toastMSG } from 'utils/toast';
 import { allNote } from 'utils/notes';
 import Flex from '@/components/Flex';
@@ -28,6 +27,7 @@ import ScoreService from 'services/ScoreService';
 import Heart from '@/components/Heart';
 import MicrophoneStream from 'microphone-stream';
 import Pitchfinder from 'pitchfinder';
+import { setProgress } from 'store/actions/progress';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
@@ -35,6 +35,7 @@ const LevelPage: React.FC = () => {
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
+  const dispatch = useDispatch();
   const { id } = router.query;
   const { level } = router.query;
   const [active, setActive] = useState(0);
@@ -43,12 +44,11 @@ const LevelPage: React.FC = () => {
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
-  const user = useSelector((state: StoreData) => state.user);
-  const config = useSelector((state: ConfigData) => state.config);
+  const state = useSelector((state: StoreData) => state);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
     done: false,
-    email: user.email,
+    email: state.user.email,
     life: LIFE,
     score: 0,
     notes: [],
@@ -72,6 +72,7 @@ const LevelPage: React.FC = () => {
 
   useEffect(() => {
     if (steps.length === active) {
+      dispatch(setProgress(0));
       updateScore(dataScore).then(() => {
         return router.push(`/${pages.success}/${id}`);
       });
@@ -93,6 +94,7 @@ const LevelPage: React.FC = () => {
   useEffect(() => {
     const updateGame = async (id: string) => {
       if (dataScore.life === 0) {
+        dispatch(setProgress(0));
         updateScore(dataScore).then(() => {
           return router.push(`/${pages.failed}/${id}`);
         });
@@ -105,9 +107,27 @@ const LevelPage: React.FC = () => {
     return getRandomNumber(notes ? notes?.length : 0);
   };
 
+  useEffect(() => {
+    if (data && record) {
+      let value = 0;
+      const id = setInterval(() => {
+        value = value + 4;
+        dispatch(setProgress(value));
+        if (value === 100) {
+          clearInterval(id);
+          const timeID = setTimeout(() => {
+            dispatch(setProgress(0));
+            clearTimeout(timeID);
+          }, 800);
+        }
+      }, 120);
+    }
+  }, [record]);
+
   const getFrequency = () => {
     setTimeout(() => {
       setRecord(true);
+      dispatch(setProgress(0));
       const MicroStream = new MicrophoneStream() as unknown as MicrophoneProps;
       const frequencyData: number[] = [];
       navigator.mediaDevices
@@ -147,7 +167,7 @@ const LevelPage: React.FC = () => {
       play(`/${note.src}`);
       setDisabled(false);
     }
-    config.microphone && getFrequency();
+    state.config.microphone && getFrequency();
   };
 
   const analyzeFrequency = () => {
@@ -178,7 +198,7 @@ const LevelPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!record && config.microphone) {
+    if (!record && state.config.microphone) {
       analyzeFrequency();
     }
   }, [record]);
@@ -259,7 +279,7 @@ const LevelPage: React.FC = () => {
             data.map((note) => (
               <Button
                 style={{ width: 86, height: 36, fontSize: 14 }}
-                disabled={disabled}
+                disabled={disabled || state.config.microphone}
                 onClick={async () => await handleIsCorrect(note)}
                 key={note.id}
               >{`${note.name} (${note.id})`}</Button>

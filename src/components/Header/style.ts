@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
   flex-direction: row;
   height: 76px;
   box-shadow: ${shadow};
-  margin-bottom: 24px;
   color: ${primary};
 `;
 

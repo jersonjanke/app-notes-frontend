@@ -20,4 +20,5 @@ export interface PasswordData {
 export interface StoreData {
   user: User;
   config: ConfigDto;
+  progress: { value: number };
 }
