@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { toastMSG } from 'utils/toast';
 import { allNote } from 'utils/notes';
+import { setProgress } from 'store/actions/progress';
 import Flex from '@/components/Flex';
 import Button from '@/components/Button';
 import Stepper from '@/components/Stepper';
@@ -27,7 +28,6 @@ import ScoreService from 'services/ScoreService';
 import Heart from '@/components/Heart';
 import MicrophoneStream from 'microphone-stream';
 import Pitchfinder from 'pitchfinder';
-import { setProgress } from 'store/actions/progress';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;

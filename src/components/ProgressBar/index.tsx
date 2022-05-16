@@ -1,5 +1,5 @@
-import { transparentize } from 'polished';
 import styled from 'styled-components';
+import { transparentize } from 'polished';
 import { primary, white } from 'utils/colors';
 
 export interface ProgressBarProps {
@@ -40,21 +40,4 @@ const CurrentProgress = styled.div<{
   transition: .25s ease;
   z-index: 2;
   position: relative;
-`;
-
-const TextShadow = styled.span<{
-  progress: number;
-}>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  color: ${primary};
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  text-transform: lowercase;
-  overflow: hidden;
-  padding-left: 4px;
-  white-space: nowrap;
 `;

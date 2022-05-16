@@ -1,17 +1,17 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Switch from 'react-switch';
-import ReactModal from 'react-modal';
 import { primary } from 'utils/colors';
-import Flex from '../Flex';
-import Title from '../Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { setConfig } from 'store/actions/config';
 import { StoreData } from 'types/Login';
-import Button from '../Button';
 import { WrapperButtonOut } from './style';
 import { userUpdate } from 'store/actions/user';
+import Switch from 'react-switch';
+import ReactModal from 'react-modal';
+import Flex from '../Flex';
+import Title from '../Title';
+import Button from '../Button';
 
 type Props = {
   open: boolean;
@@ -55,7 +55,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
         />
       </Flex>
       <WrapperButtonOut>
-        <Button onClick={handleLogOut}>Sair</Button>
+        <Button onClick={handleLogOut}>Logout</Button>
       </WrapperButtonOut>
     </ReactModal>
   );

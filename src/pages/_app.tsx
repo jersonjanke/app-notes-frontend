@@ -19,8 +19,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (user?.token?.length) {
       axios.defaults.headers.common['Authorization'] = user.token;
-    } else {
-      router.push('/');
     }
   }, [user]);
 
