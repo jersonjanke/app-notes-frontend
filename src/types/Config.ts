@@ -1,4 +1,5 @@
 export type ConfigDto = {
+  autoplay: boolean;
   microphone: boolean;
 };
 

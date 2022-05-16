@@ -31,7 +31,7 @@ import Pitchfinder from 'pitchfinder';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
-  const MARGIN_HZ = 4;
+  const MARGIN_HZ = 5;
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
@@ -140,12 +140,12 @@ const LevelPage: React.FC = () => {
         const detectPitch = Pitchfinder.AMDF({
           minFrequency: 60,
           maxFrequency: 700,
-          ratio: 5,
+          ratio: 10,
         });
         const stream = detectPitch(MicrophoneStream.toRaw(chunk));
 
         if (stream) {
-          frequencyData.push(Number(stream) * 0.089 + Number(stream));
+          frequencyData.push(Number(stream));
           let averageHZ =
             frequencyData.reduce((a, b) => a + b, 0) / frequencyData.length;
           setFrequency(averageHZ);
@@ -156,7 +156,7 @@ const LevelPage: React.FC = () => {
         MicroStream.stop();
         setRecord(false);
       }, 2500);
-    }, 1000);
+    }, 2050);
   };
 
   const handlePlay = () => {

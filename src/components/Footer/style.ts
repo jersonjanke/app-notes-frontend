@@ -5,12 +5,7 @@ export const Wrapper = styled.div`
   z-index: -1;
 
   .custom-shape-divider-bottom {
-    position: absolute;
-    bottom: 64px;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
+    margin-top: 32px;
   }
 
   .custom-shape-divider-bottom svg {
