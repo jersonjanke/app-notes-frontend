@@ -3,7 +3,7 @@ import { CONFIG } from './../../actions/index';
 
 const initialState = {
   autoplay: true,
-  microphone: false,
+  microphone: true,
 };
 
 type DataConfig = {

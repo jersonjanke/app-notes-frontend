@@ -31,7 +31,7 @@ import Pitchfinder from 'pitchfinder';
 
 const LevelPage: React.FC = () => {
   const LIFE = 5;
-  const MARGIN_HZ = 5;
+  const MARGIN_HZ = 3;
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
@@ -44,6 +44,8 @@ const LevelPage: React.FC = () => {
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
+  const [disabledStart, setDisabledStart] = useState(false);
+  const [intervalIDs, setIntervalID] = useState<NodeJS.Timeout>();
   const state = useSelector((state: StoreData) => state);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
@@ -138,16 +140,16 @@ const LevelPage: React.FC = () => {
 
       MicroStream.on('data', (chunk: Buffer) => {
         const detectPitch = Pitchfinder.AMDF({
-          minFrequency: 60,
+          minFrequency: 65,
           maxFrequency: 700,
-          ratio: 10,
         });
         const stream = detectPitch(MicrophoneStream.toRaw(chunk));
 
         if (stream) {
-          frequencyData.push(Number(stream));
+          frequencyData.push(Number(stream) * 0.09 + Number(stream));
           let averageHZ =
             frequencyData.reduce((a, b) => a + b, 0) / frequencyData.length;
+
           setFrequency(averageHZ);
         }
       });
@@ -159,7 +161,7 @@ const LevelPage: React.FC = () => {
     }, 2050);
   };
 
-  const handlePlay = () => {
+  const playNote = () => {
     if (data) {
       const random = setRandomNote(data);
       const note = data[random];
@@ -167,8 +169,39 @@ const LevelPage: React.FC = () => {
       play(`/${note.src}`);
       setDisabled(false);
     }
+    setDisabledStart(state.config.autoplay);
     state.config.microphone && getFrequency();
   };
+
+  const handlePlay = () => {
+    if (state.config.autoplay) {
+      setDisabledStart(true);
+      playNote();
+    } else {
+      playNote();
+    }
+  };
+
+  useEffect(() => {
+    if (!state.config.autoplay || !disabledStart) return;
+    if (intervalIDs && (steps.length === active || dataScore.life === 0)) {
+      return clearTimeout(intervalIDs);
+    }
+
+    if (!intervalIDs) {
+      const timer = setInterval(() => {
+        playNote();
+      }, 5000);
+
+      setIntervalID(timer);
+    }
+  }, [disabledStart, active, steps, dataScore]);
+
+  useEffect(() => {
+    return () => {
+      if (intervalIDs) clearTimeout(intervalIDs);
+    };
+  }, []);
 
   const analyzeFrequency = () => {
     if (!correct) return;
@@ -201,7 +234,7 @@ const LevelPage: React.FC = () => {
     if (!record && state.config.microphone) {
       analyzeFrequency();
     }
-  }, [record]);
+  }, [record, frequency]);
 
   const handleIsCorrect = async (note: Note) => {
     setDisabled(true);
@@ -265,12 +298,12 @@ const LevelPage: React.FC = () => {
           gap="8px"
           style={{ marginTop: 24, marginBottom: 24 }}
         >
-          <ButtonCircle onClick={handlePlay}>
+          <ButtonCircle onClick={handlePlay} disabled={disabledStart}>
             <Flex justifyContent="center" style={{ marginLeft: 2 }}>
               <FontAwesomeIcon icon={faPlay as IconProp} size="2x" />
             </Flex>
           </ButtonCircle>
-          <ButtonCircle onClick={handleRepeat}>
+          <ButtonCircle onClick={handleRepeat} disabled={disabledStart}>
             <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
           </ButtonCircle>
         </Flex>
