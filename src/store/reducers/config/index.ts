@@ -2,8 +2,8 @@ import { ConfigData } from 'types/Config';
 import { CONFIG } from './../../actions/index';
 
 const initialState = {
-  autoplay: true,
-  microphone: true,
+  autoplay: false,
+  microphone: false,
 };
 
 type DataConfig = {

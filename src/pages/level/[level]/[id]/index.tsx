@@ -14,39 +14,37 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { play } from 'services/AudioService';
 import { ScoreDto } from 'types/Score';
 import { primary } from 'utils/colors';
-import { MicrophoneProps } from 'utils/microphone';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { toastMSG } from 'utils/toast';
 import { allNote } from 'utils/notes';
 import { setProgress } from 'store/actions/progress';
+import { NextPage } from 'next';
 import Flex from '@/components/Flex';
 import Button from '@/components/Button';
 import Stepper from '@/components/Stepper';
 import ButtonCircle from '@/components/ButtonCircle';
 import ScoreService from 'services/ScoreService';
 import Heart from '@/components/Heart';
-import MicrophoneStream from 'microphone-stream';
-import Pitchfinder from 'pitchfinder';
+import Microphone from '@/components/Microphone';
 
-const LevelPage: React.FC = () => {
+const LevelPage: NextPage = () => {
   const LIFE = 5;
-  const MARGIN_HZ = 3;
+  const MARGIN_HZ = 1.5;
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
   const router = useRouter();
   const dispatch = useDispatch();
+  const state = useSelector((state: StoreData) => state);
   const { id } = router.query;
   const { level } = router.query;
   const [active, setActive] = useState(0);
+  const [microphone, setMicrophone] = useState(false);
   const [record, setRecord] = useState(false);
-  const [frequency, setFrequency] = useState(0);
   const [correct, setCorrect] = useState<Note | null>();
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
   const [disabledStart, setDisabledStart] = useState(false);
-  const [intervalIDs, setIntervalID] = useState<NodeJS.Timeout>();
-  const state = useSelector((state: StoreData) => state);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
     done: false,
@@ -74,6 +72,7 @@ const LevelPage: React.FC = () => {
 
   useEffect(() => {
     if (steps.length === active) {
+      setMicrophone(false);
       dispatch(setProgress(0));
       updateScore(dataScore).then(() => {
         return router.push(`/${pages.success}/${id}`);
@@ -83,6 +82,10 @@ const LevelPage: React.FC = () => {
     setData(randomData);
     const random = setRandomNote(randomData);
     setCorrect(randomData[random]);
+
+    return () => {
+      if (steps.length === active) setMicrophone(false);
+    };
   }, [level, active]);
 
   useEffect(() => {
@@ -96,6 +99,7 @@ const LevelPage: React.FC = () => {
   useEffect(() => {
     const updateGame = async (id: string) => {
       if (dataScore.life === 0) {
+        setMicrophone(false);
         dispatch(setProgress(0));
         updateScore(dataScore).then(() => {
           return router.push(`/${pages.failed}/${id}`);
@@ -103,59 +107,36 @@ const LevelPage: React.FC = () => {
       }
     };
     id && updateGame(id as string);
+
+    return () => {
+      if (dataScore.life === 0) setMicrophone(false);
+    };
   }, [dataScore.life, active]);
 
   const setRandomNote = (notes: Note[]) => {
     return getRandomNumber(notes ? notes?.length : 0);
   };
 
-  useEffect(() => {
-    if (data && record) {
-      let value = 0;
-      const id = setInterval(() => {
-        value = value + 4;
-        dispatch(setProgress(value));
-        if (value === 100) {
-          clearInterval(id);
-          const timeID = setTimeout(() => {
-            dispatch(setProgress(0));
-            clearTimeout(timeID);
-          }, 800);
-        }
-      }, 120);
-    }
-  }, [record]);
+  const startProgressBar = () => {
+    let value = 0;
+    const id = setInterval(() => {
+      value = value + 4;
+      dispatch(setProgress(value));
+      if (value === 100) {
+        clearInterval(id);
+        const timeID = setTimeout(() => {
+          dispatch(setProgress(0));
+          clearTimeout(timeID);
+        }, 800);
+      }
+    }, 120);
+  };
 
   const getFrequency = () => {
     setTimeout(() => {
       setRecord(true);
       dispatch(setProgress(0));
-      const MicroStream = new MicrophoneStream() as unknown as MicrophoneProps;
-      const frequencyData: number[] = [];
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then((stream: MediaStream) => {
-          MicroStream.setStream(stream);
-        });
-
-      MicroStream.on('data', (chunk: Buffer) => {
-        const detectPitch = Pitchfinder.AMDF({
-          minFrequency: 65,
-          maxFrequency: 700,
-        });
-        const stream = detectPitch(MicrophoneStream.toRaw(chunk));
-
-        if (stream) {
-          frequencyData.push(Number(stream) * 0.09 + Number(stream));
-          let averageHZ =
-            frequencyData.reduce((a, b) => a + b, 0) / frequencyData.length;
-
-          setFrequency(averageHZ);
-        }
-      });
-
       setTimeout(() => {
-        MicroStream.stop();
         setRecord(false);
       }, 2500);
     }, 2050);
@@ -166,14 +147,52 @@ const LevelPage: React.FC = () => {
       const random = setRandomNote(data);
       const note = data[random];
       setCorrect(note);
-      play(`/${note.src}`);
+      const audio = play(`/${note.src}`);
+      state.config.microphone &&
+        audio.addEventListener(
+          'ended',
+          () => {
+            startProgressBar();
+            getFrequency();
+          },
+          false
+        );
       setDisabled(false);
     }
+
     setDisabledStart(state.config.autoplay);
-    state.config.microphone && getFrequency();
   };
 
-  const handlePlay = () => {
+  useEffect(() => {
+    if (!correct) return;
+    if (record) {
+      const notes = dataScore.notes;
+      notes.push({
+        level: active + 1,
+        correct: correct.name,
+        selected:
+          allNote.find(
+            (note) =>
+              state.frequency.value >= note.frequency - MARGIN_HZ &&
+              state.frequency.value <= note.frequency + MARGIN_HZ
+          )?.name || '',
+      });
+
+      const correctNote = analyzeFrequency(state.frequency.value);
+
+      if (correctNote) {
+        setActive(active + 1);
+        setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
+        toastMSG('Correto!', 'success');
+      } else {
+        setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
+        toastMSG('Incorreto!', 'error');
+      }
+    }
+  }, [record]);
+
+  const handlePlay = async () => {
+    state.config.microphone && setMicrophone(true);
     if (state.config.autoplay) {
       setDisabledStart(true);
       playNote();
@@ -182,59 +201,18 @@ const LevelPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (!state.config.autoplay || !disabledStart) return;
-    if (intervalIDs && (steps.length === active || dataScore.life === 0)) {
-      return clearTimeout(intervalIDs);
-    }
-
-    if (!intervalIDs) {
-      const timer = setInterval(() => {
-        playNote();
-      }, 5000);
-
-      setIntervalID(timer);
-    }
-  }, [disabledStart, active, steps, dataScore]);
-
-  useEffect(() => {
-    return () => {
-      if (intervalIDs) clearTimeout(intervalIDs);
-    };
-  }, []);
-
-  const analyzeFrequency = () => {
+  const analyzeFrequency = (hz: number) => {
     if (!correct) return;
-    const notes = dataScore.notes;
-    notes.push({
-      level: active + 1,
-      correct: correct.name,
-      selected:
-        allNote.find(
-          (note) =>
-            frequency >= note.frequency - MARGIN_HZ &&
-            frequency <= note.frequency + MARGIN_HZ
-        )?.name || '',
-    });
-
     if (
-      frequency >= correct.frequency - MARGIN_HZ &&
-      frequency <= correct.frequency + MARGIN_HZ
+      hz >= correct.frequency - MARGIN_HZ &&
+      hz <= correct.frequency + MARGIN_HZ
     ) {
-      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
-      toastMSG('Correto!', 'success');
-      setActive(active + 1);
+      setRecord(false);
+      return true;
     } else {
-      setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
-      toastMSG('Incorreto!', 'error');
+      return false;
     }
   };
-
-  useEffect(() => {
-    if (!record && state.config.microphone) {
-      analyzeFrequency();
-    }
-  }, [record, frequency]);
 
   const handleIsCorrect = async (note: Note) => {
     setDisabled(true);
@@ -306,6 +284,9 @@ const LevelPage: React.FC = () => {
           <ButtonCircle onClick={handleRepeat} disabled={disabledStart}>
             <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
           </ButtonCircle>
+        </Flex>
+        <Flex justifyContent="center">
+          <Microphone start={microphone} />
         </Flex>
         <Flex justifyContent="center" gap="8px" flexWrap="wrap">
           {data &&

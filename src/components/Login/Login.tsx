@@ -36,19 +36,23 @@ const Login = () => {
   return (
     <>
       <Wrapper>
-        <Title level={1}>Login</Title>
-        <Input
-          title="E-mail"
-          name="email"
-          type="text"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <InputPassword
-          title="Senha"
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <form>
+          <Title level={1}>Login</Title>
+          <Input
+            title="E-mail"
+            name="email"
+            type="text"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputPassword
+            title="Senha"
+            name="password"
+            autoComplete="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </form>
+
         <Button
           style={{ marginTop: 8 }}
           loading={loading}

@@ -3,4 +3,5 @@ export const play = (src: string) => {
   audio.src = src;
   audio.load();
   audio.play();
+  return audio;
 };

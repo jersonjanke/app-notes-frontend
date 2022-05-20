@@ -21,4 +21,5 @@ export interface StoreData {
   user: User;
   config: ConfigDto;
   progress: { value: number };
+  frequency: { value: number };
 }

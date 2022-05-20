@@ -1,20 +1,18 @@
 import '../../styles/globals.css';
-import { storeWrapper } from '../store';
-import type { AppProps } from 'next/app';
-import { Container } from 'react-grid-system';
+import axios from 'axios';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+import type { AppProps } from 'next/app';
+import { Container } from 'react-grid-system';
+import { ToastContainer } from 'react-toastify';
+import { storeWrapper } from '../store';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const user = useSelector((state: StoreData) => state.user);
-  const router = useRouter();
 
   useEffect(() => {
     if (user?.token?.length) {
