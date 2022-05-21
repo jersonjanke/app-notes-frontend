@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     <Row>
       <Hidden sm xs>
         <Col md={4}>
-          <Image width={851} height={1262} src={guitar} />
+          <Image alt="guitar" width={851} height={1262} src={guitar} />
         </Col>
       </Hidden>
       <Col md={8} sm={12}>

@@ -21,7 +21,7 @@ const SignUpSuccess: React.FC = () => {
         }}
       >
         <Title level={1}>Usuário criado com sucesso!</Title>
-        <Image src={Band} width={540} height={260} />
+        <Image alt="Imagem Sucesso" src={Band} width={540} height={260} />
         <Button onClick={() => router.push('/')}>Login</Button>
       </div>
     </Container>

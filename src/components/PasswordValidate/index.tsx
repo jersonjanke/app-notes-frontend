@@ -34,7 +34,7 @@ const PasswordValidate = ({ password }: Props) => {
     } else {
       dispatch(setValidPassword(false));
     }
-  }, [numberOk, upperCaseOk, lowerCaseOk, specialCharacterOk]);
+  }, [numberOk, upperCaseOk, lowerCaseOk, specialCharacterOk, dispatch]);
 
   return (
     <Wrapper>

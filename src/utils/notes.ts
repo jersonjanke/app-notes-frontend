@@ -312,7 +312,7 @@ export const notes = {
     name: 'Lá',
     cipher: 'A',
     src: 'notes/E5.wav',
-    frequency: 109.5,
+    frequency: 110,
   },
   E6: {
     id: 'E6',

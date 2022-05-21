@@ -41,7 +41,7 @@ const LevelPage: NextPage = () => {
   const [active, setActive] = useState(0);
   const [microphone, setMicrophone] = useState(false);
   const [record, setRecord] = useState(false);
-  const [correct, setCorrect] = useState<Note | null>();
+  const [correct, setCorrect] = useState<Note | null>(null);
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
   const [disabledStart, setDisabledStart] = useState(false);
@@ -125,11 +125,11 @@ const LevelPage: NextPage = () => {
       if (value === 100) {
         clearInterval(id);
         const timeID = setTimeout(() => {
-          dispatch(setProgress(0));
           clearTimeout(timeID);
+          return dispatch(setProgress(0));
         }, 800);
       }
-    }, 120);
+    }, 200);
   };
 
   const getFrequency = () => {
@@ -152,8 +152,8 @@ const LevelPage: NextPage = () => {
         audio.addEventListener(
           'ended',
           () => {
-            startProgressBar();
             getFrequency();
+            startProgressBar();
           },
           false
         );
@@ -163,31 +163,36 @@ const LevelPage: NextPage = () => {
     setDisabledStart(state.config.autoplay);
   };
 
+  const validateNote = (selectNote: Note, correctNote: Note) => {
+    const notes = dataScore.notes;
+    notes.push({
+      level: active + 1,
+      correct: correctNote ? correctNote?.name : 'null',
+      selected: selectNote.name,
+    });
+
+    const isCorrect = selectNote.frequency === correctNote.frequency;
+    if (isCorrect) {
+      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
+      toastMSG('Correto!', 'success');
+      setActive(active + 1);
+    } else {
+      setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
+      toastMSG('Incorreto!', 'error');
+    }
+  };
+
   useEffect(() => {
-    if (!correct) return;
-    if (record) {
-      const notes = dataScore.notes;
-      notes.push({
-        level: active + 1,
-        correct: correct.name,
-        selected:
-          allNote.find(
-            (note) =>
-              state.frequency.value >= note.frequency - MARGIN_HZ &&
-              state.frequency.value <= note.frequency + MARGIN_HZ
-          )?.name || '',
-      });
+    if (!correct && !record) return;
+    const selectedNote =
+      allNote.find(
+        (note) =>
+          state.frequency.value >= note.frequency - MARGIN_HZ &&
+          state.frequency.value <= note.frequency + MARGIN_HZ
+      ) || null;
 
-      const correctNote = analyzeFrequency(state.frequency.value);
-
-      if (correctNote) {
-        setActive(active + 1);
-        setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
-        toastMSG('Correto!', 'success');
-      } else {
-        setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
-        toastMSG('Incorreto!', 'error');
-      }
+    if (selectedNote && correct) {
+      validateNote(selectedNote, correct);
     }
   }, [record]);
 
@@ -201,38 +206,9 @@ const LevelPage: NextPage = () => {
     }
   };
 
-  const analyzeFrequency = (hz: number) => {
-    if (!correct) return;
-    if (
-      hz >= correct.frequency - MARGIN_HZ &&
-      hz <= correct.frequency + MARGIN_HZ
-    ) {
-      setRecord(false);
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleIsCorrect = async (note: Note) => {
+  const handleIsCorrect = async (note: Note, correctNote: Note) => {
     setDisabled(true);
-
-    const notes = dataScore.notes;
-    notes.push({
-      level: active + 1,
-      correct: correct ? correct?.name : 'null',
-      selected: note.name,
-    });
-
-    const isCorrect = note === correct;
-    if (isCorrect) {
-      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
-      toastMSG('Correto!', 'success');
-      setActive(active + 1);
-    } else {
-      setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
-      toastMSG('Incorreto!', 'error');
-    }
+    validateNote(note, correctNote);
   };
 
   const handleRepeat = () => {
@@ -294,7 +270,9 @@ const LevelPage: NextPage = () => {
               <Button
                 style={{ width: 86, height: 36, fontSize: 14 }}
                 disabled={disabled || state.config.microphone}
-                onClick={async () => await handleIsCorrect(note)}
+                onClick={async () =>
+                  correct && (await handleIsCorrect(note, correct))
+                }
                 key={note.id}
               >{`${note.name} (${note.id})`}</Button>
             ))}

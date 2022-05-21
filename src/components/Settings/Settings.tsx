@@ -71,6 +71,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
 
   const handleLogOut = () => {
     dispatch(userUpdate({ email: '', name: '', token: '' }));
+    router.push('/');
   };
 
   return (

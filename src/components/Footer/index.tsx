@@ -1,5 +1,6 @@
 import { Wrapper, Info } from './style';
 import Flex from '../Flex';
+import Image from 'next/image';
 
 const Footer: React.FC = () => {
   return (
@@ -31,9 +32,24 @@ const Footer: React.FC = () => {
             </p>
           </Flex>
           <Flex gap="12px" justifyContent="flex-end" alignItems="center">
-            <img src="/icons/instagram-white.png" height={32} width={32} />
-            <img src="/icons/facebook-white.png" height={32} width={32} />
-            <img src="/icons/github-white.png" height={32} width={32} />
+            <Image
+              alt="instagram"
+              src="/icons/instagram-white.png"
+              height={32}
+              width={32}
+            />
+            <Image
+              alt="facebook"
+              src="/icons/facebook-white.png"
+              height={32}
+              width={32}
+            />
+            <Image
+              alt="github"
+              src="/icons/github-white.png"
+              height={32}
+              width={32}
+            />
           </Flex>
         </Flex>
       </Info>

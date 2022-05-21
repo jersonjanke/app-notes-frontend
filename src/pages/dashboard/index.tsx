@@ -15,19 +15,22 @@ const Dashboard: React.FC = () => {
   const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const user = useSelector((state: StoreData) => state.user);
 
-  const createScore = useCallback(async (level: number) => {
-    try {
-      const payload = {
-        email: user.email,
-        life: LIFE,
-        score: 0,
-      };
-      const response = await ScoreService.createScore(payload);
-      response._id && router.push(`${pages.level}/${level}/${response._id}`);
-    } catch (error) {
-      toastMSG(`Problema ao criar o jogo: ${error}`, 'error');
-    }
-  }, []);
+  const createScore = useCallback(
+    async (level: number) => {
+      try {
+        const payload = {
+          email: user.email,
+          life: LIFE,
+          score: 0,
+        };
+        const response = await ScoreService.createScore(payload);
+        response._id && router.push(`${pages.level}/${level}/${response._id}`);
+      } catch (error) {
+        toastMSG(`Problema ao criar o jogo: ${error}`, 'error');
+      }
+    },
+    [router, user.email]
+  );
 
   return (
     <Row>

@@ -35,7 +35,7 @@ const TunerPage: NextPage = () => {
     if (source != undefined && analyser != undefined) {
       source?.connect(analyser);
     }
-  }, [source]);
+  }, [source, analyser]);
 
   const start = async () => {
     if (!audio) return;
