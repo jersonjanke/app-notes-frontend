@@ -8,7 +8,6 @@ import Settings from '../Settings';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import ProgressBar from '../ProgressBar';
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -37,7 +36,6 @@ const Header: React.FC = () => {
           <Settings open={show} onClose={() => setShow(false)} />
         )}
       </Wrapper>
-      <ProgressBar progress={state.progress.value} />
     </>
   );
 };

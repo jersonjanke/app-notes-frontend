@@ -27,6 +27,7 @@ import ButtonCircle from '@/components/ButtonCircle';
 import ScoreService from 'services/ScoreService';
 import Heart from '@/components/Heart';
 import Microphone from '@/components/Microphone';
+import { setFrequency } from 'store/actions/frequency';
 
 const LevelPage: NextPage = () => {
   const LIFE = 5;
@@ -40,7 +41,6 @@ const LevelPage: NextPage = () => {
   const { level } = router.query;
   const [active, setActive] = useState(0);
   const [microphone, setMicrophone] = useState(false);
-  const [record, setRecord] = useState(false);
   const [correct, setCorrect] = useState<Note | null>(null);
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
@@ -71,11 +71,12 @@ const LevelPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    if (!correct) return;
     if (steps.length === active) {
       setMicrophone(false);
       dispatch(setProgress(0));
       updateScore(dataScore).then(() => {
-        return router.push(`/${pages.success}/${id}`);
+        return router.push(`/${pages.success}/${id}?level=${level}`);
       });
     }
     const randomData = generateLevel(Number(level));
@@ -89,20 +90,12 @@ const LevelPage: NextPage = () => {
   }, [level, active]);
 
   useEffect(() => {
-    if (data) {
-      const random = setRandomNote(data);
-      const note = data[random];
-      setCorrect(note);
-    }
-  }, [data]);
-
-  useEffect(() => {
     const updateGame = async (id: string) => {
       if (dataScore.life === 0) {
         setMicrophone(false);
         dispatch(setProgress(0));
         updateScore(dataScore).then(() => {
-          return router.push(`/${pages.failed}/${id}`);
+          return router.push(`/${pages.failed}/${id}?level=${level}`);
         });
       }
     };
@@ -113,54 +106,29 @@ const LevelPage: NextPage = () => {
     };
   }, [dataScore.life, active]);
 
+  useEffect(() => {
+    if (!correct || !microphone) return;
+
+    let selectedNote =
+      allNote.find(
+        (note) =>
+          state.frequency.value >= note.frequency - MARGIN_HZ &&
+          state.frequency.value <= note.frequency + MARGIN_HZ
+      ) || null;
+
+    if (selectedNote) {
+      validateNote(selectedNote, correct);
+    }
+    return () => {
+      selectedNote = null;
+      setMicrophone(false);
+      setDisabledStart(false);
+      dispatch(setFrequency(-1));
+    };
+  }, [microphone, state.frequency.value]);
+
   const setRandomNote = (notes: Note[]) => {
     return getRandomNumber(notes ? notes?.length : 0);
-  };
-
-  const startProgressBar = () => {
-    let value = 0;
-    const id = setInterval(() => {
-      value = value + 4;
-      dispatch(setProgress(value));
-      if (value === 100) {
-        clearInterval(id);
-        const timeID = setTimeout(() => {
-          clearTimeout(timeID);
-          return dispatch(setProgress(0));
-        }, 800);
-      }
-    }, 200);
-  };
-
-  const getFrequency = () => {
-    setTimeout(() => {
-      setRecord(true);
-      dispatch(setProgress(0));
-      setTimeout(() => {
-        setRecord(false);
-      }, 2500);
-    }, 2050);
-  };
-
-  const playNote = () => {
-    if (data) {
-      const random = setRandomNote(data);
-      const note = data[random];
-      setCorrect(note);
-      const audio = play(`/${note.src}`);
-      state.config.microphone &&
-        audio.addEventListener(
-          'ended',
-          () => {
-            getFrequency();
-            startProgressBar();
-          },
-          false
-        );
-      setDisabled(false);
-    }
-
-    setDisabledStart(state.config.autoplay);
   };
 
   const validateNote = (selectNote: Note, correctNote: Note) => {
@@ -176,31 +144,49 @@ const LevelPage: NextPage = () => {
       setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
       toastMSG('Correto!', 'success');
       setActive(active + 1);
+      dispatch(setFrequency(-1));
+      setMicrophone(false);
     } else {
       setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
       toastMSG('Incorreto!', 'error');
+      dispatch(setFrequency(-1));
+      setMicrophone(false);
     }
   };
 
-  useEffect(() => {
-    if (!correct && !record) return;
-    const selectedNote =
-      allNote.find(
-        (note) =>
-          state.frequency.value >= note.frequency - MARGIN_HZ &&
-          state.frequency.value <= note.frequency + MARGIN_HZ
-      ) || null;
-
-    if (selectedNote && correct) {
-      validateNote(selectedNote, correct);
+  const playNote = () => {
+    setMicrophone(false);
+    if (data) {
+      const random = setRandomNote(data);
+      const note = data[random];
+      setCorrect(note);
+      const audio = play(`/${note.src}`);
+      state.config.microphone &&
+        audio.addEventListener('ended', () => setMicrophone(true), false);
+      setDisabled(false);
+    } else {
+      const randomData = generateLevel(Number(level));
+      setData(randomData);
+      const random = setRandomNote(randomData);
+      const note = randomData[random];
+      setCorrect(note);
+      const audio = play(`/${note.src}`);
+      state.config.microphone &&
+        audio.addEventListener('ended', () => setMicrophone(true), false);
+      setDisabled(false);
     }
-  }, [record]);
+
+    setDisabledStart(true);
+  };
 
   const handlePlay = async () => {
+    setDisabledStart(true);
     state.config.microphone && setMicrophone(true);
-    if (state.config.autoplay) {
+    if (state.config.autoplay && correct) {
       setDisabledStart(true);
-      playNote();
+      const audio = play(`/${correct.src}`);
+      state.config.microphone &&
+        audio.addEventListener('ended', () => setMicrophone(true), false);
     } else {
       playNote();
     }
@@ -208,6 +194,7 @@ const LevelPage: NextPage = () => {
 
   const handleIsCorrect = async (note: Note, correctNote: Note) => {
     setDisabled(true);
+    setDisabledStart(false);
     validateNote(note, correctNote);
   };
 
@@ -257,7 +244,10 @@ const LevelPage: NextPage = () => {
               <FontAwesomeIcon icon={faPlay as IconProp} size="2x" />
             </Flex>
           </ButtonCircle>
-          <ButtonCircle onClick={handleRepeat} disabled={disabledStart}>
+          <ButtonCircle
+            onClick={handleRepeat}
+            disabled={!correct || state.config.microphone}
+          >
             <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
           </ButtonCircle>
         </Flex>

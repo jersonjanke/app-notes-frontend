@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   height: 76px;
   box-shadow: ${shadow};
   color: ${primary};
+  margin-bottom: 24px;
 `;
 
 export const Menu = styled.div`

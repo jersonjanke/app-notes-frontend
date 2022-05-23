@@ -20,16 +20,28 @@ const Heading1 = styled.h1`
   font-weight: 900;
   font-size: 36px;
   color: ${primary};
+
+  @media screen and (max-width: 600px) {
+    font-size: 22px;
+  }
 `;
 
 const Heading2 = styled.h2`
   font-weight: 900;
   font-size: 24px;
   color: ${primary};
+
+  @media screen and (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
 const Heading3 = styled.h3`
   font-weight: 900;
   font-size: 18px;
   color: ${primary};
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 `;

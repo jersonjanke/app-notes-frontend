@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NextPage } from 'next';
 import ScoreService from 'services/ScoreService';
 import { storeWrapper } from 'store';
-import { User } from 'types/Login';
+import { StoreData, User } from 'types/Login';
 import { ScoreDto } from 'types/Score';
 import { red } from 'utils/colors';
 import { faFlushed, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,9 @@ import Table from '@/components/Table';
 import Button from '@/components/Button';
 import { useRouter } from 'next/router';
 import { pages } from 'utils/pages';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { toastMSG } from 'utils/toast';
 
 type Props = {
   result: {
@@ -22,8 +24,28 @@ type Props = {
 };
 
 const FailedPage: NextPage<Props> = ({ result }) => {
+  const LIFE = 5;
   const router = useRouter();
+  const { level } = router?.query;
   const [percentual, setPercentual] = useState(0);
+  const user = useSelector((state: StoreData) => state.user);
+
+  const createScore = useCallback(
+    async (level: number) => {
+      try {
+        const payload = {
+          email: user.email,
+          life: LIFE,
+          score: 0,
+        };
+        const response = await ScoreService.createScore(payload);
+        response._id && router.push(`/${pages.level}/${level}/${response._id}`);
+      } catch (error) {
+        toastMSG(`Problema ao criar o jogo: ${error}`, 'error');
+      }
+    },
+    [router, user.email]
+  );
 
   useEffect(() => {
     const correctItem = result.data.notes.filter(
@@ -32,6 +54,10 @@ const FailedPage: NextPage<Props> = ({ result }) => {
 
     setPercentual((correctItem.length / result.data.notes.length) * 100);
   }, [result]);
+
+  const handleRepeat = () => {
+    createScore(Number(level));
+  };
 
   return (
     <>
@@ -91,11 +117,25 @@ const FailedPage: NextPage<Props> = ({ result }) => {
             ))}
           </tbody>
         </Table>
-        <Flex justifyContent="space-between" style={{ marginTop: 12 }}>
-          <Button onClick={() => router.push(`/${pages.dashboard}`)}>
-            Voltar
-          </Button>
-          <Title level={3}>{`Você acerto: ${percentual.toFixed(2)}%`}</Title>
+        <Flex
+          justifyContent="space-between"
+          style={{ marginTop: 8 }}
+          alignContent="center"
+        >
+          <Flex gap="12px" style={{ width: '40%' }}>
+            <Button
+              onClick={() => router.push(`/${pages.dashboard}`)}
+              style={{ width: 76 }}
+            >
+              Voltar
+            </Button>
+            <Button onClick={handleRepeat} style={{ width: 76 }}>
+              Repetir
+            </Button>
+          </Flex>
+          <Flex alignItems="center" justifyContent="flex-end">
+            <Title level={3}>{`Você acerto: ${percentual.toFixed(2)}%`}</Title>
+          </Flex>
         </Flex>
       </Flex>
     </>

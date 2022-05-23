@@ -11,11 +11,10 @@ export const Wrapper = styled.div`
   .custom-shape-divider-bottom svg {
     position: relative;
     display: block;
-    width: calc(100% + 20px);
+    width: 100%;
     height: 142px;
 
     @media (max-width: 768px) {
-      width: 100%;
       height: 86px;
     }
   }
