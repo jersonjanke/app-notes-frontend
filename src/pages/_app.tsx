@@ -10,6 +10,7 @@ import { storeWrapper } from '../store';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { useEffect } from 'react';
+import { Head } from 'next/document';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const user = useSelector((state: StoreData) => state.user);
@@ -22,6 +23,25 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <Head>
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=G-ZKJ93ZEE7P`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-ZKJ93ZEE7P', {
+              page_path: window.location.pathname,
+            });
+          `,
+          }}
+        />
+      </Head>
       <Header />
       <Container className="container">
         <Component {...pageProps} />
