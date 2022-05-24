@@ -28,6 +28,7 @@ import ScoreService from 'services/ScoreService';
 import Heart from '@/components/Heart';
 import Microphone from '@/components/Microphone';
 import { setFrequency } from 'store/actions/frequency';
+import Loading from '@/components/Loading';
 
 const LevelPage: NextPage = () => {
   const LIFE = 5;
@@ -44,6 +45,7 @@ const LevelPage: NextPage = () => {
   const [correct, setCorrect] = useState<Note | null>(null);
   const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [disabledStart, setDisabledStart] = useState(false);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
@@ -56,6 +58,7 @@ const LevelPage: NextPage = () => {
 
   const updateScore = useCallback(async (data: ScoreDto) => {
     try {
+      setLoading(true);
       await ScoreService.updateScore({
         ...data,
         _id: id as string,
@@ -66,6 +69,7 @@ const LevelPage: NextPage = () => {
         email: data.email,
       });
     } catch (error) {
+      setLoading(false);
       toastMSG(`Problema ao atualizar o score: ${error}`, 'error');
     }
   }, []);
@@ -205,68 +209,74 @@ const LevelPage: NextPage = () => {
   return (
     <Flex flexDirection="column" gap="16px">
       <>
-        <Flex justifyContent="space-between">
-          <Flex>
-            <FontAwesomeIcon
-              size="2x"
-              color={primary}
-              style={{ cursor: 'pointer' }}
-              icon={faArrowAltCircleLeft as IconProp}
-              onClick={() => router.push(`/${pages.dashboard}`)}
-            />
-          </Flex>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <Flex justifyContent="space-between">
+              <Flex>
+                <FontAwesomeIcon
+                  size="2x"
+                  color={primary}
+                  style={{ cursor: 'pointer' }}
+                  icon={faArrowAltCircleLeft as IconProp}
+                  onClick={() => router.push(`/${pages.dashboard}`)}
+                />
+              </Flex>
 
-          <Flex
-            style={{ fontSize: 22, color: primary, textAlign: 'center' }}
-            flexDirection="column"
-          >
-            Level: {level}
-          </Flex>
+              <Flex
+                style={{ fontSize: 22, color: primary, textAlign: 'center' }}
+                flexDirection="column"
+              >
+                Level: {level}
+              </Flex>
 
-          <Flex
-            style={{ fontSize: 22, color: primary }}
-            justifyContent="flex-end"
-          >
-            Score: {dataScore?.score}
-          </Flex>
-        </Flex>
-
-        <Heart size={5} opacity={dataScore.life} />
-        <Stepper items={steps} level={active + 1} />
-
-        <Flex
-          justifyContent="center"
-          gap="8px"
-          style={{ marginTop: 24, marginBottom: 24 }}
-        >
-          <ButtonCircle onClick={handlePlay} disabled={disabledStart}>
-            <Flex justifyContent="center" style={{ marginLeft: 2 }}>
-              <FontAwesomeIcon icon={faPlay as IconProp} size="2x" />
+              <Flex
+                style={{ fontSize: 22, color: primary }}
+                justifyContent="flex-end"
+              >
+                Score: {dataScore?.score}
+              </Flex>
             </Flex>
-          </ButtonCircle>
-          <ButtonCircle
-            onClick={handleRepeat}
-            disabled={!correct || state.config.microphone}
-          >
-            <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
-          </ButtonCircle>
-        </Flex>
-        <Flex justifyContent="center">
-          <Microphone start={microphone} />
-        </Flex>
-        <Flex justifyContent="center" gap="8px" flexWrap="wrap">
-          {data &&
-            data.map((note) => (
-              <Button
-                style={{ width: 86, height: 36, fontSize: 14 }}
-                disabled={disabled || state.config.microphone}
-                onClick={async () =>
-                  correct && (await handleIsCorrect(note, correct))
-                }
-                key={note.id}
-              >{`${note.name} (${note.id})`}</Button>
-            ))}
-        </Flex>
+
+            <Heart size={5} opacity={dataScore.life} />
+            <Stepper items={steps} level={active + 1} />
+
+            <Flex
+              justifyContent="center"
+              gap="8px"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              <ButtonCircle onClick={handlePlay} disabled={disabledStart}>
+                <Flex justifyContent="center" style={{ marginLeft: 2 }}>
+                  <FontAwesomeIcon icon={faPlay as IconProp} size="2x" />
+                </Flex>
+              </ButtonCircle>
+              <ButtonCircle
+                onClick={handleRepeat}
+                disabled={!correct || state.config.microphone}
+              >
+                <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
+              </ButtonCircle>
+            </Flex>
+            <Flex justifyContent="center">
+              <Microphone start={microphone} />
+            </Flex>
+            <Flex justifyContent="center" gap="8px" flexWrap="wrap">
+              {data &&
+                data.map((note) => (
+                  <Button
+                    style={{ width: 86, height: 36, fontSize: 14 }}
+                    disabled={disabled || state.config.microphone}
+                    onClick={async () =>
+                      correct && (await handleIsCorrect(note, correct))
+                    }
+                    key={note.id}
+                  >{`${note.name} (${note.id})`}</Button>
+                ))}
+            </Flex>
+          </>
+        )}
       </>
     </Flex>
   );

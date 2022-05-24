@@ -20,6 +20,7 @@ import { pages } from 'utils/pages';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toastMSG } from 'utils/toast';
+import Loading from '@/components/Loading';
 
 type Props = {
   result: {
@@ -32,11 +33,13 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
   const router = useRouter();
   const { level } = router?.query;
   const [percentual, setPercentual] = useState(0);
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state: StoreData) => state.user);
 
   const createScore = useCallback(
     async (level: number) => {
       try {
+        setLoading(true);
         const payload = {
           email: user.email,
           life: LIFE,
@@ -45,6 +48,7 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
         const response = await ScoreService.createScore(payload);
         response._id && router.push(`/${pages.level}/${level}/${response._id}`);
       } catch (error) {
+        setLoading(false);
         toastMSG(`Problema ao criar o jogo: ${error}`, 'error');
       }
     },
@@ -67,88 +71,92 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
 
   return (
     <>
-      {result && (
-        <>
-          <Flex
-            style={{ marginTop: 24, width: '100%' }}
-            justifyContent="space-between"
-          >
-            <Flex>
-              <Title level={1}>
-                Você Ganhou!{' '}
-                <FontAwesomeIcon
-                  icon={faGrinSquint as IconProp}
-                  color={red}
-                  size="1x"
-                />
-              </Title>
-            </Flex>
-            <Flex gap="4px" justifyContent="flex-end">
-              <Title level={2}>
-                Pontos: <b>{result.data.score}</b>
-              </Title>
-            </Flex>
-          </Flex>
-
-          <hr />
-
-          <Flex style={{ marginTop: 12 }} flexDirection="column">
-            <Flex>Resultado das tentativas:</Flex>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Level</th>
-                  <th>Nota Correto</th>
-                  <th>Nota Selecionada</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {result.data.notes.map((item, index) => (
-                  <tr key={`${index}${item.level}`}>
-                    <td>{item.level}</td>
-                    <td>{item.correct}</td>
-                    <td>{item.selected}</td>
-                    <td>
-                      <FontAwesomeIcon
-                        icon={
-                          item.correct === item.selected
-                            ? (faCheck as IconProp)
-                            : (faTimes as IconProp)
-                        }
-                        color={item.correct === item.selected ? 'green' : red}
-                        size="1x"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+      {loading ? (
+        <Loading />
+      ) : (
+        result && (
+          <>
             <Flex
+              style={{ marginTop: 24, width: '100%' }}
               justifyContent="space-between"
-              style={{ marginTop: 8 }}
-              alignContent="center"
             >
-              <Flex gap="12px" style={{ width: '40%' }}>
-                <Button
-                  onClick={() => router.push(`/${pages.dashboard}`)}
-                  style={{ width: 76 }}
-                >
-                  Voltar
-                </Button>
-                <Button onClick={handleRepeat} style={{ width: 76 }}>
-                  Repetir
-                </Button>
+              <Flex>
+                <Title level={1}>
+                  Você Ganhou!{' '}
+                  <FontAwesomeIcon
+                    icon={faGrinSquint as IconProp}
+                    color={red}
+                    size="1x"
+                  />
+                </Title>
               </Flex>
-              <Flex alignItems="center" justifyContent="flex-end">
-                <Title level={3}>{`Você acerto: ${percentual.toFixed(
-                  2
-                )}%`}</Title>
+              <Flex gap="4px" justifyContent="flex-end">
+                <Title level={2}>
+                  Pontos: <b>{result.data.score}</b>
+                </Title>
               </Flex>
             </Flex>
-          </Flex>
-        </>
+
+            <hr />
+
+            <Flex style={{ marginTop: 12 }} flexDirection="column">
+              <Flex>Resultado das tentativas:</Flex>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Level</th>
+                    <th>Nota Correto</th>
+                    <th>Nota Selecionada</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {result.data.notes.map((item, index) => (
+                    <tr key={`${index}${item.level}`}>
+                      <td>{item.level}</td>
+                      <td>{item.correct}</td>
+                      <td>{item.selected}</td>
+                      <td>
+                        <FontAwesomeIcon
+                          icon={
+                            item.correct === item.selected
+                              ? (faCheck as IconProp)
+                              : (faTimes as IconProp)
+                          }
+                          color={item.correct === item.selected ? 'green' : red}
+                          size="1x"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <Flex
+                justifyContent="space-between"
+                style={{ marginTop: 8 }}
+                alignContent="center"
+              >
+                <Flex gap="12px" style={{ width: '40%' }}>
+                  <Button
+                    onClick={() => router.push(`/${pages.dashboard}`)}
+                    style={{ width: 76 }}
+                  >
+                    Voltar
+                  </Button>
+                  <Button onClick={handleRepeat} style={{ width: 76 }}>
+                    Repetir
+                  </Button>
+                </Flex>
+                <Flex alignItems="center" justifyContent="flex-end">
+                  <Title level={3}>{`Você acerto: ${percentual.toFixed(
+                    2
+                  )}%`}</Title>
+                </Flex>
+              </Flex>
+            </Flex>
+          </>
+        )
       )}
       {!result && <Title level={2}>Problema ao carregar os dados...</Title>}
     </>

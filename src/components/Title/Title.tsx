@@ -22,7 +22,7 @@ const Heading1 = styled.h1`
   color: ${primary};
 
   @media screen and (max-width: 600px) {
-    font-size: 22px;
+    font-size: 18px;
   }
 `;
 
@@ -32,7 +32,7 @@ const Heading2 = styled.h2`
   color: ${primary};
 
   @media screen and (max-width: 600px) {
-    font-size: 18px;
+    font-size: 16px;
   }
 `;
 
