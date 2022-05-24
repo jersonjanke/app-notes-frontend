@@ -259,9 +259,7 @@ const LevelPage: NextPage = () => {
                 <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
               </ButtonCircle>
             </Flex>
-            <Flex justifyContent="center">
-              <Microphone start={microphone} />
-            </Flex>
+
             <Flex justifyContent="center" gap="8px" flexWrap="wrap">
               {data &&
                 data.map((note) => (
@@ -274,6 +272,9 @@ const LevelPage: NextPage = () => {
                     key={note.id}
                   >{`${note.name} (${note.id})`}</Button>
                 ))}
+            </Flex>
+            <Flex justifyContent="center" style={{ marginTop: 12 }}>
+              <Microphone start={microphone} />
             </Flex>
           </>
         )}

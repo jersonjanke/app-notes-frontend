@@ -7,6 +7,8 @@ import { StoreData } from 'types/Login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { primary } from 'utils/colors';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Wrapper } from './style';
+import Flex from '../Flex';
 
 type Props = {
   start: boolean;
@@ -56,7 +58,6 @@ const Microphone: React.FC<Props> = ({ start }) => {
     analyser.getFloatTimeDomainData(buffer);
     var hz = autoCorrelate(buffer, audio.sampleRate);
     if (hz > -1) {
-      console.log(hz);
       dispatch(setFrequency(hz));
     }
   };
@@ -93,13 +94,23 @@ const Microphone: React.FC<Props> = ({ start }) => {
 
   return (
     <>
-      {state.config.microphone && (
-        <FontAwesomeIcon
-          size="2x"
-          color={primary}
-          style={{ cursor: 'pointer' }}
-          icon={faMicrophone as IconProp}
-        />
+      {state.config.microphone && start && (
+        <Flex justifyContent="center" flexDirection="column">
+          <FontAwesomeIcon
+            size="2x"
+            color={primary}
+            style={{ cursor: 'pointer' }}
+            icon={faMicrophone as IconProp}
+          />
+          <Wrapper>
+            <div className="bar1"></div>
+            <div className="bar2"></div>
+            <div className="bar3"></div>
+            <div className="bar4"></div>
+            <div className="bar5"></div>
+            <div className="bar6"></div>
+          </Wrapper>
+        </Flex>
       )}
     </>
   );
