@@ -1,8 +1,12 @@
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import autoCorrelate from 'utils/AutoCorrelate';
 import { setFrequency } from 'store/actions/frequency';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { primary } from 'utils/colors';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type Props = {
   start: boolean;
@@ -52,6 +56,7 @@ const Microphone: React.FC<Props> = ({ start }) => {
     analyser.getFloatTimeDomainData(buffer);
     var hz = autoCorrelate(buffer, audio.sampleRate);
     if (hz > -1) {
+      console.log(hz);
       dispatch(setFrequency(hz));
     }
   };
@@ -86,7 +91,18 @@ const Microphone: React.FC<Props> = ({ start }) => {
     });
   };
 
-  return <div>Hz: {state.frequency.value.toFixed(2)}</div>;
+  return (
+    <>
+      {state.config.microphone && (
+        <FontAwesomeIcon
+          size="2x"
+          color={primary}
+          style={{ cursor: 'pointer' }}
+          icon={faMicrophone as IconProp}
+        />
+      )}
+    </>
+  );
 };
 
 export default Microphone;
