@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
             />
             <Image
               alt="facebook"
-              src="/icons/facebook-white.png"
+              src="/icons/linkedin-white.png"
               height={32}
               width={32}
             />
