@@ -164,7 +164,7 @@ const LevelPage: NextPage = () => {
       const random = setRandomNote(data);
       const note = data[random];
       setCorrect(note);
-      const audio = play(`/${note.src}`);
+      const audio = play(note.src);
       state.config.microphone &&
         audio.addEventListener('ended', () => setMicrophone(true), false);
       setDisabled(false);
@@ -174,7 +174,7 @@ const LevelPage: NextPage = () => {
       const random = setRandomNote(randomData);
       const note = randomData[random];
       setCorrect(note);
-      const audio = play(`/${note.src}`);
+      const audio = play(note.src);
       state.config.microphone &&
         audio.addEventListener('ended', () => setMicrophone(true), false);
       setDisabled(false);
@@ -188,7 +188,7 @@ const LevelPage: NextPage = () => {
     state.config.microphone && setMicrophone(true);
     if (state.config.autoplay && correct) {
       setDisabledStart(true);
-      const audio = play(`/${correct.src}`);
+      const audio = play(correct.src);
       state.config.microphone &&
         audio.addEventListener('ended', () => setMicrophone(true), false);
     } else {
@@ -203,7 +203,7 @@ const LevelPage: NextPage = () => {
   };
 
   const handleRepeat = () => {
-    correct && play(`/${correct.src}`);
+    correct && play(correct.src);
   };
 
   return (
