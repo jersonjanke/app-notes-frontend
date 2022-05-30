@@ -1,14 +1,12 @@
-import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import autoCorrelate from 'utils/AutoCorrelate';
 import { setFrequency } from 'store/actions/frequency';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { primary } from 'utils/colors';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from './style';
 import Flex from '../Flex';
+import micIcon from '../../../public/icons/mic.svg';
+import Image from 'next/image';
 
 type Props = {
   start: boolean;
@@ -96,12 +94,7 @@ const Microphone: React.FC<Props> = ({ start }) => {
     <>
       {state.config.microphone && start && (
         <Flex justifyContent="center" flexDirection="column">
-          <FontAwesomeIcon
-            size="2x"
-            color={primary}
-            style={{ cursor: 'pointer' }}
-            icon={faMicrophone as IconProp}
-          />
+          <Image src={micIcon} alt="Microphone" />
           <Wrapper>
             <div className="bar1"></div>
             <div className="bar2"></div>

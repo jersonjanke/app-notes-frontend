@@ -1,6 +1,3 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { primary } from 'utils/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setConfig } from 'store/actions/config';
@@ -14,6 +11,8 @@ import { useCallback, useEffect, useState } from 'react';
 import SettingsService, { SettingsData } from 'services/SettingsService';
 import { useRouter } from 'next/router';
 import { gray } from 'utils/colors';
+import Image from 'next/image';
+import closeIcon from '../../../public/icons/x-circle.svg';
 
 type Props = {
   open: boolean;
@@ -78,13 +77,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
     <ReactModal isOpen={open} id="settings" ariaHideApp={false}>
       <Flex justifyContent="space-between">
         <Title level={2}>Configurações</Title>
-        <FontAwesomeIcon
-          size="2x"
-          color={primary}
-          onClick={onClose}
-          icon={faTimes as IconProp}
-          style={{ cursor: 'pointer' }}
-        />
+        <Image src={closeIcon} height={32} width={32} onClick={onClose} />
       </Flex>
       <hr />
       <Flex

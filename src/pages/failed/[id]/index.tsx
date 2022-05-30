@@ -1,13 +1,9 @@
 import Title from '@/components/Title';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NextPage } from 'next';
 import ScoreService from 'services/ScoreService';
 import { storeWrapper } from 'store';
 import { StoreData, User } from 'types/Login';
 import { ScoreDto } from 'types/Score';
-import { red } from 'utils/colors';
-import { faFlushed, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Flex from '@/components/Flex';
 import Table from '@/components/Table';
 import Button from '@/components/Button';
@@ -17,6 +13,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toastMSG } from 'utils/toast';
 import Loading from '@/components/Loading';
+import checkIcon from '../../../../public/icons/check.svg';
+import xIcon from '../../../../public/icons/x.svg';
+import Image from 'next/image';
 
 type Props = {
   result: {
@@ -74,14 +73,7 @@ const FailedPage: NextPage<Props> = ({ result }) => {
             justifyContent="space-between"
           >
             <Flex>
-              <Title level={1}>
-                Você Perdeu!{' '}
-                <FontAwesomeIcon
-                  icon={faFlushed as IconProp}
-                  color={red}
-                  size="1x"
-                />
-              </Title>
+              <Title level={1}>Você Perdeu! </Title>
             </Flex>
             <Flex gap="4px" justifyContent="flex-end">
               <Title level={2}>
@@ -111,14 +103,8 @@ const FailedPage: NextPage<Props> = ({ result }) => {
                     <td>{item.correct}</td>
                     <td>{item.selected}</td>
                     <td>
-                      <FontAwesomeIcon
-                        icon={
-                          item.correct === item.selected
-                            ? (faCheck as IconProp)
-                            : (faTimes as IconProp)
-                        }
-                        color={item.correct === item.selected ? 'green' : red}
-                        size="1x"
+                      <Image
+                        src={item.correct === item.selected ? checkIcon : xIcon}
                       />
                     </td>
                   </tr>

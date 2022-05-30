@@ -1,19 +1,19 @@
 import { InputHTMLAttributes, useState } from 'react';
 import { InputWrapper, Label, Wrapper, WrapperIcon } from './style';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Image from 'next/image';
+import eye from '../../../public/icons/eye.svg';
+import eyeOff from '../../../public/icons/eye-off.svg';
 
 const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  const [icon, setIcon] = useState(faEyeSlash);
+  const [icon, setIcon] = useState(eye);
   return (
     <Wrapper>
       {props?.title && <Label htmlFor={props?.id}>{props?.title}</Label>}
       <WrapperIcon>
-        <InputWrapper {...props} type={icon === faEye ? 'text' : 'password'} />
-        <FontAwesomeIcon
-          icon={icon as IconProp}
-          onClick={() => setIcon(icon === faEye ? faEyeSlash : faEye)}
+        <InputWrapper {...props} type={icon === eye ? 'text' : 'password'} />
+        <Image
+          src={icon}
+          onClick={() => setIcon(icon === eye ? eyeOff : eye)}
         />
       </WrapperIcon>
     </Wrapper>

@@ -1,18 +1,16 @@
-import { Wrapper } from './style';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { primary } from 'utils/colors';
-import { useEffect, useMemo } from 'react';
-import { IconX } from './style';
-import { useDispatch } from 'react-redux';
-import { setValidPassword } from 'store/actions/user';
 import {
   hasLowerCase,
   hasNumber,
   hasSpecialCharacter,
   hasUpperCase,
 } from 'utils/validate';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Wrapper } from './style';
+import { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { setValidPassword } from 'store/actions/user';
+import checkIcon from '../../../public/icons/check.svg';
+import xIcon from '../../../public/icons/x.svg';
+import Image from 'next/image';
 
 type Props = {
   password: string;
@@ -40,61 +38,41 @@ const PasswordValidate = ({ password }: Props) => {
     <Wrapper>
       <div>
         {password.length > 5 ? (
-          <FontAwesomeIcon
-            icon={faCheck as IconProp}
-            color={primary}
-            size="1x"
-          />
+          <Image src={checkIcon} alt="Check" />
         ) : (
-          <IconX>X</IconX>
+          <Image src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>6 caracteres ou mais</span>
       </div>
       <div>
         {numberOk ? (
-          <FontAwesomeIcon
-            icon={faCheck as IconProp}
-            color={primary}
-            size="1x"
-          />
+          <Image src={checkIcon} alt="Check" />
         ) : (
-          <IconX>X</IconX>
+          <Image src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Um número</span>
       </div>
       <div>
         {upperCaseOk ? (
-          <FontAwesomeIcon
-            icon={faCheck as IconProp}
-            color={primary}
-            size="1x"
-          />
+          <Image src={checkIcon} alt="Check" />
         ) : (
-          <IconX>X</IconX>
+          <Image src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
       </div>
       <div>
         {lowerCaseOk ? (
-          <FontAwesomeIcon
-            icon={faCheck as IconProp}
-            color={primary}
-            size="1x"
-          />
+          <Image src={checkIcon} alt="Check" />
         ) : (
-          <IconX>X</IconX>
+          <Image src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
       </div>
       <div>
         {specialCharacterOk ? (
-          <FontAwesomeIcon
-            icon={faCheck as IconProp}
-            color={primary}
-            size="1x"
-          />
+          <Image src={checkIcon} alt="Check" />
         ) : (
-          <IconX>X</IconX>
+          <Image src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Um carácter especial (@$!?+%)</span>
       </div>

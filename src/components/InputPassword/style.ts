@@ -11,11 +11,10 @@ export const WrapperIcon = styled.div`
   display: flex;
   justify-content: flex-end;
 
-  > svg {
-    cursor: pointer;
-    position: absolute;
-    margin-top: 8px;
-    margin-right: 8px;
+  > span {
+    position: absolute !important;
+    margin-top: 5px !important;
+    margin-right: 8px !important;
   }
 `;
 

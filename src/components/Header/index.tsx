@@ -1,13 +1,12 @@
-import { Container } from 'react-grid-system';
 import Link from 'next/link';
 import { Wrapper, Menu } from './style';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Settings from '../Settings';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
+import settingsIcon from '../../../public/icons/settings.svg';
+import Image from 'next/image';
+import { Container } from 'react-grid-system';
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -19,16 +18,11 @@ const Header: React.FC = () => {
           <Menu>
             <Link href={'/dashboard'}>Guitar Notes</Link>
             <div>
-              {state?.user?.token && (
-                <FontAwesomeIcon
-                  onClick={() => setShow(true)}
-                  icon={faCog as IconProp}
-                  size="1x"
-                  style={{ marginRight: 4, cursor: 'pointer' }}
-                />
+              {state?.user?.token ? (
+                <Image src={settingsIcon} onClick={() => setShow(true)} />
+              ) : (
+                <Link href={'/'}>Entrar</Link>
               )}
-
-              {!state.user?.token && <Link href={'/'}>Entrar</Link>}
             </div>
           </Menu>
         </Container>

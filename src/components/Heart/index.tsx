@@ -1,9 +1,7 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { primary } from 'utils/colors';
 import { useEffect, useState } from 'react';
 import Flex from '@/components/Flex';
+import Image from 'next/image';
+import heartIcon from '../../../public/icons/heart.svg';
 
 type Props = {
   size: number;
@@ -27,17 +25,21 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
   return (
     <Flex justifyContent="center">
       {hearts.map(({ opacityItem }, index) => (
-        <FontAwesomeIcon
+        <span
           key={`heart-${index}`}
           style={{
             marginLeft: 8,
             opacity: opacityItem ? 0.15 : 1,
             transition: '500ms',
           }}
-          size="2x"
-          color={primary}
-          icon={faHeart as IconProp}
-        />
+        >
+          <Image
+            src={heartIcon}
+            height={28}
+            width={28}
+            alt={`heart-${index}`}
+          />
+        </span>
       ))}
     </Flex>
   );

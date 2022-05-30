@@ -1,16 +1,9 @@
-import {
-  faPlay,
-  faRedoAlt,
-  faArrowAltCircleLeft,
-} from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { generateLevel } from 'services/GameService';
 import { getRandomNumber } from 'services/GameService';
 import { Note } from 'types/Game';
 import { pages } from 'utils/pages';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { play } from 'services/AudioService';
 import { ScoreDto } from 'types/Score';
 import { primary } from 'utils/colors';
@@ -29,6 +22,10 @@ import Heart from '@/components/Heart';
 import Microphone from '@/components/Microphone';
 import { setFrequency } from 'store/actions/frequency';
 import Loading from '@/components/Loading';
+import Image from 'next/image';
+import playIcon from '../../../../../public/icons/play.svg';
+import rotateIcon from '../../../../../public/icons/rotate-cw.svg';
+import arrowLeftCircle from '../../../../../public/icons/arrow-left-circle.svg';
 
 const LevelPage: NextPage = () => {
   const LIFE = 5;
@@ -214,12 +211,12 @@ const LevelPage: NextPage = () => {
         ) : (
           <>
             <Flex justifyContent="space-between">
-              <Flex>
-                <FontAwesomeIcon
-                  size="2x"
-                  color={primary}
-                  style={{ cursor: 'pointer' }}
-                  icon={faArrowAltCircleLeft as IconProp}
+              <Flex style={{ cursor: 'pointer' }}>
+                <Image
+                  src={arrowLeftCircle}
+                  height={32}
+                  width={32}
+                  alt="back"
                   onClick={() => router.push(`/${pages.dashboard}`)}
                 />
               </Flex>
@@ -249,14 +246,14 @@ const LevelPage: NextPage = () => {
             >
               <ButtonCircle onClick={handlePlay} disabled={disabledStart}>
                 <Flex justifyContent="center" style={{ marginLeft: 2 }}>
-                  <FontAwesomeIcon icon={faPlay as IconProp} size="2x" />
+                  <Image src={playIcon} height={28} width={28} alt="Play" />
                 </Flex>
               </ButtonCircle>
               <ButtonCircle
                 onClick={handleRepeat}
                 disabled={!correct || state.config.microphone}
               >
-                <FontAwesomeIcon icon={faRedoAlt as IconProp} size="2x" />
+                <Image src={rotateIcon} height={28} width={28} alt="Repeat" />
               </ButtonCircle>
             </Flex>
 
