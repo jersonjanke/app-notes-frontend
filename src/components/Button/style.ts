@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { primary, white, gray, black } from 'utils/colors';
 
 export const ButtonStyle = styled.button`
-  width: 196px;
+  width: 124px;
   height: 32px;
   text-decoration: none;
   background-color: ${primary};

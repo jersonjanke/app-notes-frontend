@@ -1,8 +1,7 @@
 import { ButtonStyle } from './style';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ButtonHTMLAttributes, ForwardRefRenderFunction } from 'react';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Spinner from '../Spinner';
+import Flex from '../Flex';
 
 type ButtonProps = {
   onClick?: () => void;
@@ -18,14 +17,13 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = ({
   ...props
 }) => {
   return (
-    <ButtonStyle {...props} onClick={onClick}>
-      {children}
-      {loading && (
-        <FontAwesomeIcon
-          style={{ marginLeft: 8 }}
-          spin
-          icon={faSpinner as IconProp}
-        />
+    <ButtonStyle {...props} onClick={onClick} disabled={loading}>
+      {loading ? (
+        <Flex justifyContent="center">
+          <Spinner />
+        </Flex>
+      ) : (
+        children
       )}
     </ButtonStyle>
   );
