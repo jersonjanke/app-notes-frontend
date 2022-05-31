@@ -1,7 +1,6 @@
 import { Wrapper, Info } from './style';
 import Flex from '../Flex';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
@@ -33,7 +32,7 @@ const Footer: React.FC = () => {
             </p>
           </Flex>
           <Flex gap="12px" justifyContent="flex-end" alignItems="center">
-            <a target="_blank" href="https://www.instagram.com/jersonjanke/">
+            <a href="https://www.instagram.com/jersonjanke/">
               <Image
                 height="32px"
                 width="32px"
@@ -43,7 +42,7 @@ const Footer: React.FC = () => {
               />
             </a>
 
-            <a href="https://www.linkedin.com/in/jerson-janke/" target="_blank">
+            <a href="https://www.linkedin.com/in/jerson-janke/">
               <Image
                 height="32px"
                 width="32px"
@@ -53,7 +52,7 @@ const Footer: React.FC = () => {
               />
             </a>
 
-            <a href="https://github.com/jersonjanke" target="_blank">
+            <a href="https://github.com/jersonjanke">
               <Image
                 height="32px"
                 width="32px"

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { black, primary, gray, purple } from 'utils/colors';
+import { primary, gray, purple } from 'utils/colors';
 
 export const Table = styled.table`
   margin-top: 24px;
