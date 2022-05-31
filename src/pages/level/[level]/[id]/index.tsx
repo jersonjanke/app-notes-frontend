@@ -77,7 +77,9 @@ const LevelPage: NextPage = () => {
       setMicrophone(false);
       dispatch(setProgress(0));
       updateScore(dataScore).then(() => {
-        return router.push(`/${pages.success}/${id}?level=${level}`);
+        return router.push(
+          `/${pages.finished}/${id}?level=${level}&success=${true}`
+        );
       });
     }
     const randomData = generateLevel(Number(level));
@@ -96,7 +98,9 @@ const LevelPage: NextPage = () => {
         setMicrophone(false);
         dispatch(setProgress(0));
         updateScore(dataScore).then(() => {
-          return router.push(`/${pages.failed}/${id}?level=${level}`);
+          return router.push(
+            `/${pages.finished}/${id}?level=${level}&success=${false}`
+          );
         });
       }
     };

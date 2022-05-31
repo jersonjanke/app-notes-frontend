@@ -9,6 +9,7 @@ export const pages = {
   level: 'level',
   success: 'success',
   failed: 'failed',
+  finished: 'finished',
   dashboard: 'dashboard',
   interval: 'interval',
   password: 'password',

@@ -26,7 +26,7 @@ type Props = {
 const SuccessPage: NextPage<Props> = ({ result }) => {
   const LIFE = 5;
   const router = useRouter();
-  const { level } = router?.query;
+  const { level, success } = router?.query;
   const [percentual, setPercentual] = useState(0);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: StoreData) => state.user);
@@ -64,6 +64,12 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
     createScore(Number(level));
   };
 
+  const handleTitle = () => {
+    if (success) {
+      return JSON.parse(success as string) ? 'Você ganhou!' : 'Você perdeu!';
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -76,7 +82,7 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
               justifyContent="space-between"
             >
               <Flex>
-                <Title level={1}>Você Ganhou! </Title>
+                <Title level={1}>{handleTitle()}</Title>
               </Flex>
               <Flex gap="4px" justifyContent="flex-end">
                 <Title level={2}>
