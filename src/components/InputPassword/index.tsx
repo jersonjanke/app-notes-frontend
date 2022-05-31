@@ -12,6 +12,9 @@ const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
       <WrapperIcon>
         <InputWrapper {...props} type={icon === eye ? 'text' : 'password'} />
         <Image
+          height="24px"
+          width="24px"
+          layout="fixed"
           src={icon}
           onClick={() => setIcon(icon === eye ? eyeOff : eye)}
         />
