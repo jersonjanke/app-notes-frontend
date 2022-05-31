@@ -1,6 +1,7 @@
 import { Wrapper, Info } from './style';
 import Flex from '../Flex';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
@@ -32,24 +33,35 @@ const Footer: React.FC = () => {
             </p>
           </Flex>
           <Flex gap="12px" justifyContent="flex-end" alignItems="center">
-            <Image
-              alt="instagram"
-              src="/icons/instagram-white.png"
-              height={32}
-              width={32}
-            />
-            <Image
-              alt="facebook"
-              src="/icons/linkedin-white.png"
-              height={32}
-              width={32}
-            />
-            <Image
-              alt="github"
-              src="/icons/github-white.png"
-              height={32}
-              width={32}
-            />
+            <a target="_blank" href="https://www.instagram.com/jersonjanke/">
+              <Image
+                height="32px"
+                width="32px"
+                layout="fixed"
+                alt="instagram"
+                src="/icons/instagram-white.png"
+              />
+            </a>
+
+            <a href="https://www.linkedin.com/in/jerson-janke/" target="_blank">
+              <Image
+                height="32px"
+                width="32px"
+                layout="fixed"
+                alt="facebook"
+                src="/icons/linkedin-white.png"
+              />
+            </a>
+
+            <a href="https://github.com/jersonjanke" target="_blank">
+              <Image
+                height="32px"
+                width="32px"
+                layout="fixed"
+                alt="github"
+                src="/icons/github-white.png"
+              />
+            </a>
           </Flex>
         </Flex>
       </Info>
