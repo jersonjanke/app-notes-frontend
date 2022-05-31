@@ -4,6 +4,10 @@ import { Row, Col, Hidden } from 'react-grid-system';
 import Image from 'next/image';
 import guitar from '../../public/img/guitar.png';
 
+export async function getStaticProps() {
+  return { props: { loading: true } };
+}
+
 const Home: NextPage = () => {
   return (
     <Row>
