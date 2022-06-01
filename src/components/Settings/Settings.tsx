@@ -86,7 +86,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
         style={{ height: '90%' }}
       >
         <Flex flexDirection="column">
-          <Flex
+          {/* <Flex
             gap="4px"
             justifyContent="space-between"
             style={{ marginTop: 24 }}
@@ -104,7 +104,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
               }
               checked={settings?.autoplay ? settings?.autoplay : false}
             />
-          </Flex>
+          </Flex> */}
           <Flex
             gap="4px"
             justifyContent="space-between"

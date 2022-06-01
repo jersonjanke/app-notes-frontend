@@ -257,7 +257,9 @@ const LevelPage: NextPage = () => {
                 onClick={handleRepeat}
                 disabled={!correct || state.config.microphone}
               >
-                <Image src={rotateIcon} height={28} width={28} alt="Repeat" />
+                <Flex justifyContent="center">
+                  <Image src={rotateIcon} height={28} width={28} alt="Repeat" />
+                </Flex>
               </ButtonCircle>
             </Flex>
 
