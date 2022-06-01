@@ -40,8 +40,9 @@ const Login = () => {
           <Title level={1}>Login</Title>
           <Input
             title="E-mail"
-            id="email"
-            name="email"
+            id="username"
+            name="username"
+            autoComplete="username"
             placeholder="Insira seu e-mail"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -51,7 +52,6 @@ const Login = () => {
             id="password"
             name="password"
             autoComplete="password"
-            type="password"
             placeholder="Insira sua senha"
             onChange={(e) => setPassword(e.target.value)}
           />
