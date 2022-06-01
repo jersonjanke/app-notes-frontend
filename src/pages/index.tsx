@@ -12,8 +12,8 @@ const Home: NextPage = () => {
           <Image
             alt="guitar"
             layout="responsive"
-            width={851}
-            height={1262}
+            width={626}
+            height={774}
             src={guitar}
           />
         </Col>
