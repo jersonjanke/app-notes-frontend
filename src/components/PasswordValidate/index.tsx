@@ -38,41 +38,41 @@ const PasswordValidate = ({ password }: Props) => {
     <Wrapper>
       <div>
         {password.length > 5 ? (
-          <Image src={checkIcon} alt="Check" />
+          <Image layout="fixed" src={checkIcon} alt="Check" />
         ) : (
-          <Image src={xIcon} alt="uncheck" />
+          <Image layout="fixed" src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>6 caracteres ou mais</span>
       </div>
       <div>
         {numberOk ? (
-          <Image src={checkIcon} alt="Check" />
+          <Image layout="fixed" src={checkIcon} alt="Check" />
         ) : (
-          <Image src={xIcon} alt="uncheck" />
+          <Image layout="fixed" src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Um número</span>
       </div>
       <div>
         {upperCaseOk ? (
-          <Image src={checkIcon} alt="Check" />
+          <Image layout="fixed" src={checkIcon} alt="Check" />
         ) : (
-          <Image src={xIcon} alt="uncheck" />
+          <Image layout="fixed" src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
       </div>
       <div>
         {lowerCaseOk ? (
-          <Image src={checkIcon} alt="Check" />
+          <Image layout="fixed" src={checkIcon} alt="Check" />
         ) : (
-          <Image src={xIcon} alt="uncheck" />
+          <Image layout="fixed" src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
       </div>
       <div>
         {specialCharacterOk ? (
-          <Image src={checkIcon} alt="Check" />
+          <Image layout="fixed" src={checkIcon} alt="Check" />
         ) : (
-          <Image src={xIcon} alt="uncheck" />
+          <Image layout="fixed" src={xIcon} alt="uncheck" />
         )}
         <span style={{ marginLeft: 6 }}>Um carácter especial (@$!?+%)</span>
       </div>

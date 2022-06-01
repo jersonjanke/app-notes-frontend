@@ -94,7 +94,13 @@ const Microphone: React.FC<Props> = ({ start }) => {
     <>
       {state.config.microphone && start && (
         <Flex justifyContent="center" flexDirection="column">
-          <Image src={micIcon} alt="Microphone" />
+          <Image
+            layout="fixed"
+            src={micIcon}
+            alt="Microphone"
+            height={32}
+            width={32}
+          />
           <Wrapper>
             <div className="bar1"></div>
             <div className="bar2"></div>

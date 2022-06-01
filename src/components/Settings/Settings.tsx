@@ -77,7 +77,13 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
     <ReactModal isOpen={open} id="settings" ariaHideApp={false}>
       <Flex justifyContent="space-between">
         <Title level={2}>Configurações</Title>
-        <Image src={closeIcon} height={32} width={32} onClick={onClose} />
+        <Image
+          layout="fixed"
+          src={closeIcon}
+          height={32}
+          width={32}
+          onClick={onClose}
+        />
       </Flex>
       <hr />
       <Flex

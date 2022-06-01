@@ -19,7 +19,11 @@ const Header: React.FC = () => {
             <Link href={'/dashboard'}>Guitar Notes</Link>
             <div>
               {state?.user?.token ? (
-                <Image src={settingsIcon} onClick={() => setShow(true)} />
+                <Image
+                  layout="responsive"
+                  src={settingsIcon}
+                  onClick={() => setShow(true)}
+                />
               ) : (
                 <Link href={'/'}>Entrar</Link>
               )}

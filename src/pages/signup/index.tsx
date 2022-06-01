@@ -8,7 +8,13 @@ const SignUp = () => {
     <Row>
       <Hidden sm xs>
         <Col md={5}>
-          <Image alt="Image cadastro" width={1033} height={1150} src={drums} />
+          <Image
+            layout="responsive"
+            alt="Image cadastro"
+            width={1033}
+            height={1150}
+            src={drums}
+          />
         </Col>
       </Hidden>
       <Col md={7} sm={12}>

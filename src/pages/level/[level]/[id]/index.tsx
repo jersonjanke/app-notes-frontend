@@ -217,6 +217,7 @@ const LevelPage: NextPage = () => {
             <Flex justifyContent="space-between">
               <Flex style={{ cursor: 'pointer' }}>
                 <Image
+                  layout="fixed"
                   src={arrowLeftCircle}
                   height={32}
                   width={32}
@@ -250,7 +251,13 @@ const LevelPage: NextPage = () => {
             >
               <ButtonCircle onClick={handlePlay} disabled={disabledStart}>
                 <Flex justifyContent="center" style={{ marginLeft: 2 }}>
-                  <Image src={playIcon} height={28} width={28} alt="Play" />
+                  <Image
+                    layout="fixed"
+                    src={playIcon}
+                    height={28}
+                    width={28}
+                    alt="Play"
+                  />
                 </Flex>
               </ButtonCircle>
               <ButtonCircle
@@ -258,7 +265,13 @@ const LevelPage: NextPage = () => {
                 disabled={!correct || state.config.microphone}
               >
                 <Flex justifyContent="center">
-                  <Image src={rotateIcon} height={28} width={28} alt="Repeat" />
+                  <Image
+                    layout="fixed"
+                    src={rotateIcon}
+                    height={28}
+                    width={28}
+                    alt="Repeat"
+                  />
                 </Flex>
               </ButtonCircle>
             </Flex>

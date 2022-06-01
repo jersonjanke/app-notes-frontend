@@ -11,7 +11,13 @@ const PasswordPage: React.FC = () => {
       </Col>
       <Hidden sm xs>
         <Col md={4}>
-          <Image alt="Image trompete" width={232} height={614} src={trompete} />
+          <Image
+            layout="responsive"
+            alt="Image trompete"
+            width={232}
+            height={614}
+            src={trompete}
+          />
         </Col>
       </Hidden>
     </Row>

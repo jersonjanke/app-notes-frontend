@@ -34,6 +34,7 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
           }}
         >
           <Image
+            layout="fixed"
             src={heartIcon}
             height={28}
             width={28}
