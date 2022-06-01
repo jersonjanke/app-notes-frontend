@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const WrapperText = styled.div`
+export const WrapperText = styled.p`
   width: 432px;
   margin: 0 auto;
   margin-top: 14px;
