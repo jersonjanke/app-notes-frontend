@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Title from 'components/Title';
 import InputPassword from '../InputPassword';
 import { toastMSG } from 'utils/toast';
+import { setCookies } from 'cookies-next';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await AuthService.login({ email, password });
+      setCookies('token', data);
       dispatch(userUpdate(data));
       setLoading(false);
       router.push('/dashboard');

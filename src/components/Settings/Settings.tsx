@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { gray } from 'utils/colors';
 import Image from 'next/image';
 import closeIcon from '../../../public/icons/x-circle.svg';
+import { setCookies } from 'cookies-next';
 
 type Props = {
   open: boolean;
@@ -70,6 +71,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
 
   const handleLogOut = () => {
     dispatch(userUpdate({ email: '', name: '', token: '' }));
+    setCookies('token', null);
     router.push('/');
   };
 

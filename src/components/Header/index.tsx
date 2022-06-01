@@ -17,10 +17,10 @@ const Header: React.FC = () => {
         <Container style={{ width: '100%' }}>
           <Menu>
             <Link href={'/dashboard'}>Guitar Notes</Link>
-            <div>
+            <div style={{ marginTop: 8, cursor: 'pointer' }}>
               {state?.user?.token ? (
                 <Image
-                  layout="responsive"
+                  layout="fixed"
                   src={settingsIcon}
                   onClick={() => setShow(true)}
                 />

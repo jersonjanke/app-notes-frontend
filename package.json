@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.5",
     "@types/styled-components": "^5.1.21",
     "axios": "^0.25.0",
+    "cookies-next": "^2.0.4",
     "formik": "^2.2.9",
     "next": "12",
     "next-redux-wrapper": "^7.0.5",
