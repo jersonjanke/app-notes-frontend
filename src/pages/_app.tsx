@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const userData = getCookie('token');
-    setData(JSON.parse(userData as string));
+    userData && setData(JSON.parse(userData as string));
     if (user?.token?.length) {
       axios.defaults.headers.common['Authorization'] = user.token;
     }
