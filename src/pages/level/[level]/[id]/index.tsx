@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { toastMSG } from 'utils/toast';
 import { allNote } from 'utils/notes';
-import { setProgress } from 'store/actions/progress';
 import { NextPage } from 'next';
 import Flex from '@/components/Flex';
 import Button from '@/components/Button';
@@ -75,7 +74,6 @@ const LevelPage: NextPage = () => {
     if (!correct) return;
     if (steps.length === active) {
       setMicrophone(false);
-      dispatch(setProgress(0));
       updateScore(dataScore).then(() => {
         return router.push(
           `/${pages.finished}/${id}?level=${level}&success=${true}`
@@ -96,7 +94,6 @@ const LevelPage: NextPage = () => {
     const updateGame = async (id: string) => {
       if (dataScore.life === 0) {
         setMicrophone(false);
-        dispatch(setProgress(0));
         updateScore(dataScore).then(() => {
           return router.push(
             `/${pages.finished}/${id}?level=${level}&success=${false}`
