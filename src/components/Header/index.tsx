@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const state = useSelector((state: StoreData) => state);
   return (
     <>
-      <Wrapper>
+      <Wrapper data-testid="header">
         <Container style={{ width: '100%' }}>
           <Menu>
             <Link href={'/dashboard'}>Guitar Notes</Link>

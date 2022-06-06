@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Footer: React.FC = () => {
   return (
     <>
-      <Wrapper>
+      <Wrapper data-testid="footer">
         <div className="custom-shape-divider-bottom">
           <svg
             data-name="Layer 1"

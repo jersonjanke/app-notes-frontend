@@ -7,7 +7,7 @@ type Props = {
 
 const Stepper: React.FC<Props> = ({ items, level }) => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="stepper">
       {items.map((value, index) => (
         <Item key={index} current={value === level}>
           {value}

@@ -13,7 +13,7 @@ export default function Title({ level, children }: HeadingProps) {
     3: Heading3,
   }[level];
 
-  return <Component>{children}</Component>;
+  return <Component data-testid="title">{children}</Component>;
 }
 
 const Heading1 = styled.h1`

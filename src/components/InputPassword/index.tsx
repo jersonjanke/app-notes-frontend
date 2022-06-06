@@ -7,7 +7,7 @@ import eyeOff from '../../../public/icons/eye-off.svg';
 const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
   const [icon, setIcon] = useState(eye);
   return (
-    <Wrapper>
+    <Wrapper data-testid="inputPassword">
       {props?.title && <Label htmlFor={props?.id}>{props?.title}</Label>}
       <WrapperIcon>
         <InputWrapper {...props} type={icon == eye ? 'password' : 'text'} />
@@ -15,7 +15,7 @@ const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
           height="24px"
           width="24px"
           layout="fixed"
-          src={icon}
+          src={icon ? icon : eye}
           onClick={() => setIcon(icon === eye ? eyeOff : eye)}
         />
       </WrapperIcon>

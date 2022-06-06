@@ -12,7 +12,7 @@ const ButtonCircle: ForwardRefRenderFunction<
   ButtonProps
 > = ({ onClick, children, ...props }) => {
   return (
-    <ButtonStyle {...props} onClick={onClick}>
+    <ButtonStyle data-testid="buttonCircle" {...props} onClick={onClick}>
       {children}
     </ButtonStyle>
   );

@@ -6,7 +6,11 @@ type Props = {
 };
 
 const Card: React.FC<Props> = ({ children, onClick }) => {
-  return <Wrapper onClick={onClick}>{children}</Wrapper>;
+  return (
+    <Wrapper data-testid="card" onClick={onClick}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default Card;

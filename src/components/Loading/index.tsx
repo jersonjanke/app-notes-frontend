@@ -2,7 +2,7 @@ import { Wrapper } from './style';
 
 const Loading: React.FC = () => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="loading">
       <div className="bar1"></div>
       <div className="bar2"></div>
       <div className="bar3"></div>

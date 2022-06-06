@@ -66,7 +66,11 @@ export type FlexProps = HTMLAttributes<HTMLDivElement> &
   };
 
 const Flex: React.FC<FlexProps> = ({ children, ...props }) => {
-  return <Wrapper {...props}>{children}</Wrapper>;
+  return (
+    <Wrapper data-testid="flex" {...props}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default Flex;

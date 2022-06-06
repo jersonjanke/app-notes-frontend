@@ -6,7 +6,11 @@ type Props = {
 };
 
 const DashboardCard: React.FC<Props> = ({ children, onClick }) => {
-  return <Wrapper onClick={onClick}>{children}</Wrapper>;
+  return (
+    <Wrapper data-testid="dashboardCard" onClick={onClick}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default DashboardCard;

@@ -17,7 +17,12 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = ({
   ...props
 }) => {
   return (
-    <ButtonStyle {...props} onClick={onClick} disabled={loading}>
+    <ButtonStyle
+      data-testid="button"
+      {...props}
+      onClick={onClick}
+      disabled={loading}
+    >
       {loading ? (
         <Flex justifyContent="center">
           <Spinner />
