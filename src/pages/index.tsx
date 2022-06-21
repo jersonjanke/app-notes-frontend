@@ -35,7 +35,7 @@ const Home: NextPage<Props> = ({ loaded }) => {
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   return {
     props: { loaded: true },
   };
