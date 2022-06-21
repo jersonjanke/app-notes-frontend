@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   compiler: {
+    swcMinify: true,
     styledComponents: true,
     removeConsole: true,
     removeConsole: {
