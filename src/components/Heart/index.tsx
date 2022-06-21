@@ -20,7 +20,8 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
       })
       .reverse();
     setHearts(opacityData);
-  }, [opacity, hearts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [opacity]);
 
   return (
     <Flex justifyContent="center" data-testid="heart">
