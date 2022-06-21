@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { Wrapper } from './style';
 import Flex from '../Flex';
-import micIcon from '../../../public/icons/mic.svg';
+import micIcon from '../../../public/svg/mic.svg';
 import Image from 'next/image';
 
 type Props = {

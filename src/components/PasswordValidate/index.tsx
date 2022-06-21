@@ -8,8 +8,8 @@ import { Wrapper } from './style';
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setValidPassword } from 'store/actions/user';
-import checkIcon from '../../../public/icons/check.svg';
-import xIcon from '../../../public/icons/x.svg';
+import checkIcon from '../../../public/svg/check.svg';
+import xIcon from '../../../public/svg/x.svg';
 import Image from 'next/image';
 
 type Props = {

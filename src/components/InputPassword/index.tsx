@@ -1,8 +1,8 @@
 import { InputHTMLAttributes, useState } from 'react';
 import { InputWrapper, Label, Wrapper, WrapperIcon } from './style';
 import Image from 'next/image';
-import eye from '../../../public/icons/eye.svg';
-import eyeOff from '../../../public/icons/eye-off.svg';
+import eye from '../../../public/svg/eye.svg';
+import eyeOff from '../../../public/svg/eye-off.svg';
 
 const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
   const [icon, setIcon] = useState(eye);

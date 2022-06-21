@@ -4,7 +4,7 @@ import Settings from '../Settings';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import settingsIcon from '../../../public/icons/settings.svg';
+import settingsIcon from '../../../public/svg/settings.svg';
 import Image from 'next/image';
 import { Container } from 'react-grid-system';
 

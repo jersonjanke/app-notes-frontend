@@ -4,8 +4,8 @@ import Spinner from '../Spinner';
 import Flex from '../Flex';
 
 type ButtonProps = {
-  onClick?: () => void;
   children: React.ReactNode;
+  onClick?: () => void;
   loading?: boolean;
   props?: any;
 } & ButtonHTMLAttributes<HTMLButtonElement>;

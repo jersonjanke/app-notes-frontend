@@ -22,9 +22,9 @@ import Microphone from '@/components/Microphone';
 import { setFrequency } from 'store/actions/frequency';
 import Loading from '@/components/Loading';
 import Image from 'next/image';
-import playIcon from '../../../../../public/icons/play.svg';
-import rotateIcon from '../../../../../public/icons/rotate-cw.svg';
-import arrowLeftCircle from '../../../../../public/icons/arrow-left-circle.svg';
+import playIcon from '../../../../../public/svg/play.svg';
+import rotateIcon from '../../../../../public/svg/rotate-cw.svg';
+import arrowLeftCircle from '../../../../../public/svg/arrow-left-circle.svg';
 
 const LevelPage: NextPage = () => {
   const LIFE = 5;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import Flex from '@/components/Flex';
+import Flex from '../Flex';
 import Image from 'next/image';
-import heartIcon from '../../../public/icons/heart.svg';
+import heartIcon from '../../../public/svg/heart.svg';
 
 type Props = {
   size: number;
@@ -23,7 +23,7 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
   }, [opacity]);
 
   return (
-    <Flex justifyContent="center">
+    <Flex justifyContent="center" data-testid="heart">
       {hearts.map(({ opacityItem }, index) => (
         <span
           key={`heart-${index}`}
