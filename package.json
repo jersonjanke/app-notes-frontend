@@ -6,8 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch",
-    "coverage": "jest --coverage"
+    "test": "jest --watch"
   },
   "dependencies": {
     "@types/react-dom": "^18.0.5",
