@@ -21,6 +21,7 @@ const Header: React.FC = () => {
               {state?.user?.token ? (
                 <Image
                   layout="fixed"
+                  alt="fixed"
                   src={settingsIcon}
                   onClick={() => setShow(true)}
                 />

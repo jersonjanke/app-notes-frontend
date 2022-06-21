@@ -26,6 +26,16 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
   const [settings, setSettings] = useState<SettingsData | null>(null);
   const router = useRouter();
 
+  const fetchCreateSettings = useCallback(() => {
+    SettingsService.createSettings({
+      autoplay: false,
+      microphone: false,
+      email: state.user.email,
+    }).then((response) => {
+      setSettings(response[response.length - 1]);
+    });
+  }, [state?.user?.email]);
+
   const getSettings = useCallback(() => {
     SettingsService.getSettings(state.user.email).then((response) => {
       if (response.length > 0) {
@@ -35,17 +45,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
         fetchCreateSettings();
       }
     });
-  }, []);
-
-  const fetchCreateSettings = useCallback(() => {
-    SettingsService.createSettings({
-      autoplay: false,
-      microphone: false,
-      email: state.user.email,
-    }).then((response) => {
-      setSettings(response[response.length - 1]);
-    });
-  }, []);
+  }, [dispatch, fetchCreateSettings, state?.user?.email]);
 
   const handleUpdate = (settings: SettingsData) => {
     SettingsService.updateSettings(settings);
@@ -57,17 +57,17 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
       handleUpdate(settings);
       dispatch(setConfig(settings));
     }
-  }, [settings]);
+  }, [settings, dispatch]);
 
   useEffect(() => {
     setTimeout(() => {
       getSettings();
     }, 500);
-  }, [router?.isReady]);
+  }, [router?.isReady, getSettings]);
 
   useEffect(() => {
     open && getSettings();
-  }, [open]);
+  }, [open, getSettings]);
 
   const handleLogOut = () => {
     dispatch(userUpdate({ email: '', name: '', token: '' }));
@@ -82,6 +82,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
         <Image
           layout="fixed"
           src={closeIcon}
+          alt="Close"
           height={32}
           width={32}
           onClick={onClose}

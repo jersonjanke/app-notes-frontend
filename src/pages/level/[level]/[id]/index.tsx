@@ -52,23 +52,26 @@ const LevelPage: NextPage = () => {
     notes: [],
   });
 
-  const updateScore = useCallback(async (data: ScoreDto) => {
-    try {
-      setLoading(true);
-      await ScoreService.updateScore({
-        ...data,
-        _id: id as string,
-        done: data.done,
-        life: data.life,
-        score: data.score,
-        notes: dataScore.notes,
-        email: data.email,
-      });
-    } catch (error) {
-      setLoading(false);
-      toastMSG(`Problema ao atualizar o score: ${error}`, 'error');
-    }
-  }, []);
+  const updateScore = useCallback(
+    async (data: ScoreDto) => {
+      try {
+        setLoading(true);
+        await ScoreService.updateScore({
+          ...data,
+          _id: id as string,
+          done: data.done,
+          life: data.life,
+          score: data.score,
+          notes: dataScore.notes,
+          email: data.email,
+        });
+      } catch (error) {
+        setLoading(false);
+        toastMSG(`Problema ao atualizar o score: ${error}`, 'error');
+      }
+    },
+    [dataScore?.notes, id]
+  );
 
   useEffect(() => {
     if (!correct) return;
@@ -88,7 +91,42 @@ const LevelPage: NextPage = () => {
     return () => {
       if (steps.length === active) setMicrophone(false);
     };
-  }, [level, active]);
+  }, [
+    level,
+    active,
+    correct,
+    dataScore,
+    id,
+    router,
+    steps?.length,
+    updateScore,
+  ]);
+
+  const validateNote = useCallback(
+    (selectNote: Note, correctNote: Note) => {
+      const notes = dataScore.notes;
+      notes.push({
+        level: active + 1,
+        correct: correctNote ? correctNote?.name : 'null',
+        selected: selectNote.name,
+      });
+
+      const isCorrect = selectNote.frequency === correctNote.frequency;
+      if (isCorrect) {
+        setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
+        toastMSG('Correto!', 'success');
+        setActive(active + 1);
+        dispatch(setFrequency(-1));
+        setMicrophone(false);
+      } else {
+        setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
+        toastMSG('Incorreto!', 'error');
+        dispatch(setFrequency(-1));
+        setMicrophone(false);
+      }
+    },
+    [active, dataScore, dispatch]
+  );
 
   useEffect(() => {
     const updateGame = async (id: string) => {
@@ -106,7 +144,7 @@ const LevelPage: NextPage = () => {
     return () => {
       if (dataScore.life === 0) setMicrophone(false);
     };
-  }, [dataScore.life, active]);
+  }, [dataScore.life, active, dataScore, id, level, router, updateScore]);
 
   useEffect(() => {
     if (!correct || !microphone) return;
@@ -127,33 +165,10 @@ const LevelPage: NextPage = () => {
       setDisabledStart(false);
       dispatch(setFrequency(-1));
     };
-  }, [microphone, state.frequency.value]);
+  }, [microphone, state.frequency.value, correct, dispatch, validateNote]);
 
   const setRandomNote = (notes: Note[]) => {
     return getRandomNumber(notes ? notes?.length : 0);
-  };
-
-  const validateNote = (selectNote: Note, correctNote: Note) => {
-    const notes = dataScore.notes;
-    notes.push({
-      level: active + 1,
-      correct: correctNote ? correctNote?.name : 'null',
-      selected: selectNote.name,
-    });
-
-    const isCorrect = selectNote.frequency === correctNote.frequency;
-    if (isCorrect) {
-      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
-      toastMSG('Correto!', 'success');
-      setActive(active + 1);
-      dispatch(setFrequency(-1));
-      setMicrophone(false);
-    } else {
-      setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
-      toastMSG('Incorreto!', 'error');
-      dispatch(setFrequency(-1));
-      setMicrophone(false);
-    }
   };
 
   const playNote = () => {

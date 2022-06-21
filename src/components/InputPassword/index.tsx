@@ -15,6 +15,7 @@ const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
           height="24px"
           width="24px"
           layout="fixed"
+          alt="fixed"
           src={icon ? icon : eye}
           onClick={() => setIcon(icon === eye ? eyeOff : eye)}
         />

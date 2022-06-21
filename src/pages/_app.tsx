@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (data && !user?.token?.length) {
       dispatch(userUpdate(data));
     }
-  }, [data]);
+  }, [data, dispatch, user]);
 
   return (
     <>

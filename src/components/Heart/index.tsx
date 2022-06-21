@@ -20,7 +20,7 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
       })
       .reverse();
     setHearts(opacityData);
-  }, [opacity]);
+  }, [opacity, hearts]);
 
   return (
     <Flex justifyContent="center" data-testid="heart">
