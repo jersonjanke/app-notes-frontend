@@ -22,9 +22,6 @@ import Microphone from '@/components/Microphone';
 import { setFrequency } from 'store/actions/frequency';
 import Loading from '@/components/Loading';
 import Image from 'next/image';
-import playIcon from '../../../../../public/svg/play.svg';
-import rotateIcon from '../../../../../public/svg/rotate-cw.svg';
-import arrowLeftCircle from '../../../../../public/svg/arrow-left-circle.svg';
 
 const LevelPage: NextPage = () => {
   const LIFE = 5;
@@ -230,7 +227,7 @@ const LevelPage: NextPage = () => {
               <Flex style={{ cursor: 'pointer' }}>
                 <Image
                   layout="fixed"
-                  src={arrowLeftCircle}
+                  src="/svg/arrow-left-circle.svg"
                   height={32}
                   width={32}
                   alt="back"
@@ -265,7 +262,7 @@ const LevelPage: NextPage = () => {
                 <Flex justifyContent="center" style={{ marginLeft: 2 }}>
                   <Image
                     layout="fixed"
-                    src={playIcon}
+                    src="/svg/play.svg"
                     height={28}
                     width={28}
                     alt="Play"
@@ -279,7 +276,7 @@ const LevelPage: NextPage = () => {
                 <Flex justifyContent="center">
                   <Image
                     layout="fixed"
-                    src={rotateIcon}
+                    src="/svg/rotate-cw.svg"
                     height={28}
                     width={28}
                     alt="Repeat"

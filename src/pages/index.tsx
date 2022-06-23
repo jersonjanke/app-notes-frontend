@@ -2,7 +2,6 @@ import Login from 'components/Login/Login';
 import type { NextPage } from 'next';
 import { Row, Col, Hidden } from 'react-grid-system';
 import Image from 'next/image';
-import guitar from '../../public/img/guitar.png';
 
 type Props = {
   loaded: boolean;
@@ -20,7 +19,7 @@ const Home: NextPage<Props> = ({ loaded }) => {
                 layout="responsive"
                 width={626}
                 height={774}
-                src={guitar}
+                src="/img/guitar.png"
               />
             </Col>
           </Hidden>

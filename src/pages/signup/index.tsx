@@ -1,7 +1,6 @@
 import Register from 'components/Register';
 import { Row, Col, Hidden } from 'react-grid-system';
 import Image from 'next/image';
-import drums from '../../../public/img/drums.png';
 
 const SignUp = () => {
   return (
@@ -13,7 +12,7 @@ const SignUp = () => {
             alt="Image cadastro"
             width={1033}
             height={1150}
-            src={drums}
+            src="/img/drums.png"
           />
         </Col>
       </Hidden>

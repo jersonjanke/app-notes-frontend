@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import { Wrapper } from './style';
 import Flex from '../Flex';
-import micIcon from '../../../public/svg/mic.svg';
 import Image from 'next/image';
 
 type Props = {
@@ -97,7 +96,7 @@ const Microphone: React.FC<Props> = ({ start }) => {
           <Flex style={{ width: '100%' }} justifyContent="center">
             <Image
               layout="fixed"
-              src={micIcon}
+              src="/svg/mic.svg"
               alt="Microphone"
               height={32}
               width={32}

@@ -12,7 +12,6 @@ import SettingsService, { SettingsData } from 'services/SettingsService';
 import { useRouter } from 'next/router';
 import { gray } from 'utils/colors';
 import Image from 'next/image';
-import closeIcon from '../../../public/svg/x-circle.svg';
 import { setCookies } from 'cookies-next';
 
 type Props = {
@@ -81,7 +80,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
         <Title level={2}>Configurações</Title>
         <Image
           layout="fixed"
-          src={closeIcon}
+          src="/svg/x-circle.svg"
           alt="Close"
           height={32}
           width={32}

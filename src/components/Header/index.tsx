@@ -1,11 +1,10 @@
 import Link from 'next/link';
-import { Wrapper, Menu } from './style';
+import Image from 'next/image';
 import Settings from '../Settings';
+import { Wrapper, Menu } from './style';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
-import settingsIcon from '../../../public/svg/settings.svg';
-import Image from 'next/image';
 import { Container } from 'react-grid-system';
 
 const Header: React.FC = () => {
@@ -22,7 +21,9 @@ const Header: React.FC = () => {
                 <Image
                   layout="fixed"
                   alt="fixed"
-                  src={settingsIcon}
+                  height={24}
+                  width={24}
+                  src="/svg/settings.svg"
                   onClick={() => setShow(true)}
                 />
               ) : (

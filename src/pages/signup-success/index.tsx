@@ -1,6 +1,5 @@
 import { Container } from 'react-grid-system';
 import Image from 'next/image';
-import Band from '../../../public/img/band.png';
 import Title from '@/components/Title';
 import Button from '@/components/Button';
 import { useRouter } from 'next/router';
@@ -24,7 +23,7 @@ const SignUpSuccess: React.FC = () => {
         <Image
           layout="fixed"
           alt="Imagem Sucesso"
-          src={Band}
+          src="/img/band.png"
           width={540}
           height={260}
         />

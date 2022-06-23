@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Flex from '../Flex';
 import Image from 'next/image';
-import heartIcon from '../../../public/svg/heart.svg';
 
 type Props = {
   size: number;
@@ -36,7 +35,7 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
         >
           <Image
             layout="fixed"
-            src={heartIcon}
+            src="/svg/heart.svg"
             height={28}
             width={28}
             alt={`heart-${index}`}

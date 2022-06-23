@@ -8,8 +8,6 @@ import { Wrapper } from './style';
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setValidPassword } from 'store/actions/user';
-import checkIcon from '../../../public/svg/check.svg';
-import xIcon from '../../../public/svg/x.svg';
 import Image from 'next/image';
 
 type Props = {
@@ -17,6 +15,8 @@ type Props = {
 };
 
 const PasswordValidate = ({ password }: Props) => {
+  const checkIcon = '/svg/check.svg';
+  const xIcon = '/svg/x.svg';
   const dispatch = useDispatch();
   const numberOk = useMemo(() => hasNumber(password), [password]);
   const upperCaseOk = useMemo(() => hasUpperCase(password), [password]);

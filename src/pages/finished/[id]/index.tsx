@@ -13,8 +13,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toastMSG } from 'utils/toast';
 import Loading from '@/components/Loading';
-import checkIcon from '../../../../public/svg/check.svg';
-import xIcon from '../../../../public/svg/x.svg';
 import Image from 'next/image';
 
 type Props = {
@@ -24,6 +22,8 @@ type Props = {
 };
 
 const SuccessPage: NextPage<Props> = ({ result }) => {
+  const checkIcon = '/svg/check.svg';
+  const xIcon = '/svg/x.svg';
   const LIFE = 5;
   const router = useRouter();
   const { level, success } = router?.query;

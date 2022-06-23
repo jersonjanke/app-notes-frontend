@@ -1,6 +1,5 @@
 import Password from '@/components/Password';
 import { Row, Col, Hidden } from 'react-grid-system';
-import trompete from '../../../public/img/trompete.png';
 import Image from 'next/image';
 
 const PasswordPage: React.FC = () => {
@@ -16,7 +15,7 @@ const PasswordPage: React.FC = () => {
             alt="Image trompete"
             width={232}
             height={614}
-            src={trompete}
+            src="/img/trompete.png"
           />
         </Col>
       </Hidden>

@@ -1,10 +1,10 @@
 import { InputHTMLAttributes, useState } from 'react';
 import { InputWrapper, Label, Wrapper, WrapperIcon } from './style';
 import Image from 'next/image';
-import eye from '../../../public/svg/eye.svg';
-import eyeOff from '../../../public/svg/eye-off.svg';
 
 const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
+  const eye = '/svg/eye.svg';
+  const eyeOff = '/svg/eye-off.svg';
   const [icon, setIcon] = useState(eye);
   return (
     <Wrapper data-testid="inputPassword">
