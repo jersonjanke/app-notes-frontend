@@ -27,6 +27,7 @@ const Heart: React.FC<Props> = ({ size, opacity }) => {
       {hearts.map(({ opacityItem }, index) => (
         <span
           key={`heart-${index}`}
+          data-testid={`heart-${index}`}
           style={{
             marginLeft: 8,
             opacity: opacityItem ? 0.15 : 1,

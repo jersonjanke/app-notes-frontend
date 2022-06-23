@@ -7,4 +7,12 @@ describe('<Heart />', () => {
     render(<Heart size={0} opacity={0} />);
     expect(screen.getByTestId('heart')).toBeInTheDocument();
   });
+  it('should render 5 itens', () => {
+    render(<Heart size={5} opacity={0} />);
+    expect(screen.getByTestId('heart-4')).toBeInTheDocument();
+  });
+  it('should render 5 itens', () => {
+    render(<Heart size={5} opacity={4} />);
+    expect(screen.getByTestId('heart-4')).toHaveStyle('opacity: 1');
+  });
 });
