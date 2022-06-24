@@ -13,6 +13,7 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import { userUpdate } from 'store/actions/user';
 import GlobalStyle from '../../styles/globalStyles';
+import '../../styles/font.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const dispatch = useDispatch();
