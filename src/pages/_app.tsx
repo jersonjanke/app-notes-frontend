@@ -1,4 +1,3 @@
-import '../../styles/globals.css';
 import axios from 'axios';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
@@ -13,6 +12,7 @@ import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import { userUpdate } from 'store/actions/user';
+import GlobalStyle from '../../styles/globalStyles';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           gtag('config', '${ID}');
         `}
       </Script>
+      <GlobalStyle />
       <Header />
       <Container className="container">
         <Component {...pageProps} />

@@ -9,6 +9,9 @@ const nextConfig = {
       exclude: ['error'],
     },
   },
+  experimental: {
+    forceSwcTransforms: true,
+  },
 };
 
 module.exports = nextConfig;
