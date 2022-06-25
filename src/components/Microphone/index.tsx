@@ -92,7 +92,11 @@ const Microphone: React.FC<Props> = ({ start }) => {
   return (
     <>
       {state.config.microphone && start && (
-        <Flex justifyContent="center" flexDirection="column">
+        <Flex
+          data-testid="microphone"
+          justifyContent="center"
+          flexDirection="column"
+        >
           <Flex style={{ width: '100%' }} justifyContent="center">
             <Image
               layout="fixed"
