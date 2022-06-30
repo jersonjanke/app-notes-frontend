@@ -3,39 +3,25 @@ import type { NextPage } from 'next';
 import { Row, Col, Hidden } from 'react-grid-system';
 import Image from 'next/image';
 
-type Props = {
-  loaded: boolean;
-};
-
-const Home: NextPage<Props> = ({ loaded }) => {
+const Home: NextPage = () => {
   return (
     <Row>
-      {loaded && (
-        <>
-          <Hidden sm xs>
-            <Col md={4}>
-              <Image
-                alt="guitar"
-                layout="responsive"
-                width={626}
-                height={774}
-                src="/img/guitar.png"
-              />
-            </Col>
-          </Hidden>
-          <Col md={8} sm={12}>
-            <Login />
-          </Col>
-        </>
-      )}
+      <Hidden sm xs>
+        <Col md={4}>
+          <Image
+            alt="guitar"
+            layout="responsive"
+            width={626}
+            height={774}
+            src="/img/guitar.png"
+          />
+        </Col>
+      </Hidden>
+      <Col md={8} sm={12}>
+        <Login />
+      </Col>
     </Row>
   );
 };
 
 export default Home;
-
-export async function getServerSideProps() {
-  return {
-    props: { loaded: true },
-  };
-}
