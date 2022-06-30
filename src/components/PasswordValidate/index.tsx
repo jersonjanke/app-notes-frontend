@@ -35,44 +35,104 @@ const PasswordValidate = ({ password }: Props) => {
   }, [numberOk, upperCaseOk, lowerCaseOk, specialCharacterOk, dispatch]);
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="passwordValidate">
       <div>
         {password.length > 5 ? (
-          <Image layout="fixed" src={checkIcon} alt="Check" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={checkIcon}
+            alt="Check"
+          />
         ) : (
-          <Image layout="fixed" src={xIcon} alt="uncheck" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={xIcon}
+            alt="uncheck"
+          />
         )}
         <span style={{ marginLeft: 6 }}>6 caracteres ou mais</span>
       </div>
       <div>
         {numberOk ? (
-          <Image layout="fixed" src={checkIcon} alt="Check" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={checkIcon}
+            alt="Check"
+          />
         ) : (
-          <Image layout="fixed" src={xIcon} alt="uncheck" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={xIcon}
+            alt="uncheck"
+          />
         )}
         <span style={{ marginLeft: 6 }}>Um número</span>
       </div>
       <div>
         {upperCaseOk ? (
-          <Image layout="fixed" src={checkIcon} alt="Check" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={checkIcon}
+            alt="Check"
+          />
         ) : (
-          <Image layout="fixed" src={xIcon} alt="uncheck" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={xIcon}
+            alt="uncheck"
+          />
         )}
         <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
       </div>
       <div>
         {lowerCaseOk ? (
-          <Image layout="fixed" src={checkIcon} alt="Check" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={checkIcon}
+            alt="Check"
+          />
         ) : (
-          <Image layout="fixed" src={xIcon} alt="uncheck" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={xIcon}
+            alt="uncheck"
+          />
         )}
         <span style={{ marginLeft: 6 }}>Uma letra maiúscula</span>
       </div>
       <div>
         {specialCharacterOk ? (
-          <Image layout="fixed" src={checkIcon} alt="Check" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={checkIcon}
+            alt="Check"
+          />
         ) : (
-          <Image layout="fixed" src={xIcon} alt="uncheck" />
+          <Image
+            layout="fixed"
+            height={32}
+            width={32}
+            src={xIcon}
+            alt="uncheck"
+          />
         )}
         <span style={{ marginLeft: 6 }}>Um carácter especial (@$!?+%)</span>
       </div>

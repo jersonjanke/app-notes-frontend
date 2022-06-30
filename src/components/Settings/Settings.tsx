@@ -82,6 +82,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
           layout="fixed"
           src="/svg/x-circle.svg"
           alt="Close"
+          data-testid="setting-x-circle"
           height={32}
           width={32}
           onClick={onClose}

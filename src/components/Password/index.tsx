@@ -53,6 +53,7 @@ const Password: React.FC = () => {
   return (
     <Card>
       <form
+        data-testid="password-form"
         onSubmit={formik.handleSubmit}
         style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
       >
