@@ -196,14 +196,7 @@ const LevelPage: NextPage = () => {
   const handlePlay = async () => {
     setDisabledStart(true);
     state.config.microphone && setMicrophone(true);
-    if (state.config.autoplay && correct) {
-      setDisabledStart(true);
-      const audio = play(correct.src);
-      state.config.microphone &&
-        audio.addEventListener('ended', () => setMicrophone(true), false);
-    } else {
-      playNote();
-    }
+    playNote();
   };
 
   const handleIsCorrect = async (note: Note, correctNote: Note) => {
