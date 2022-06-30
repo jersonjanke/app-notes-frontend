@@ -40,16 +40,16 @@ const PasswordValidate = ({ password }: Props) => {
         {password.length > 5 ? (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={checkIcon}
             alt="Check"
           />
         ) : (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={xIcon}
             alt="uncheck"
           />
@@ -60,16 +60,16 @@ const PasswordValidate = ({ password }: Props) => {
         {numberOk ? (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={checkIcon}
             alt="Check"
           />
         ) : (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={xIcon}
             alt="uncheck"
           />
@@ -80,16 +80,16 @@ const PasswordValidate = ({ password }: Props) => {
         {upperCaseOk ? (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={checkIcon}
             alt="Check"
           />
         ) : (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={xIcon}
             alt="uncheck"
           />
@@ -100,16 +100,16 @@ const PasswordValidate = ({ password }: Props) => {
         {lowerCaseOk ? (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={checkIcon}
             alt="Check"
           />
         ) : (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={xIcon}
             alt="uncheck"
           />
@@ -120,16 +120,16 @@ const PasswordValidate = ({ password }: Props) => {
         {specialCharacterOk ? (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={checkIcon}
             alt="Check"
           />
         ) : (
           <Image
             layout="fixed"
-            height={32}
-            width={32}
+            height={16}
+            width={16}
             src={xIcon}
             alt="uncheck"
           />

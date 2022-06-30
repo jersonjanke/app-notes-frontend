@@ -95,25 +95,6 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
         style={{ height: '90%' }}
       >
         <Flex flexDirection="column">
-          {/* <Flex
-            gap="4px"
-            justifyContent="space-between"
-            style={{ marginTop: 24 }}
-          >
-            <span style={{ fontSize: 18 }}>Autoplay</span>
-            <Switch
-              onColor={primary}
-              onChange={() =>
-                settings &&
-                setSettings({
-                  ...settings,
-                  autoplay: !settings.autoplay,
-                  update: true,
-                })
-              }
-              checked={settings?.autoplay ? settings?.autoplay : false}
-            />
-          </Flex> */}
           <Flex
             gap="4px"
             justifyContent="space-between"

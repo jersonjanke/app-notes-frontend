@@ -114,7 +114,9 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
                       <td>
                         <Image
                           alt="fixed"
-                          layout="fixed"
+                          layout="intrinsic"
+                          height={32}
+                          width={32}
                           src={
                             item.correct === item.selected ? checkIcon : xIcon
                           }
