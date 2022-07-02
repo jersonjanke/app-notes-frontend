@@ -1,39 +1,15 @@
-import axios from 'axios';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import type { AppProps } from 'next/app';
 import { Container } from 'react-grid-system';
 import { ToastContainer } from 'react-toastify';
 import { storeWrapper } from '../store';
-import { useDispatch, useSelector } from 'react-redux';
-import { StoreData } from 'types/Login';
-import { useEffect, useState } from 'react';
 import Script from 'next/script';
-import { getCookie } from 'cookies-next';
-import { userUpdate } from 'store/actions/user';
 import 'react-toastify/dist/ReactToastify.css';
-import '../../styles/font.css';
 import GlobalStyle from '../../styles/globalStyles';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const dispatch = useDispatch();
-  const [data, setData] = useState();
-  const user = useSelector((state: StoreData) => state.user);
   const ID = 'G-ZKJ93ZEE7P';
-
-  useEffect(() => {
-    const userData = getCookie('token');
-    userData && setData(JSON.parse(userData as string));
-    if (user?.token?.length) {
-      axios.defaults.headers.common['Authorization'] = user.token;
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (data && !user?.token?.length) {
-      dispatch(userUpdate(data));
-    }
-  }, [data, dispatch, user]);
 
   return (
     <>
