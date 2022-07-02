@@ -7,13 +7,16 @@ import { storeWrapper } from '../store';
 import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import GlobalStyle from '../../styles/globalStyles';
+import { useSelector } from 'react-redux';
+import { StoreData } from 'types/Login';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const ID = 'G-ZKJ93ZEE7P';
+  const user = useSelector((state: StoreData) => state.user);
 
   return (
     <>
-      <Header />
+      <Header showSettings={!!user?.token} />
       <GlobalStyle />
       <Container style={{ width: '100%', flex: ' 1 0 auto' }}>
         <Component {...pageProps} />

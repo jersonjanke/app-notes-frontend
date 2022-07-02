@@ -22,6 +22,7 @@ import Heart from 'components/Heart';
 import Microphone from 'components/Microphone';
 import Loading from 'components/Loading';
 import { setFrequency } from 'store/actions/frequency';
+import Back from 'components/Back';
 
 const LevelPage: NextPage = () => {
   const LIFE = 5;
@@ -204,32 +205,14 @@ const LevelPage: NextPage = () => {
           <Loading />
         ) : (
           <>
-            {JSON.stringify(correct?.cipher)}
-            <Flex justifyContent="space-between">
-              <Flex style={{ cursor: 'pointer' }}>
-                <Image
-                  layout="fixed"
-                  src="/svg/arrow-left-circle.svg"
-                  height={32}
-                  width={32}
-                  alt="back"
-                  onClick={() => router.push(`/${pages.dashboard}`)}
-                />
-              </Flex>
+            <Flex justifyContent="space-between" style={{ width: '100%' }}>
+              <Back />
 
-              <Flex
-                style={{ fontSize: 22, color: primary, textAlign: 'center' }}
-                flexDirection="column"
-              >
-                Level: {level}
-              </Flex>
+              <div style={{ fontSize: 22, color: primary }}>Level: {level}</div>
 
-              <Flex
-                style={{ fontSize: 22, color: primary }}
-                justifyContent="flex-end"
-              >
+              <div style={{ fontSize: 22, color: primary }}>
                 Score: {dataScore?.score}
-              </Flex>
+              </div>
             </Flex>
 
             <Heart size={5} opacity={dataScore.life} />
