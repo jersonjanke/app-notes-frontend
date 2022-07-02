@@ -57,12 +57,7 @@ const scoreService = {
   updateScore: (score: ScoreDto) => {
     return new Promise<ScoreDto>((resolve, reject) => {
       axios
-        .put(`${URL.URL_BASE}/score/${score?._id}`, {
-          email: score.email,
-          score: score.score,
-          life: score.life,
-          notes: score.notes,
-        })
+        .put(`${URL.URL_BASE}/score/${score?._id}`, score)
         .then((response) => {
           resolve(response.data);
         })

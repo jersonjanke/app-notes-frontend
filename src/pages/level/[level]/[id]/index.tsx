@@ -42,6 +42,7 @@ const LevelPage: NextPage = () => {
   const [disabledStart, setDisabledStart] = useState(false);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
+    level: Number(level),
     done: false,
     email: state.user.email,
     life: LIFE,
@@ -56,17 +57,13 @@ const LevelPage: NextPage = () => {
         await ScoreService.updateScore({
           ...data,
           _id: id as string,
-          done: data.done,
-          life: data.life,
-          score: data.score,
-          notes: dataScore.notes,
-          email: data.email,
         });
       } catch (error) {
         setLoading(false);
         toastMSG(`Problema ao atualizar o score: ${error}`, 'error');
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dataScore?.notes, id]
   );
 
@@ -74,7 +71,7 @@ const LevelPage: NextPage = () => {
     if (!correct) return;
     if (steps.length === active) {
       setMicrophone(false);
-      updateScore(dataScore).then(() => {
+      updateScore({ ...dataScore, done: true }).then(() => {
         return router.push(
           `/${pages.finished}/${id}?level=${level}&success=${true}`
         );
@@ -88,16 +85,8 @@ const LevelPage: NextPage = () => {
     return () => {
       if (steps.length === active) setMicrophone(false);
     };
-  }, [
-    level,
-    active,
-    correct,
-    dataScore,
-    id,
-    router,
-    steps?.length,
-    updateScore,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, steps?.length]);
 
   const validateNote = useCallback(
     (selectNote: Note, correctNote: Note) => {
@@ -189,7 +178,6 @@ const LevelPage: NextPage = () => {
         audio.addEventListener('ended', () => setMicrophone(true), false);
       setDisabled(false);
     }
-
     setDisabledStart(true);
   };
 
@@ -216,6 +204,7 @@ const LevelPage: NextPage = () => {
           <Loading />
         ) : (
           <>
+            {JSON.stringify(correct?.cipher)}
             <Flex justifyContent="space-between">
               <Flex style={{ cursor: 'pointer' }}>
                 <Image

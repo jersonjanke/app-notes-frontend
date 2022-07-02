@@ -36,6 +36,7 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
       try {
         setLoading(true);
         const payload = {
+          level,
           email: user.email,
           life: LIFE,
           score: 0,

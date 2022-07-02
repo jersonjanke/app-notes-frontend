@@ -1,4 +1,5 @@
 export interface Score {
+  level: number;
   id?: number;
   email: string;
   score?: number;
@@ -12,6 +13,7 @@ export type GameListNotes = {
 };
 
 export interface ScoreDto {
+  level: number;
   done: boolean;
   email: string;
   life: number;
