@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
 import { Container } from 'react-grid-system';
 import { ToastContainer } from 'react-toastify';
@@ -12,8 +11,9 @@ import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import { userUpdate } from 'store/actions/user';
-import GlobalStyle from '../../styles/globalStyles';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/font.css';
+import GlobalStyle from '../../styles/globalStyles';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const dispatch = useDispatch();
@@ -37,26 +37,28 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
+      <Header />
+      <GlobalStyle />
+      <Container style={{ width: '100%', flex: ' 1 0 auto' }}>
+        <Component {...pageProps} />
+      </Container>
+      <Footer />
+      <>
+        <ToastContainer autoClose={500} hideProgressBar={true} />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', '${ID}');
         `}
-      </Script>
-      <GlobalStyle />
-      <Header />
-      <Container className="container">
-        <Component {...pageProps} />
-      </Container>
-      <Footer />
-      <ToastContainer autoClose={500} hideProgressBar={true} />
+        </Script>
+      </>
     </>
   );
 }

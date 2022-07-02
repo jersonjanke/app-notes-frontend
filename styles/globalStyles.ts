@@ -41,11 +41,6 @@ a {
   font-family: 'Catamaran', sans-serif;
 }
 
-.container {
-  width: 100%;
-  flex: 1 0 auto;
-}
-
 .ReactModal__Content {
   max-height: 564px;
   max-width: 664px;
