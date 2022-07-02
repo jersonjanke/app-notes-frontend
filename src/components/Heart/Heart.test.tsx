@@ -1,4 +1,4 @@
-import Heart from './';
+import Heart from '.';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
