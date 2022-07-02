@@ -31,7 +31,7 @@ const Register: React.FC = () => {
   });
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="register">
       <Card>
         <Title level={2}>Criar conta!</Title>
         <WrapperForm>

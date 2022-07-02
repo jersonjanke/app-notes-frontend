@@ -10,7 +10,9 @@ const DashboardCard: React.FC<Props> = ({ disabled, children, onClick }) => {
   return (
     <>
       {disabled ? (
-        <WrapperDisabled>{children}</WrapperDisabled>
+        <WrapperDisabled data-testid="dashboardCardDisabled">
+          {children}
+        </WrapperDisabled>
       ) : (
         <Wrapper data-testid="dashboardCard" onClick={onClick}>
           {children}

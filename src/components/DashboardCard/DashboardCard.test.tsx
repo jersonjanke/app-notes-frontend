@@ -7,4 +7,9 @@ describe('<DashboardCard', () => {
     render(<DashboardCard>Dashboard Test</DashboardCard>);
     expect(screen.getByTestId('dashboardCard')).toBeInTheDocument();
   });
+
+  it('should render disabled <Dashboard />', () => {
+    render(<DashboardCard disabled={true}>Dashboard Test</DashboardCard>);
+    expect(screen.getByTestId('dashboardCardDisabled')).toBeInTheDocument();
+  });
 });

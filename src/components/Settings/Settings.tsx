@@ -77,7 +77,7 @@ const Settings: React.FC<Props> = ({ open, onClose }) => {
 
   return (
     <ReactModal isOpen={open} id="settings" ariaHideApp={false}>
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" data-testid="settings-form">
         <Title level={2}>Configurações</Title>
         <Image
           layout="fixed"

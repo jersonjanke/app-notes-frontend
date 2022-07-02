@@ -37,7 +37,7 @@ const Login = () => {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper data-testid="login-form">
         <form>
           <Title level={1}>Login</Title>
           <Input
