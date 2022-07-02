@@ -14,7 +14,7 @@ describe('<Settings />', () => {
       <Provider store={store}>
         <Settings
           open={true}
-          onClose={function (): void {
+          onClose={function () {
             throw new Error('Function not implemented.');
           }}
         />
