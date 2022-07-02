@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import Link from 'next/link';
 import Title from 'components/Title';
-import InputPassword from '../InputPassword';
+import InputPassword from '../../components/InputPassword';
 import { toastMSG } from 'utils/toast';
 import { setCookies } from 'cookies-next';
 

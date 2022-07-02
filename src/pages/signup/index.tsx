@@ -1,4 +1,4 @@
-import Register from 'components/Register';
+import Register from 'forms/Register';
 import { Row, Col, Hidden } from 'react-grid-system';
 import Image from 'next/image';
 

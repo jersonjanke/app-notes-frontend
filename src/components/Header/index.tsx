@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Settings from '../Settings';
+import Settings from '../../forms/Settings';
 import { Wrapper, Menu } from './style';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
