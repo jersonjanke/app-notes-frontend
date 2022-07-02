@@ -19,6 +19,7 @@ const Header: React.FC = () => {
             <div style={{ marginTop: 8, cursor: 'pointer' }}>
               {state?.user?.token ? (
                 <Image
+                  data-testid="settings-icon"
                   layout="fixed"
                   alt="fixed"
                   height={24}
