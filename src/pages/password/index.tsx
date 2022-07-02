@@ -1,4 +1,4 @@
-import Password from '@/components/Password';
+import Password from 'components/Password';
 import { Row, Col, Hidden } from 'react-grid-system';
 import Image from 'next/image';
 

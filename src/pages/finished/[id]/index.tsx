@@ -1,18 +1,18 @@
-import Title from '@/components/Title';
+import Title from 'components/Title';
 import { NextPage } from 'next';
 import ScoreService from 'services/ScoreService';
 import { storeWrapper } from 'store';
 import { StoreData, User } from 'types/Login';
 import { ScoreDto } from 'types/Score';
-import Flex from '@/components/Flex';
-import Table from '@/components/Table';
-import Button from '@/components/Button';
+import Flex from 'components/Flex';
+import Table from 'components/Table';
+import Button from 'components/Button';
 import { useRouter } from 'next/router';
 import { pages } from 'utils/pages';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toastMSG } from 'utils/toast';
-import Loading from '@/components/Loading';
+import Loading from 'components/Loading';
 import Image from 'next/image';
 
 type Props = {

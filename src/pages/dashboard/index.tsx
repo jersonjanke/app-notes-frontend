@@ -1,5 +1,5 @@
-import DashboardCard from '@/components/DashboardCard';
-import Title from '@/components/Title';
+import DashboardCard from 'components/DashboardCard';
+import Title from 'components/Title';
 import { Row, Col } from 'react-grid-system';
 import { useRouter } from 'next/router';
 import { pages } from 'utils/pages';
@@ -8,10 +8,10 @@ import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import ScoreService from 'services/ScoreService';
 import { toastMSG } from 'utils/toast';
-import Loading from '@/components/Loading';
+import Loading from 'components/Loading';
 import { ScoreDto } from 'types/Score';
 import Image from 'next/image';
-import Flex from '@/components/Flex';
+import Flex from 'components/Flex';
 import { GAME } from 'utils/Game';
 
 const Dashboard: React.FC = () => {
@@ -26,11 +26,11 @@ const Dashboard: React.FC = () => {
       const response = await ScoreService.getByEmailScore(user?.email);
       setData(response);
     } catch (error) {
-      toastMSG(`Problema ao criar o jogo: ${error}`, 'error');
+      toastMSG(`Problema ao carregar dados: ${error}`, 'error');
       router.push('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router?.isReady]);
 
   useEffect(() => {
     fetchData();
@@ -59,7 +59,8 @@ const Dashboard: React.FC = () => {
   const getIsDone = (level: number): boolean => {
     if (data.length > 0) {
       const item = data?.filter((item) => item?.level === level && item.done);
-      return item[0]?.done ? true : false;
+      const [done] = item;
+      return done ? true : false;
     } else {
       return false;
     }
