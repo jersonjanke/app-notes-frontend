@@ -1,20 +1,21 @@
+/* eslint-disable @next/next/link-passhref */
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { pages } from 'utils/pages';
 
 const Back: React.FC = () => {
-  const router = useRouter();
   return (
-    <div style={{ cursor: 'pointer' }}>
+    <Link href={`/${pages.dashboard}`}>
       <Image
+        data-testid="back"
+        style={{ cursor: 'pointer' }}
         layout="fixed"
         src="/svg/arrow-left-circle.svg"
         height={32}
         width={32}
         alt="back"
-        onClick={() => router.push(`/${pages.dashboard}`)}
       />
-    </div>
+    </Link>
   );
 };
 

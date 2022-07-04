@@ -10,7 +10,11 @@ const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
     <Wrapper data-testid="inputPassword">
       {props?.title && <Label htmlFor={props?.id}>{props?.title}</Label>}
       <WrapperIcon>
-        <InputWrapper {...props} type={icon == eye ? 'password' : 'text'} />
+        <InputWrapper
+          data-testid="input-field"
+          {...props}
+          type={icon == eye ? 'password' : 'text'}
+        />
         <Image
           height="24px"
           width="24px"
