@@ -32,8 +32,7 @@ const LevelPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const state = useSelector((state: StoreData) => state);
-  const { id } = router.query;
-  const { level } = router.query;
+  const { id, level } = router.query;
   const [active, setActive] = useState(0);
   const [microphone, setMicrophone] = useState(false);
   const [correct, setCorrect] = useState<Note | null>(null);
@@ -134,6 +133,7 @@ const LevelPage: NextPage = () => {
   }, [dataScore.life, active, dataScore, id, level, router, updateScore]);
 
   useEffect(() => {
+    console.log(state.frequency.value);
     if (!correct || !microphone) return;
 
     let selectedNote =
@@ -152,7 +152,8 @@ const LevelPage: NextPage = () => {
       setDisabledStart(false);
       dispatch(setFrequency(-1));
     };
-  }, [microphone, state.frequency.value, correct, dispatch, validateNote]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.frequency.value]);
 
   const setRandomNote = (notes: Note[]) => {
     return getRandomNumber(notes ? notes?.length : 0);

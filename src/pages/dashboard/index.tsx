@@ -4,7 +4,7 @@ import { Row, Col } from 'react-grid-system';
 import { useRouter } from 'next/router';
 import { pages } from 'utils/pages';
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
 import ScoreService from 'services/ScoreService';
 import { toastMSG } from 'utils/toast';
@@ -13,10 +13,13 @@ import { ScoreDto } from 'types/Score';
 import Image from 'next/image';
 import Flex from 'components/Flex';
 import { GAME } from 'utils/Game';
+import SettingsService from 'services/SettingsService';
+import { setConfig } from 'store/actions/config';
 
 const Dashboard: React.FC = () => {
   const LIFE = 5;
   const router = useRouter();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: StoreData) => state.user);
   const [data, setData] = useState<ScoreDto[]>([]);
@@ -35,6 +38,18 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const getSettings = useCallback(() => {
+    SettingsService.getSettings(user.email).then((response) => {
+      if (response.length > 0) {
+        dispatch(setConfig(response[response.length - 1]));
+      }
+    });
+  }, [dispatch, user?.email]);
+
+  useEffect(() => {
+    getSettings();
+  }, [getSettings]);
 
   const createScore = useCallback(
     async (level: number) => {
