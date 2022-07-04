@@ -97,7 +97,7 @@ const LevelPage: NextPage = () => {
         selected: selectNote.name,
       });
 
-      const isCorrect = selectNote.frequency === correctNote.frequency;
+      const isCorrect = selectNote.name === correctNote.name;
       if (isCorrect) {
         setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
         toastMSG('Correto!', 'success');
@@ -133,14 +133,15 @@ const LevelPage: NextPage = () => {
   }, [dataScore.life, active, dataScore, id, level, router, updateScore]);
 
   useEffect(() => {
-    console.log(state.frequency.value);
     if (!correct || !microphone) return;
 
     let selectedNote =
-      allNote.find(
-        (note) =>
-          state.frequency.value >= note.frequency - MARGIN_HZ &&
-          state.frequency.value <= note.frequency + MARGIN_HZ
+      allNote.find((note) =>
+        note.frequency.find(
+          (hz) =>
+            state.frequency.value >= hz - MARGIN_HZ &&
+            state.frequency.value <= hz + MARGIN_HZ
+        )
       ) || null;
 
     if (selectedNote) {
