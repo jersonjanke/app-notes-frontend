@@ -40,16 +40,6 @@ a {
   box-sizing: border-box;
   font-family: 'Catamaran', sans-serif;
 }
-
-.ReactModal__Content {
-  max-height: 564px;
-  max-width: 664px;
-  margin: 0 auto;
-}
-
-.ReactModal__Overlay {
-  z-index: 9999;
-}
 `;
 
 export default GlobalStyle;
