@@ -21,7 +21,7 @@ const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
           data-testid="inputPassword-image"
           layout="fixed"
           alt="fixed"
-          src={icon ? icon : eye}
+          src={icon}
           onClick={() => setIcon(icon === eye ? eyeOff : eye)}
         />
       </WrapperIcon>

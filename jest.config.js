@@ -4,6 +4,7 @@ module.exports = {
     // '<rootDir>/src/pages/**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
+    '!<rootDir>/src/components/Microphone/**/*.{js,jsx,ts,tsx}',
   ],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   moduleNameMapper: {
