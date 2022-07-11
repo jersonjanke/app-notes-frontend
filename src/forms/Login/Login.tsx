@@ -13,6 +13,7 @@ import { toastMSG } from 'utils/toast';
 import { setCookies } from 'cookies-next';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import Flex from 'components/Flex';
+import Image from 'next/image';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -86,7 +87,16 @@ const Login = () => {
             <GoogleLogin
               clientId="829625549487-m7dvtef9obacodq027b6j7eegt3p6oon.apps.googleusercontent.com"
               render={(renderProps) => (
-                <Button onClick={renderProps.onClick}>Conta Google</Button>
+                <Button onClick={renderProps.onClick} style={{ width: 56 }}>
+                  <Image
+                    data-testid="back"
+                    layout="fixed"
+                    src="/img/Google.webp"
+                    height={32}
+                    width={32}
+                    alt="Google"
+                  />
+                </Button>
               )}
               buttonText="Login"
               onSuccess={(response) =>
