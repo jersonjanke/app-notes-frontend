@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shadow, primary } from 'utils/colors';
+import { shadow, primary, white } from 'utils/colors';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   box-shadow: ${shadow};
   color: ${primary};
   margin-bottom: 24px;
+  background-color: ${primary};
 `;
 
 export const Menu = styled.div`
@@ -17,6 +18,7 @@ export const Menu = styled.div`
   justify-content: space-between;
 
   a {
+    color: ${white};
     font-size: 18px;
     cursor: pointer;
   }
