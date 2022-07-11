@@ -24,32 +24,35 @@ const Dashboard: React.FC = () => {
   const user = useSelector((state: StoreData) => state.user);
   const [data, setData] = useState<ScoreDto[]>([]);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (email: string) => {
     try {
-      const response = await ScoreService.getByEmailScore(user?.email);
+      const response = await ScoreService.getByEmailScore(email);
       setData(response);
     } catch (error) {
       toastMSG(`Problema ao carregar dados: ${error}`, 'error');
       router.push('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router?.isReady]);
+  }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (data.length === 0 && user.email.length > 0) fetchData(user.email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.email]);
 
-  const getSettings = useCallback(() => {
-    SettingsService.getSettings(user.email).then((response) => {
+  const getSettings = useCallback((email: string) => {
+    SettingsService.getSettings(email).then((response) => {
       if (response.length > 0) {
         dispatch(setConfig(response[response.length - 1]));
       }
     });
-  }, [dispatch, user?.email]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    getSettings();
-  }, [getSettings]);
+    user.email.length > 0 && getSettings(user.email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.email]);
 
   const createScore = useCallback(
     async (level: number) => {

@@ -30,16 +30,19 @@ const SettingsPage: NextPage = () => {
     });
   }, [state?.user?.email]);
 
-  const getSettings = useCallback(() => {
-    SettingsService.getSettings(state.user.email).then((response) => {
-      if (response.length > 0) {
-        setSettings(response[response.length - 1]);
-        dispatch(setConfig(response[response.length - 1]));
-      } else {
-        fetchCreateSettings();
-      }
-    });
-  }, [dispatch, fetchCreateSettings, state?.user?.email]);
+  const getSettings = useCallback(
+    (email: string) => {
+      SettingsService.getSettings(email).then((response) => {
+        if (response.length > 0) {
+          setSettings(response[response.length - 1]);
+          dispatch(setConfig(response[response.length - 1]));
+        } else {
+          fetchCreateSettings();
+        }
+      });
+    },
+    [dispatch, fetchCreateSettings]
+  );
 
   const handleUpdate = (settings: SettingsData) => {
     SettingsService.updateSettings(settings);
@@ -55,9 +58,9 @@ const SettingsPage: NextPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      getSettings();
+      state?.user?.email.length > 0 && getSettings(state?.user?.email);
     }, 500);
-  }, [router?.isReady, getSettings]);
+  }, [getSettings, state?.user?.email]);
 
   const handleLogOut = () => {
     dispatch(userUpdate({ email: '', name: '', token: '' }));

@@ -37,7 +37,6 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await AuthService.login({ email, password });
-      console.log(data);
       setCookies('token', data);
       dispatch(userUpdate(data));
       setLoading(false);

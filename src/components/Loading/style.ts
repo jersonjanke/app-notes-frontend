@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
     animation-delay: -0.5s;
   }
   .bar5 {
-    background-color: #fb4b19;
+    background-color: #1dd05e;
     -webkit-animation-delay: -0.4s;
     animation-delay: -0.4s;
   }

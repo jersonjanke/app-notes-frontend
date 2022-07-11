@@ -4,7 +4,7 @@ export const pages = {
   success: 'success',
   failed: 'failed',
   finished: 'finished',
-  dashboard: 'dashboard',
+  dashboard: '/dashboard',
   interval: 'interval',
   password: 'password',
   signup: 'signup',

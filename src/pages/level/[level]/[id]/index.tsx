@@ -25,7 +25,7 @@ import { setFrequency } from 'store/actions/frequency';
 import Back from 'components/Back';
 
 const LevelPage: NextPage = () => {
-  const LIFE = 5;
+  const LIFE = 3;
   const MARGIN_HZ = 1.5;
   const SCORE = 10;
   const steps = [1, 2, 3, 4, 5];
@@ -217,7 +217,7 @@ const LevelPage: NextPage = () => {
               </div>
             </Flex>
 
-            <Heart size={5} opacity={dataScore.life} />
+            <Heart size={LIFE} opacity={dataScore.life} />
             <Stepper items={steps} level={active + 1} />
 
             <Flex
