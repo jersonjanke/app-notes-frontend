@@ -134,7 +134,7 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
               >
                 <Flex gap="12px" style={{ width: '40%' }}>
                   <Button
-                    onClick={() => router.push(`/${pages.dashboard}`)}
+                    onClick={() => router.push(pages.dashboard)}
                     style={{ width: 76 }}
                   >
                     Voltar

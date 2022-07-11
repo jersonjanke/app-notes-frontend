@@ -107,6 +107,7 @@ const Dashboard: React.FC = () => {
                   <Flex justifyContent="flex-end" alignItems="center">
                     <Image
                       layout="fixed"
+                      key={item.level}
                       height={24}
                       width={24}
                       src="/svg/check.svg"

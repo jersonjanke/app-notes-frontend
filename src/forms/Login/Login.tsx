@@ -14,6 +14,7 @@ import { setCookies } from 'cookies-next';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import Flex from 'components/Flex';
 import Image from 'next/image';
+import { pages } from 'utils/pages';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Login = () => {
 
     setCookies('token', payload);
     dispatch(userUpdate(payload));
-    router.push('/dashboard');
+    router.push(pages.dashboard);
   };
 
   const handleLogin = async () => {
@@ -41,7 +42,7 @@ const Login = () => {
       setCookies('token', data);
       dispatch(userUpdate(data));
       setLoading(false);
-      router.push('/dashboard');
+      router.push(pages.dashboard);
     } catch (err: any) {
       setLoading(false);
       err?.response?.data?.errors?.forEach((error: string) =>

@@ -5,7 +5,5 @@ export const purple = '#9057F2';
 export const red = '#EB341A';
 export const white = '#ffffff';
 export const gray = '#eeeeee';
-export const black = '#18181a';
+export const black = '#1f1f1f';
 export const shadow = '0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%)';
-export const gradient =
-  'linear-gradient(90deg,rgba(144, 87, 242, 1) 0%,rgba(90, 219, 219, 1) 52%,rgba(0, 212, 255, 1) 100%);';

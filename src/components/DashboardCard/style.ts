@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { primary, white, shadow, gray, black } from 'utils/colors';
+import { primary, white, shadow, black } from 'utils/colors';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   font-weight: 600;
 
   :hover {
-    background: ${primary};
+    background: #1dd05e9e;
     color: ${white};
   }
 `;
