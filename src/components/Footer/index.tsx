@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Footer: React.FC = () => {
   return (
     <>
-      {/* <Wrapper data-testid="footer">
+      <Wrapper data-testid="footer">
         <div className="custom-shape-divider-bottom">
           <svg
             data-name="Layer 1"
@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
             ></path>
           </svg>
         </div>
-      </Wrapper> */}
+      </Wrapper>
       <Info>
         <Flex
           justifyContent="space-between"
