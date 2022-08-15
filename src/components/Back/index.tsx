@@ -5,7 +5,7 @@ import { pages } from 'utils/pages';
 
 const Back: React.FC = () => {
   return (
-    <Link href={pages.dashboard}>
+    <Link href={pages.dashboard} passHref>
       <Image
         data-testid="back"
         style={{ cursor: 'pointer' }}
