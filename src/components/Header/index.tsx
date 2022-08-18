@@ -10,7 +10,9 @@ const Header: React.FC<{ showSettings: boolean }> = ({ showSettings }) => {
       <Wrapper data-testid="header">
         <Container style={{ width: '100%' }}>
           <Menu>
-            <Link href={pages.dashboard}>Guitar Notes</Link>
+            <Link href={showSettings ? pages.dashboard : pages.root}>
+              Guitar Notes
+            </Link>
             <div style={{ marginTop: 8, cursor: 'pointer' }}>
               {showSettings ? (
                 <Link href={pages.settings} passHref>
@@ -24,7 +26,7 @@ const Header: React.FC<{ showSettings: boolean }> = ({ showSettings }) => {
                   />
                 </Link>
               ) : (
-                <Link href={'/'}>Entrar</Link>
+                <Link href={pages.root}>Entrar</Link>
               )}
             </div>
           </Menu>

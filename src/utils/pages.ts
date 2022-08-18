@@ -1,4 +1,5 @@
 export const pages = {
+  root: '/',
   play: 'play',
   level: 'level',
   success: 'success',
