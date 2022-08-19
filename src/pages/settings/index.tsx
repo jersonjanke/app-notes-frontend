@@ -10,9 +10,11 @@ import Title from '../../components/Title';
 import { useCallback, useEffect, useState } from 'react';
 import SettingsService, { SettingsData } from 'services/SettingsService';
 import { useRouter } from 'next/router';
-import { setCookies } from 'cookies-next';
 import Button from 'components/Button';
 import Back from 'components/Back';
+import { cookies, keys } from 'utils/cookies';
+import withAuthPage from 'hooks/withAuthPage';
+import Head from 'next/head';
 
 const SettingsPage: NextPage = () => {
   const dispatch = useDispatch();
@@ -64,12 +66,15 @@ const SettingsPage: NextPage = () => {
 
   const handleLogOut = () => {
     dispatch(userUpdate({ email: '', name: '', token: '' }));
-    setCookies('token', null);
+    cookies.remove(keys.user);
     router.push('/');
   };
 
   return (
     <div style={{ height: '50vh' }}>
+      <Head>
+        <title>Guitar Notes - Configurações</title>
+      </Head>
       <Flex data-testid="settings-form" gap="12px">
         <Back />
         <Title level={2}>Configurações</Title>
@@ -112,4 +117,4 @@ const SettingsPage: NextPage = () => {
   );
 };
 
-export default SettingsPage;
+export default withAuthPage(SettingsPage);

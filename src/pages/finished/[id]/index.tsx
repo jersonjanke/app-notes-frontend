@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux';
 import { toastMSG } from 'utils/toast';
 import Loading from 'components/Loading';
 import Image from 'next/image';
+import { cookies, keys } from 'utils/cookies';
+import Head from 'next/head';
 
 type Props = {
   result: {
@@ -52,6 +54,10 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
   );
 
   useEffect(() => {
+    const token = cookies.get(keys.user);
+
+    if (!token) router.push(pages.root);
+
     if (result) {
       const correctItem = result.data.notes.filter(
         (note) => note.correct === note.selected
@@ -59,7 +65,7 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
 
       setPercentual((correctItem.length / result.data.notes.length) * 100);
     }
-  }, [result]);
+  }, [result, router]);
 
   const handleRepeat = () => {
     createScore(Number(level));
@@ -78,6 +84,9 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
       ) : (
         result && (
           <>
+            <Head>
+              <title>Guitar Notes - {handleTitle()}</title>
+            </Head>
             <Flex
               style={{ marginTop: 24, width: '100%' }}
               justifyContent="space-between"

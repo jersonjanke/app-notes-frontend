@@ -23,6 +23,8 @@ import Microphone from 'components/Microphone';
 import Loading from 'components/Loading';
 import { setFrequency } from 'store/actions/frequency';
 import Back from 'components/Back';
+import withAuthPage from 'hooks/withAuthPage';
+import Head from 'next/head';
 
 const LevelPage: NextPage = () => {
   const LIFE = 3;
@@ -202,6 +204,9 @@ const LevelPage: NextPage = () => {
 
   return (
     <Flex flexDirection="column" gap="16px">
+      <Head>
+        <title>Guitar Notes - Jogar (Level: {level})</title>
+      </Head>
       <>
         {loading ? (
           <Loading />
@@ -275,4 +280,4 @@ const LevelPage: NextPage = () => {
   );
 };
 
-export default LevelPage;
+export default withAuthPage(LevelPage);

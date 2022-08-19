@@ -6,8 +6,9 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { StoreData } from 'types/Login';
-import { getCookie } from 'cookies-next';
 import { userUpdate } from 'store/actions/user';
+import Head from 'next/head';
+import { cookies, keys } from 'utils/cookies';
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,11 @@ const Home: NextPage = () => {
   const user = useSelector((state: StoreData) => state.user);
 
   useEffect(() => {
-    const userData = getCookie('token');
+    cookies.remove(keys.user);
+  }, []);
+
+  useEffect(() => {
+    const userData = cookies.get(keys.user);
     userData && setData(JSON.parse(userData as string));
     if (user?.token?.length) {
       axios.defaults.headers.common['Authorization'] = user.token;
@@ -29,23 +34,28 @@ const Home: NextPage = () => {
   }, [data, dispatch, user]);
 
   return (
-    <Row>
-      <Hidden sm xs>
-        <Col md={4}>
-          <Image
-            alt="guitar"
-            layout="responsive"
-            priority={true}
-            width={626}
-            height={774}
-            src="/img/guitar.png"
-          />
+    <>
+      <Head>
+        <title>Guitar Notes - Login</title>
+      </Head>
+      <Row>
+        <Hidden sm xs>
+          <Col md={4}>
+            <Image
+              alt="guitar"
+              layout="responsive"
+              priority={true}
+              width={626}
+              height={774}
+              src="/img/guitar.png"
+            />
+          </Col>
+        </Hidden>
+        <Col md={8} sm={12}>
+          <Login />
         </Col>
-      </Hidden>
-      <Col md={8} sm={12}>
-        <Login />
-      </Col>
-    </Row>
+      </Row>
+    </>
   );
 };
 

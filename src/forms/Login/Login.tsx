@@ -10,11 +10,11 @@ import Link from 'next/link';
 import Title from 'components/Title';
 import InputPassword from '../../components/InputPassword';
 import { toastMSG } from 'utils/toast';
-import { setCookies } from 'cookies-next';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import Flex from 'components/Flex';
 import Image from 'next/image';
 import { pages } from 'utils/pages';
+import { cookies, keys } from 'utils/cookies';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Login = () => {
       token: response.tokenObj.id_token,
     };
 
-    setCookies('token', payload);
+    cookies.set(keys.user, JSON.stringify(payload));
     dispatch(userUpdate(payload));
     router.push(pages.dashboard);
   };
@@ -39,7 +39,7 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await AuthService.login({ email, password });
-      setCookies('token', data);
+      cookies.set(keys.user, JSON.stringify(data));
       dispatch(userUpdate(data));
       setLoading(false);
       router.push(pages.dashboard);

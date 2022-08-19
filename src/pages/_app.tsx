@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Container>
       <Footer />
       <>
-        <ToastContainer autoClose={500} hideProgressBar={true} />
+        <ToastContainer autoClose={5000} hideProgressBar={true} />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${ID}`}
           strategy="afterInteractive"

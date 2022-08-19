@@ -15,6 +15,8 @@ import Flex from 'components/Flex';
 import { GAME } from 'utils/Game';
 import SettingsService from 'services/SettingsService';
 import { setConfig } from 'store/actions/config';
+import Head from 'next/head';
+import withAuthPage from 'hooks/withAuthPage';
 
 const Dashboard: React.FC = () => {
   const LIFE = 5;
@@ -85,43 +87,48 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <Row>
-      <Col md={12} style={{ marginBottom: 12 }}>
-        <Title level={1}>Treinar ouvido: </Title>
-      </Col>
+    <>
+      <Head>
+        <title>Guitar Notes - Dashboard</title>
+      </Head>
+      <Row>
+        <Col md={12} style={{ marginBottom: 12 }}>
+          <Title level={1}>Treinar ouvido: </Title>
+        </Col>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        GAME.map((item) => (
-          <Col
-            key={`level-${item.level}`}
-            md={3}
-            sm={12}
-            style={{ marginTop: 24 }}
-          >
-            <DashboardCard onClick={() => createScore(item.level)}>
-              <Flex justifyContent="space-between" style={{ width: '100%' }}>
-                <Flex>{`${item.level}° fase`}</Flex>
-                {getIsDone(item.level) && (
-                  <Flex justifyContent="flex-end" alignItems="center">
-                    <Image
-                      layout="fixed"
-                      key={item.level}
-                      height={24}
-                      width={24}
-                      src="/svg/check.svg"
-                      alt="Check"
-                    />
-                  </Flex>
-                )}
-              </Flex>
-            </DashboardCard>
-          </Col>
-        ))
-      )}
-    </Row>
+        {loading ? (
+          <Loading />
+        ) : (
+          GAME.map((item) => (
+            <Col
+              key={`level-${item.level}`}
+              md={3}
+              sm={12}
+              style={{ marginTop: 24 }}
+            >
+              <DashboardCard onClick={() => createScore(item.level)}>
+                <Flex justifyContent="space-between" style={{ width: '100%' }}>
+                  <Flex>{`${item.level}° fase`}</Flex>
+                  {getIsDone(item.level) && (
+                    <Flex justifyContent="flex-end" alignItems="center">
+                      <Image
+                        layout="fixed"
+                        key={item.level}
+                        height={24}
+                        width={24}
+                        src="/svg/check.svg"
+                        alt="Check"
+                      />
+                    </Flex>
+                  )}
+                </Flex>
+              </DashboardCard>
+            </Col>
+          ))
+        )}
+      </Row>
+    </>
   );
 };
 
-export default Dashboard;
+export default withAuthPage(Dashboard);

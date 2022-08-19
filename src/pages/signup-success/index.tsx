@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Title from 'components/Title';
 import Button from 'components/Button';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const SignUpSuccess: React.FC = () => {
   const router = useRouter();
@@ -19,6 +20,9 @@ const SignUpSuccess: React.FC = () => {
           margin: '0 auto',
         }}
       >
+        <Head>
+          <title>Guitar Notes - Conta criada</title>
+        </Head>
         <Title level={1}>Usuário criado com sucesso!</Title>
         <Image
           layout="fixed"
