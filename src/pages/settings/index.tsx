@@ -15,30 +15,37 @@ import Back from 'components/Back';
 import { cookies, keys } from 'utils/cookies';
 import withAuthPage from 'hooks/withAuthPage';
 import Head from 'next/head';
+import Loading from '@/components/Loading';
 
 const SettingsPage: NextPage = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: StoreData) => state);
   const [settings, setSettings] = useState<SettingsData | null>(null);
+  const [loader, setLoader] = useState(false);
   const router = useRouter();
 
   const fetchCreateSettings = useCallback(() => {
+    setLoader(true);
     SettingsService.createSettings({
       autoplay: false,
       microphone: false,
       email: state.user.email,
     }).then((response) => {
       setSettings(response[response.length - 1]);
+      setLoader(false);
     });
   }, [state?.user?.email]);
 
   const getSettings = useCallback(
     (email: string) => {
+      setLoader(true);
       SettingsService.getSettings(email).then((response) => {
         if (response.length > 0) {
           setSettings(response[response.length - 1]);
           dispatch(setConfig(response[response.length - 1]));
+          setLoader(false);
         } else {
+          setLoader(false);
           fetchCreateSettings();
         }
       });
@@ -47,7 +54,8 @@ const SettingsPage: NextPage = () => {
   );
 
   const handleUpdate = (settings: SettingsData) => {
-    SettingsService.updateSettings(settings);
+    setLoader(true);
+    SettingsService.updateSettings(settings).then(() => setLoader(false));
   };
 
   useEffect(() => {
@@ -86,6 +94,7 @@ const SettingsPage: NextPage = () => {
         style={{ height: '90%' }}
       >
         <Flex flexDirection="column">
+          {loader && <Loading />}
           <Flex
             gap="4px"
             justifyContent="space-between"
@@ -93,6 +102,7 @@ const SettingsPage: NextPage = () => {
           >
             <span style={{ fontSize: 18 }}>Microfone</span>
             <Switch
+              disabled={loader}
               onColor={primary}
               onChange={() =>
                 settings &&
