@@ -38,10 +38,10 @@ const LevelPage: NextPage = () => {
   const [active, setActive] = useState(0);
   const [microphone, setMicrophone] = useState(false);
   const [correct, setCorrect] = useState<Note | null>(null);
-  const [data, setData] = useState<Note[]>();
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [disabledStart, setDisabledStart] = useState(false);
+  const [options, setOptions] = useState<Note[]>([]);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
     level: Number(level),
@@ -51,6 +51,10 @@ const LevelPage: NextPage = () => {
     score: 0,
     notes: [],
   });
+
+  useEffect(() => {
+    setOptions(generateLevel(Number(level)));
+  }, [level]);
 
   const updateScore = useCallback(
     async (data: ScoreDto) => {
@@ -79,10 +83,9 @@ const LevelPage: NextPage = () => {
         );
       });
     }
-    const randomData = generateLevel(Number(level));
-    setData(randomData);
-    const random = setRandomNote(randomData);
-    setCorrect(randomData[random]);
+
+    const random = setRandomNote(options);
+    setCorrect(options[random]);
 
     return () => {
       if (steps.length === active) setMicrophone(false);
@@ -164,25 +167,13 @@ const LevelPage: NextPage = () => {
 
   const playNote = () => {
     setMicrophone(false);
-    if (data) {
-      const random = setRandomNote(data);
-      const note = data[random];
-      setCorrect(note);
-      const audio = play(note.src);
-      state.config.microphone &&
-        audio.addEventListener('ended', () => setMicrophone(true), false);
-      setDisabled(false);
-    } else {
-      const randomData = generateLevel(Number(level));
-      setData(randomData);
-      const random = setRandomNote(randomData);
-      const note = randomData[random];
-      setCorrect(note);
-      const audio = play(note.src);
-      state.config.microphone &&
-        audio.addEventListener('ended', () => setMicrophone(true), false);
-      setDisabled(false);
-    }
+    const random = setRandomNote(options);
+    const note = options[random];
+    setCorrect(note);
+    const audio = play(note.src);
+    state.config.microphone &&
+      audio.addEventListener('ended', () => setMicrophone(true), false);
+    setDisabled(false);
     setDisabledStart(true);
   };
 
@@ -258,17 +249,16 @@ const LevelPage: NextPage = () => {
             </Flex>
 
             <Flex justifyContent="center" gap="8px" flexWrap="wrap">
-              {data &&
-                data.map((note) => (
-                  <Button
-                    style={{ width: 86, height: 36, fontSize: 14 }}
-                    disabled={disabled || state.config.microphone}
-                    onClick={async () =>
-                      correct && (await handleIsCorrect(note, correct))
-                    }
-                    key={note.id}
-                  >{`${note.name} (${note.id})`}</Button>
-                ))}
+              {options.map((note) => (
+                <Button
+                  style={{ width: 86, height: 36, fontSize: 14 }}
+                  disabled={disabled || state.config.microphone}
+                  onClick={async () =>
+                    correct && (await handleIsCorrect(note, correct))
+                  }
+                  key={note.id}
+                >{`${note.name} (${note.id})`}</Button>
+              ))}
             </Flex>
             <Flex justifyContent="center" style={{ marginTop: 12 }}>
               <Microphone start={microphone} />
