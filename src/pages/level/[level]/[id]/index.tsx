@@ -25,7 +25,6 @@ import { setFrequency } from 'store/actions/frequency';
 import Back from 'components/Back';
 import withAuthPage from 'hooks/withAuthPage';
 import Head from 'next/head';
-import autoCorrelate from 'utils/AutoCorrelate';
 
 const LevelPage: NextPage = () => {
   const LIFE = 3;
@@ -113,18 +112,14 @@ const LevelPage: NextPage = () => {
       setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes }); // Atualiza a pontuação do jogo
       toastMSG('Correto!', 'success'); // Exibe mensagem de Correto através de um toast
       setActive(active + 1); // Passo para o próxima nota, no caso o step ativo
-      if (microphone) {
-        dispatch(setFrequency(-1)); // Limpa a frequência
-        setMicrophone(false); // Desativa o microfone
-      }
+      dispatch(setFrequency(-1)); // Limpa a frequência
+      setMicrophone(false); // Desativa o microfone
     } else {
       // Nota incorreta
       setDataScore({ ...dataScore, life: dataScore.life - 1, notes }); // Remove uma vida do jogador
       toastMSG('Incorreto!', 'error'); // Exibe mensagem Incorreto!
-      if (microphone) {
-        dispatch(setFrequency(-1)); // Limpa a frequência
-        setMicrophone(false); // Desativa o microfone
-      }
+      dispatch(setFrequency(-1)); // Limpa a frequência
+      setMicrophone(false); // Desativa o microfone
     }
   };
 
