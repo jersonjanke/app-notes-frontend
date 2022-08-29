@@ -9,14 +9,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import GlobalStyle from '../../styles/globalStyles';
 import { useSelector } from 'react-redux';
 import { StoreData } from 'types/Login';
+import React, { useEffect, useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const ID = 'G-ZKJ93ZEE7P';
-  const user = useSelector((state: StoreData) => state.user);
+  const user = useSelector((state: StoreData) => state?.user);
+  const [showSettings, setSettings] = useState(true);
+
+  useEffect(() => {
+    setSettings(user?.token ? true : false);
+  }, [user]);
 
   return (
     <>
-      <Header showSettings={!!user?.token} />
+      <Header showSettings={showSettings} />
       <GlobalStyle />
       <Container style={{ width: '100%', flex: ' 1 0 auto' }}>
         <Component {...pageProps} />

@@ -93,29 +93,40 @@ const LevelPage: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, steps?.length]);
 
+  /* Método é chamado sempre que houver alguma ação do jogador
+    pegando a note selecionado pelo jogador e comparando com a nota correta
+    pré selecionada pelo jogo.
+   */
+  const validate = (selectNote: Note, correctNote: Note) => {
+    const notes = dataScore.notes; // Busca dados atuais do jogo
+    notes.push({
+      level: active + 1,
+      correct: correctNote ? correctNote?.name : 'null',
+      selected: selectNote.name,
+    }); // Atualiza dados jogo
+
+    const isCorrect = selectNote.name === correctNote.name; // compara se a nota está correta
+    if (isCorrect) {
+      // Nota correta
+      setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes }); // Atualiza a pontuação do jogo
+      toastMSG('Correto!', 'success'); // Exibe mensagem de Correto através de um toast
+      setActive(active + 1); // Passo para o próxima nota, no caso o step ativo
+      dispatch(setFrequency(-1)); // Limpa a frequência
+      setMicrophone(false); // Desativa o microfone
+    } else {
+      // Nota incorreta
+      setDataScore({ ...dataScore, life: dataScore.life - 1, notes }); // Remove uma vida do jogador
+      toastMSG('Incorreto!', 'error'); // Exibe mensagem Incorreto!
+      dispatch(setFrequency(-1)); // Limpa a frequência
+      setMicrophone(false); // Desativa o microfone
+    }
+  };
+
   const validateNote = useCallback(
     (selectNote: Note, correctNote: Note) => {
-      const notes = dataScore.notes;
-      notes.push({
-        level: active + 1,
-        correct: correctNote ? correctNote?.name : 'null',
-        selected: selectNote.name,
-      });
-
-      const isCorrect = selectNote.name === correctNote.name;
-      if (isCorrect) {
-        setDataScore({ ...dataScore, score: dataScore.score + SCORE, notes });
-        toastMSG('Correto!', 'success');
-        setActive(active + 1);
-        dispatch(setFrequency(-1));
-        setMicrophone(false);
-      } else {
-        setDataScore({ ...dataScore, life: dataScore.life - 1, notes });
-        toastMSG('Incorreto!', 'error');
-        dispatch(setFrequency(-1));
-        setMicrophone(false);
-      }
+      validate(selectNote, correctNote);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [active, dataScore, dispatch]
   );
 
