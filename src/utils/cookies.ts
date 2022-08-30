@@ -1,7 +1,6 @@
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
 export const keys = {
-  token: '@guitar/token',
   user: '@guitar/user',
 };
 
