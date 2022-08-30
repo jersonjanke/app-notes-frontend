@@ -10,10 +10,10 @@ import { toastMSG } from 'utils/toast';
 export default function withAuthPage(PageComponent: React.FC) {
   const WrappedPageComponent = () => {
     const router = useRouter();
-    const user = cookies.get(keys.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
+      const user = cookies.get(keys.user);
       if (!user) {
         cookies.remove(keys.user);
         router.push(pages.root);
@@ -24,7 +24,7 @@ export default function withAuthPage(PageComponent: React.FC) {
         dispatch(userUpdate(payload));
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [router.isReady]);
+    }, []);
 
     return <PageComponent {...PageComponent.defaultProps} />;
   };

@@ -53,7 +53,7 @@ const LevelPage: NextPage = () => {
   });
 
   useEffect(() => {
-    setOptions(generateLevel(Number(level)));
+    level && setOptions(generateLevel(Number(level)));
   }, [level]);
 
   const updateScore = useCallback(

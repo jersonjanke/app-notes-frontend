@@ -15,6 +15,7 @@ import Flex from 'components/Flex';
 import Image from 'next/image';
 import { pages } from 'utils/pages';
 import { cookies, keys } from 'utils/cookies';
+import axios from 'axios';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const Login = () => {
       const { data } = await AuthService.login({ email, password });
       cookies.set(keys.user, JSON.stringify(data));
       dispatch(userUpdate(data));
+      axios.defaults.headers.common['Authorization'] = data.token;
       setLoading(false);
       router.push(pages.dashboard);
     } catch (err: any) {
