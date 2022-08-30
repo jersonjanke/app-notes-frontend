@@ -173,6 +173,7 @@ const LevelPage: NextPage = () => {
 
     if (selectedNote) {
       validateNote(selectedNote, correct);
+      validateButton(correct);
     }
     return () => {
       selectedNote = null;
