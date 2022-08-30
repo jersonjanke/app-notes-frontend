@@ -72,6 +72,7 @@ const Password: React.FC = () => {
           placeholder="Confirme sua senha"
         />
         <Button
+          color="primary"
           loading={loading}
           disabled={!formik.isValid || !user?.validPassword}
           type="submit"

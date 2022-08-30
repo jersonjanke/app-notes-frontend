@@ -51,6 +51,7 @@ const Register: React.FC = () => {
               placeholder="Informe seu e-mail"
             />
             <Button
+              color="primary"
               disabled={!formik.isValid || !formik.dirty}
               style={{ marginTop: 12 }}
               type="submit"

@@ -31,7 +31,9 @@ const SignUpSuccess: React.FC = () => {
           width={540}
           height={260}
         />
-        <Button onClick={() => router.push('/')}>Login</Button>
+        <Button color="primary" onClick={() => router.push('/')}>
+          Login
+        </Button>
       </div>
     </Container>
   );

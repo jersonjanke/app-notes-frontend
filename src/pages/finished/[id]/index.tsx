@@ -143,12 +143,17 @@ const SuccessPage: NextPage<Props> = ({ result }) => {
               >
                 <Flex gap="12px" style={{ width: '40%' }}>
                   <Button
+                    color="primary"
                     onClick={() => router.push(pages.dashboard)}
                     style={{ width: 76 }}
                   >
                     Voltar
                   </Button>
-                  <Button onClick={handleRepeat} style={{ width: 76 }}>
+                  <Button
+                    color="primary"
+                    onClick={handleRepeat}
+                    style={{ width: 76 }}
+                  >
                     Repetir
                   </Button>
                 </Flex>

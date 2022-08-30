@@ -79,6 +79,7 @@ const Login = () => {
 
         <Flex gap="8px">
           <Button
+            color="primary"
             style={{ marginTop: 8 }}
             loading={loading}
             onClick={handleLogin}
@@ -90,7 +91,11 @@ const Login = () => {
             <GoogleLogin
               clientId="829625549487-m7dvtef9obacodq027b6j7eegt3p6oon.apps.googleusercontent.com"
               render={(renderProps) => (
-                <Button onClick={renderProps.onClick} style={{ width: 56 }}>
+                <Button
+                  color="primary"
+                  onClick={renderProps.onClick}
+                  style={{ width: 56 }}
+                >
                   <Image
                     data-testid="back"
                     layout="fixed"

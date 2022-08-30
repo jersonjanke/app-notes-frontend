@@ -120,7 +120,9 @@ const SettingsPage: NextPage = () => {
         <hr />
 
         <Flex justifyContent="flex-start">
-          <Button onClick={handleLogOut}>Logout</Button>
+          <Button color="primary" onClick={handleLogOut}>
+            Logout
+          </Button>
         </Flex>
       </Flex>
     </div>
