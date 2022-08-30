@@ -5,6 +5,7 @@ import Flex from '../Flex';
 
 type ButtonProps = {
   children: React.ReactNode;
+  color: 'primary' | 'black';
   onClick?: () => void;
   loading?: boolean;
   props?: any;
@@ -12,12 +13,14 @@ type ButtonProps = {
 
 const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = ({
   onClick,
+  color = 'primary',
   children,
   loading,
   ...props
 }) => {
   return (
     <ButtonStyle
+      color={color}
       data-testid="button"
       {...props}
       onClick={onClick}

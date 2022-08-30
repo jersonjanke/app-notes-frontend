@@ -5,6 +5,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A0.wav',
     frequency: [110, 109],
+    correct: false,
   },
   A1: {
     id: 'A1',
@@ -12,6 +13,7 @@ export const notes = {
     cipher: 'A#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A1.wav',
     frequency: [116.5],
+    correct: false,
   },
   A2: {
     id: 'A2',
@@ -19,6 +21,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A2.wav',
     frequency: [123.2],
+    correct: false,
   },
   A3: {
     id: 'A3',
@@ -26,6 +29,7 @@ export const notes = {
     cipher: 'C',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A3.wav',
     frequency: [130.7],
+    correct: false,
   },
   A4: {
     id: 'A4',
@@ -33,6 +37,7 @@ export const notes = {
     cipher: 'C#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A4.wav',
     frequency: [138.1],
+    correct: false,
   },
   A5: {
     id: 'A5',
@@ -40,6 +45,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A5.wav',
     frequency: [293.5],
+    correct: false,
   },
   A6: {
     id: 'A6',
@@ -47,6 +53,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A6.wav',
     frequency: [155],
+    correct: false,
   },
   A7: {
     id: 'A7',
@@ -54,6 +61,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A7.wav',
     frequency: [164.2],
+    correct: false,
   },
   A8: {
     id: 'A8',
@@ -61,6 +69,7 @@ export const notes = {
     cipher: 'F',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A8.wav',
     frequency: [174.3],
+    correct: false,
   },
   A9: {
     id: 'A9',
@@ -68,6 +77,7 @@ export const notes = {
     cipher: 'F#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A9.wav',
     frequency: [184.3],
+    correct: false,
   },
   A10: {
     id: 'A10',
@@ -75,6 +85,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A10.wav',
     frequency: [195.6],
+    correct: false,
   },
   A11: {
     id: 'A11',
@@ -82,6 +93,7 @@ export const notes = {
     cipher: 'G#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A11.wav',
     frequency: [207.2],
+    correct: false,
   },
   A12: {
     id: 'A12',
@@ -89,6 +101,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/A12.wav',
     frequency: [220.7],
+    correct: false,
   },
   B0: {
     id: 'B0',
@@ -96,6 +109,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B0.wav',
     frequency: [246.5],
+    correct: false,
   },
   B1: {
     id: 'B1',
@@ -103,6 +117,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B1.wav',
     frequency: [262.9],
+    correct: false,
   },
   B2: {
     id: 'B2',
@@ -110,6 +125,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B2.wav',
     frequency: [277.5],
+    correct: false,
   },
   B3: {
     id: 'B3',
@@ -117,6 +133,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B3.wav',
     frequency: [294.1],
+    correct: false,
   },
   B4: {
     id: 'B4',
@@ -124,6 +141,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B4.wav',
     frequency: [311.6],
+    correct: false,
   },
   B5: {
     id: 'B5',
@@ -131,6 +149,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B5.wav',
     frequency: [330.6],
+    correct: false,
   },
   B6: {
     id: 'B6',
@@ -138,6 +157,7 @@ export const notes = {
     cipher: 'F',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B6.wav',
     frequency: [349.5],
+    correct: false,
   },
   B7: {
     id: 'B7',
@@ -145,6 +165,7 @@ export const notes = {
     cipher: 'F#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B7.wav',
     frequency: [370.5],
+    correct: false,
   },
   B8: {
     id: 'B8',
@@ -152,6 +173,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B8.wav',
     frequency: [394],
+    correct: false,
   },
   B9: {
     id: 'B9',
@@ -159,6 +181,7 @@ export const notes = {
     cipher: 'G#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B9.wav',
     frequency: [416.8],
+    correct: false,
   },
   B10: {
     id: 'B10',
@@ -166,6 +189,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B10.wav',
     frequency: [440],
+    correct: false,
   },
   B11: {
     id: 'B11',
@@ -173,6 +197,7 @@ export const notes = {
     cipher: 'A#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B11.wav',
     frequency: [467],
+    correct: false,
   },
   B12: {
     id: 'B12',
@@ -180,6 +205,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/B12.wav',
     frequency: [495.9],
+    correct: false,
   },
   D0: {
     id: 'D0',
@@ -187,6 +213,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D0.wav',
     frequency: [146.4],
+    correct: false,
   },
   D1: {
     id: 'D1',
@@ -194,6 +221,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D1.wav',
     frequency: [155.5],
+    correct: false,
   },
   D2: {
     id: 'D2',
@@ -201,6 +229,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D2.wav',
     frequency: [165],
+    correct: false,
   },
   D3: {
     id: 'D3',
@@ -208,6 +237,7 @@ export const notes = {
     cipher: 'F',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D3.wav',
     frequency: [174.4],
+    correct: false,
   },
   D4: {
     id: 'D4',
@@ -215,6 +245,7 @@ export const notes = {
     cipher: 'F#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D4.wav',
     frequency: [184.8],
+    correct: false,
   },
   D5: {
     id: 'D5',
@@ -222,6 +253,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D5.wav',
     frequency: [196],
+    correct: false,
   },
   D6: {
     id: 'D6',
@@ -229,6 +261,7 @@ export const notes = {
     cipher: 'G#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D6.wav',
     frequency: [207.5],
+    correct: false,
   },
   D7: {
     id: 'D7',
@@ -236,6 +269,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D7.wav',
     frequency: [220],
+    correct: false,
   },
   D8: {
     id: 'D8',
@@ -243,6 +277,7 @@ export const notes = {
     cipher: 'A#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D8.wav',
     frequency: [233.2],
+    correct: false,
   },
   D9: {
     id: 'D9',
@@ -250,6 +285,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D9.wav',
     frequency: [246.8],
+    correct: false,
   },
   D10: {
     id: 'D10',
@@ -257,6 +293,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D10.wav',
     frequency: [262],
+    correct: false,
   },
   D11: {
     id: 'D11',
@@ -264,6 +301,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D11.wav',
     frequency: [277.2],
+    correct: false,
   },
   D12: {
     id: 'D12',
@@ -271,6 +309,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/D12.wav',
     frequency: [294.7],
+    correct: false,
   },
   E0: {
     id: 'E0',
@@ -278,6 +317,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E0.wav',
     frequency: [82.5],
+    correct: false,
   },
   E1: {
     id: 'E1',
@@ -285,6 +325,7 @@ export const notes = {
     cipher: 'F',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E1.wav',
     frequency: [87.5],
+    correct: false,
   },
   E2: {
     id: 'E2',
@@ -292,6 +333,7 @@ export const notes = {
     cipher: 'F#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E2.wav',
     frequency: [92.5],
+    correct: false,
   },
   E3: {
     id: 'E3',
@@ -299,6 +341,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E3.wav',
     frequency: [97.6, 197],
+    correct: false,
   },
   E4: {
     id: 'E4',
@@ -306,6 +349,7 @@ export const notes = {
     cipher: 'G#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E4.wav',
     frequency: [103],
+    correct: false,
   },
   E5: {
     id: 'E5',
@@ -313,6 +357,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E5.wav',
     frequency: [110],
+    correct: false,
   },
   E6: {
     id: 'E6',
@@ -320,6 +365,7 @@ export const notes = {
     cipher: 'A#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E6.wav',
     frequency: [116],
+    correct: false,
   },
   E7: {
     id: 'E7',
@@ -327,6 +373,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E7.wav',
     frequency: [123],
+    correct: false,
   },
   E8: {
     id: 'E8',
@@ -334,6 +381,7 @@ export const notes = {
     cipher: 'C',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E8.wav',
     frequency: [130],
+    correct: false,
   },
   E9: {
     id: 'E9',
@@ -341,6 +389,7 @@ export const notes = {
     cipher: 'C#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E9.wav',
     frequency: [138],
+    correct: false,
   },
   E10: {
     id: 'E10',
@@ -348,6 +397,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E10.wav',
     frequency: [146],
+    correct: false,
   },
   E11: {
     id: 'E11',
@@ -355,6 +405,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E11.wav',
     frequency: [155.3],
+    correct: false,
   },
   E12: {
     id: 'E12',
@@ -362,6 +413,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/E12.wav',
     frequency: [165],
+    correct: false,
   },
   e0: {
     id: 'ez0',
@@ -369,6 +421,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez0.wav',
     frequency: [330],
+    correct: false,
   },
   e1: {
     id: 'ez1',
@@ -376,6 +429,7 @@ export const notes = {
     cipher: 'F',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez1.wav',
     frequency: [349.3],
+    correct: false,
   },
   e2: {
     id: 'ez2',
@@ -383,6 +437,7 @@ export const notes = {
     cipher: 'F#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez2.wav',
     frequency: [370],
+    correct: false,
   },
   e3: {
     id: 'ez3',
@@ -390,6 +445,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez3wav',
     frequency: [393.3],
+    correct: false,
   },
   e4: {
     id: 'ez4',
@@ -397,6 +453,7 @@ export const notes = {
     cipher: 'G#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez4.wav',
     frequency: [416.4],
+    correct: false,
   },
   e5: {
     id: 'ez5',
@@ -404,6 +461,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez5.wav',
     frequency: [440],
+    correct: false,
   },
   e6: {
     id: 'ez6',
@@ -411,6 +469,7 @@ export const notes = {
     cipher: 'A#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez6.wav',
     frequency: [466.6],
+    correct: false,
   },
   e7: {
     id: 'ez7',
@@ -418,6 +477,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez7.wav',
     frequency: [494.4],
+    correct: false,
   },
   e8: {
     id: 'ez8',
@@ -425,6 +485,7 @@ export const notes = {
     cipher: 'C',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez8.wav',
     frequency: [523.2],
+    correct: false,
   },
   e9: {
     id: 'ez9',
@@ -432,6 +493,7 @@ export const notes = {
     cipher: 'C#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez9.wav',
     frequency: [553.8],
+    correct: false,
   },
   e10: {
     id: 'ez10',
@@ -439,6 +501,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez10.wav',
     frequency: [583.8],
+    correct: false,
   },
   e11: {
     id: 'ez11',
@@ -446,6 +509,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez11.wav',
     frequency: [620],
+    correct: false,
   },
   e12: {
     id: 'ez12',
@@ -453,6 +517,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/ez12.wav',
     frequency: [661.2],
+    correct: false,
   },
   G0: {
     id: 'G0',
@@ -460,6 +525,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G0.wav',
     frequency: [195.7],
+    correct: false,
   },
   G1: {
     id: 'G1',
@@ -467,6 +533,7 @@ export const notes = {
     cipher: 'G#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G1.wav',
     frequency: [208.4],
+    correct: false,
   },
   G2: {
     id: 'G2',
@@ -474,6 +541,7 @@ export const notes = {
     cipher: 'A',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G2.wav',
     frequency: [220],
+    correct: false,
   },
   G3: {
     id: 'G3',
@@ -481,6 +549,7 @@ export const notes = {
     cipher: 'A#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G3.wav',
     frequency: [233.4],
+    correct: false,
   },
   G4: {
     id: 'G4',
@@ -488,6 +557,7 @@ export const notes = {
     cipher: 'B',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G4.wav',
     frequency: [247.1],
+    correct: false,
   },
   G5: {
     id: 'G5',
@@ -495,6 +565,7 @@ export const notes = {
     cipher: 'C',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G5.wav',
     frequency: [261.5],
+    correct: false,
   },
   G6: {
     id: 'G6',
@@ -502,6 +573,7 @@ export const notes = {
     cipher: 'C#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G6.wav',
     frequency: [277],
+    correct: false,
   },
   G7: {
     id: 'G7',
@@ -509,6 +581,7 @@ export const notes = {
     cipher: 'D',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G7.wav',
     frequency: [293.8],
+    correct: false,
   },
   G8: {
     id: 'G8',
@@ -516,6 +589,7 @@ export const notes = {
     cipher: 'D#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G8.wav',
     frequency: [311.6],
+    correct: false,
   },
   G9: {
     id: 'G9',
@@ -523,6 +597,7 @@ export const notes = {
     cipher: 'E',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G9.wav',
     frequency: [330],
+    correct: false,
   },
   G10: {
     id: 'G10',
@@ -530,6 +605,7 @@ export const notes = {
     cipher: 'F',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G10.wav',
     frequency: [349.2],
+    correct: false,
   },
   G11: {
     id: 'G11',
@@ -537,6 +613,7 @@ export const notes = {
     cipher: 'F#',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G11.wav',
     frequency: [370],
+    correct: false,
   },
   G12: {
     id: 'G12',
@@ -544,6 +621,7 @@ export const notes = {
     cipher: 'G',
     src: 'https://storage.cloud.google.com/guitar-notes-storage/notes/guitar/G12.wav',
     frequency: [393.4],
+    correct: false,
   },
 };
 

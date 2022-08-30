@@ -117,10 +117,20 @@ const LevelPage: NextPage = () => {
     } else {
       // Nota incorreta
       setDataScore({ ...dataScore, life: dataScore.life - 1, notes }); // Remove uma vida do jogador
-      toastMSG('Incorreto!', 'error'); // Exibe mensagem Incorreto!
+      toastMSG(
+        `Incorreto! Correto: ${correctNote?.name} (${correctNote?.id})`,
+        'error'
+      ); // Exibe mensagem Incorreto!
       dispatch(setFrequency(-1)); // Limpa a frequência
       setMicrophone(false); // Desativa o microfone
     }
+  };
+
+  const validateButton = (correctNote: Note) => {
+    options.map((note) =>
+      correctNote === note ? (note.correct = true) : (note.correct = false)
+    );
+    setOptions(options);
   };
 
   const validateNote = useCallback(
@@ -190,6 +200,8 @@ const LevelPage: NextPage = () => {
   };
 
   const handlePlay = async () => {
+    options.map((note) => (note.correct = false));
+    setOptions(options);
     setDisabledStart(true);
     state.config.microphone && setMicrophone(true);
     playNote();
@@ -199,6 +211,7 @@ const LevelPage: NextPage = () => {
     setDisabled(true);
     setDisabledStart(false);
     validateNote(note, correctNote);
+    validateButton(correctNote);
   };
 
   const handleRepeat = () => {
@@ -265,6 +278,7 @@ const LevelPage: NextPage = () => {
             <Flex justifyContent="center" gap="8px" flexWrap="wrap">
               {options.map((note) => (
                 <Button
+                  color={note.correct ? 'black' : 'primary'}
                   style={{ width: 86, height: 36, fontSize: 14 }}
                   disabled={disabled || state.config.microphone}
                   onClick={async () =>
