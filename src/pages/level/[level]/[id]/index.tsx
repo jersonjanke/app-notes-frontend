@@ -218,7 +218,9 @@ const LevelPage: NextPage = () => {
             <Flex justifyContent="space-between" style={{ width: '100%' }}>
               <Back />
 
-              <div style={{ fontSize: 22, color: primary }}>Level: {level}</div>
+              <div style={{ fontSize: 22, color: primary, paddingLeft: 54 }}>
+                Level: {level}
+              </div>
 
               <div style={{ fontSize: 22, color: primary }}>
                 Score: {dataScore?.score}
