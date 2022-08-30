@@ -19,7 +19,7 @@ import Head from 'next/head';
 import withAuthPage from 'hooks/withAuthPage';
 
 const Dashboard: React.FC = () => {
-  const LIFE = 5;
+  const LIFE = 3;
   const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
