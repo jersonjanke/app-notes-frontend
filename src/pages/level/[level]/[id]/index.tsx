@@ -42,6 +42,7 @@ const LevelPage: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [disabledStart, setDisabledStart] = useState(false);
   const [options, setOptions] = useState<Note[]>([]);
+  const [disabledRepeat, setDisabledRepeat] = useState(true);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
     level: Number(level),
@@ -53,7 +54,12 @@ const LevelPage: NextPage = () => {
   });
 
   useEffect(() => {
-    level && setOptions(generateLevel(Number(level)));
+    setOptions([]);
+    if (level) {
+      const opt = generateLevel(Number(level));
+      opt.map((note) => (note.correct = false));
+      setOptions(opt);
+    }
   }, [level]);
 
   const updateScore = useCallback(
@@ -99,6 +105,7 @@ const LevelPage: NextPage = () => {
    */
 
   const validate = (selectNote: Note, correctNote: Note) => {
+    setDisabledRepeat(true);
     const notes = dataScore.notes; // Busca dados atuais do jogo
     notes.push({
       level: active + 1,
@@ -201,6 +208,7 @@ const LevelPage: NextPage = () => {
   };
 
   const handlePlay = async () => {
+    setDisabledRepeat(false);
     options.map((note) => (note.correct = false));
     setOptions(options);
     setDisabledStart(true);
@@ -262,7 +270,7 @@ const LevelPage: NextPage = () => {
               </ButtonCircle>
               <ButtonCircle
                 onClick={handleRepeat}
-                disabled={!correct || state.config.microphone}
+                disabled={disabledRepeat || state.config.microphone}
               >
                 <Flex justifyContent="center">
                   <Image
