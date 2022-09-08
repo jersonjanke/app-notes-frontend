@@ -343,6 +343,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@greatsumini/react-facebook-login@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@greatsumini/react-facebook-login/-/react-facebook-login-3.2.1.tgz#d1fdcada64a5f90d3a4b99c14fa381ce9f95387d"
+  integrity sha512-4mCtX/Y14+O0mARMjWGjplXc1CfLcfC4F/g0Lp724zxIOL+SYzIF3nqYe6Lf+pobwl6nqAkf2B3/FZY3a+oveg==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.9.5.tgz"

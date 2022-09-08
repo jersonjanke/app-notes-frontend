@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthService from 'services/AuthService';
 import { Wrapper, WrapperText } from './style';
 import { useDispatch } from 'react-redux';
@@ -16,6 +16,8 @@ import Image from 'next/image';
 import { pages } from 'utils/pages';
 import { cookies, keys } from 'utils/cookies';
 import axios from 'axios';
+import FacebookLogin from '@greatsumini/react-facebook-login';
+import { primary, white } from 'utils/colors';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -23,6 +25,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [facebookToken, setFacebookToken] = useState('');
+  const [facebookUser, setFacebookUser] = useState({
+    name: '',
+    email: '',
+  });
 
   const responseGoogle = (response: GoogleLoginResponse) => {
     const payload = {
@@ -31,6 +38,7 @@ const Login = () => {
       token: response.tokenObj.id_token,
     };
 
+    axios.defaults.headers.common['Authorization'] = response.tokenObj.id_token;
     cookies.set(keys.user, JSON.stringify(payload));
     dispatch(userUpdate(payload));
     router.push(pages.dashboard);
@@ -52,6 +60,24 @@ const Login = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (
+      facebookToken.length > 0 &&
+      facebookUser.name.length > 0 &&
+      facebookUser.email.length > 0
+    ) {
+      const payload = {
+        name: facebookUser.name,
+        email: facebookUser.email,
+        token: facebookToken,
+      };
+      cookies.set(keys.user, JSON.stringify(payload));
+      dispatch(userUpdate(payload));
+      router.push(pages.dashboard);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setFacebookUser, facebookUser]);
 
   return (
     <>
@@ -113,6 +139,41 @@ const Login = () => {
               onFailure={responseGoogle}
               cookiePolicy={'single_host_origin'}
             />
+            <FacebookLogin
+              style={{
+                textDecoration: 'none',
+                backgroundColor: primary,
+                border: 'none',
+                borderRadius: 8,
+                height: 32,
+                width: 56,
+                marginLeft: 8,
+                color: white,
+                cursor: 'pointer',
+              }}
+              appId="5542817972449076"
+              onSuccess={(response: any) => {
+                axios.defaults.headers.common['Authorization'] =
+                  response?.accessToken;
+                setFacebookToken(response?.accessToken);
+              }}
+              onProfileSuccess={(response: any) => {
+                setFacebookUser({
+                  name: response?.name,
+                  email: response?.email,
+                });
+              }}
+              onFail={(error) => toastMSG(JSON.stringify(error), 'error')}
+            >
+              <Image
+                data-testid="back"
+                layout="fixed"
+                src="/img/facebook.png"
+                height={32}
+                width={32}
+                alt="Facebook"
+              />
+            </FacebookLogin>
           </Flex>
         </Flex>
         <Link href="/signup">Criar conta</Link>

@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { primary } from 'utils/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setConfig } from 'store/actions/config';
-import { StoreData } from 'types/Login';
+import { StoreData, User } from 'types/Login';
 import { userUpdate } from 'store/actions/user';
 import Switch from 'react-switch';
 import Flex from '../../components/Flex';
@@ -25,15 +25,17 @@ const SettingsPage: NextPage = () => {
   const router = useRouter();
 
   const fetchCreateSettings = useCallback(() => {
+    const user = cookies.get(keys.user) as unknown as User;
     setLoader(true);
     SettingsService.createSettings({
       autoplay: false,
       microphone: false,
-      email: state.user.email,
+      email: user.email,
     }).then((response) => {
       setSettings(response[response.length - 1]);
       setLoader(false);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.user?.email]);
 
   const getSettings = useCallback(
@@ -104,14 +106,15 @@ const SettingsPage: NextPage = () => {
             <Switch
               disabled={loader}
               onColor={primary}
-              onChange={() =>
-                settings &&
-                setSettings({
-                  ...settings,
-                  microphone: !settings?.microphone,
-                  update: true,
-                })
-              }
+              onChange={() => {
+                settings
+                  ? setSettings({
+                      ...settings,
+                      microphone: !settings?.microphone,
+                      update: true,
+                    })
+                  : fetchCreateSettings();
+              }}
               checked={settings?.microphone ? settings?.microphone : false}
             />
           </Flex>
