@@ -42,6 +42,7 @@ const LevelPage: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [disabledStart, setDisabledStart] = useState(false);
   const [options, setOptions] = useState<Note[]>([]);
+  const [startOptions, setStartOptions] = useState(false);
   const [disabledRepeat, setDisabledRepeat] = useState(true);
   const [dataScore, setDataScore] = useState<ScoreDto>({
     _id: '',
@@ -59,8 +60,27 @@ const LevelPage: NextPage = () => {
       const opt = generateLevel(Number(level));
       opt.map((note) => (note.correct = false));
       setOptions(opt);
+      setStartOptions(true);
     }
   }, [level]);
+
+  useEffect(() => {
+    if (!startOptions) return;
+
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handlePlay();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startOptions]);
 
   const updateScore = useCallback(
     async (data: ScoreDto) => {

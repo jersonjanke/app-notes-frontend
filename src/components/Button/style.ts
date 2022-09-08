@@ -16,4 +16,9 @@ export const ButtonStyle = styled.button<{ color: 'primary' | 'black' }>`
     color: ${black};
     cursor: not-allowed;
   }
+
+  :focus {
+    outline: none;
+    box-shadow: none;
+  }
 `;
