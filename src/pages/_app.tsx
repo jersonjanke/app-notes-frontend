@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
         </Script>
 
-        {/* <Script id="facebook-login" strategy="afterInteractive">
+        <Script id="facebook-login" strategy="afterInteractive">
           {`
             window.fbAsyncInit = function() {
               FB.init({
@@ -57,7 +57,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         `}
-        </Script> */}
+        </Script>
       </>
     </>
   );
