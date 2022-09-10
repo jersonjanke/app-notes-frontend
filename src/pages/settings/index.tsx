@@ -26,11 +26,12 @@ const SettingsPage: NextPage = () => {
 
   const fetchCreateSettings = useCallback(() => {
     const user = cookies.get(keys.user) as unknown as User;
+    console.log(state);
     setLoader(true);
     SettingsService.createSettings({
       autoplay: false,
       microphone: false,
-      email: user.email,
+      email: user?.email || state?.user?.email,
     }).then((response) => {
       setSettings(response[response.length - 1]);
       setLoader(false);
