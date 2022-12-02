@@ -34,8 +34,8 @@ const Footer: React.FC = () => {
           <Flex gap="12px" justifyContent="flex-end" alignItems="center">
             <a href="https://www.instagram.com/jersonjanke/">
               <Image
-                height="32px"
-                width="32px"
+                height={32}
+                width={32}
                 layout="fixed"
                 alt="instagram"
                 src="/icons/instagram-white.png"
@@ -44,8 +44,8 @@ const Footer: React.FC = () => {
 
             <a href="https://www.linkedin.com/in/jerson-janke/">
               <Image
-                height="32px"
-                width="32px"
+                height={32}
+                width={32}
                 layout="fixed"
                 alt="facebook"
                 src="/icons/linkedin-white.png"
@@ -54,8 +54,8 @@ const Footer: React.FC = () => {
 
             <a href="https://github.com/jersonjanke">
               <Image
-                height="32px"
-                width="32px"
+                height={32}
+                width={32}
                 layout="fixed"
                 alt="github"
                 src="/icons/github-white.png"

@@ -16,8 +16,8 @@ const InputPassword = (props: InputHTMLAttributes<HTMLInputElement>) => {
           type={icon == eye ? 'password' : 'text'}
         />
         <Image
-          height="24px"
-          width="24px"
+          height={24}
+          width={24}
           data-testid="inputPassword-image"
           layout="fixed"
           alt="fixed"
